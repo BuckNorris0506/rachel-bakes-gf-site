@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>Request a Business Review — BuckSites</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Request a free business review. Plain-language diagnosis of where trust breaks and where your intake flow loses leads — plus the highest-leverage fix to install first." />
+  <link rel="icon" href="/assets/logo/bucksites-logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: { navy: '#0f172a', accent: '#f97316', lightbg: '#f8fafc' },
+          boxShadow: { 'soft': '0 18px 45px rgba(15,23,42,0.15)' },
+        }
+      }
+    };
+  </script>
+  <style>body { font-family: 'Inter', system-ui, sans-serif; }</style>
+</head>
+<body class="bg-lightbg text-navy antialiased">
+  <div class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-white/10">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <div class="flex items-center justify-between py-4">
+          <a href="/" class="flex items-center gap-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-10 w-auto flex-shrink-0" fill="none" aria-label="BuckSites logo">
+              <path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/>
+              <path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/>
+              <path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/><path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/>
+              <ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/>
+              <ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/>
+            </svg>
+            <div class="flex flex-col leading-none">
+              <span class="text-[1.2rem] font-black tracking-tight text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"><span>Buck</span><span class="text-accent">Sites</span></span>
+              <span class="mt-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/75">Fix the leak. Install the right solution.</span>
+            </div>
+          </a>
+          <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+            <a href="/" class="text-white/80 hover:text-white transition-colors">Home</a>
+            <a href="/contractor-website-design/" class="text-white/80 hover:text-white transition-colors">Services</a>
+            <a href="/contractor-website-redesign/" class="text-white/80 hover:text-white transition-colors">Rebuild</a>
+            <a href="/contractor-website-pricing/" class="text-white/80 hover:text-white transition-colors">Pricing</a>
+            <a href="/contractor-website-examples/" class="text-white/80 hover:text-white transition-colors">Examples</a>
+            <a href="/free-website-review/" class="text-accent font-semibold">Business Review</a>
+          </nav>
+          <div class="hidden md:flex items-center gap-4">
+            <a href="tel:+18168048603" class="flex flex-col items-end text-right min-w-[7.5rem]">
+              <span class="text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">Call or Text</span>
+              <span class="text-sm font-semibold text-white whitespace-nowrap">(816) 804-8603</span>
+            </a>
+          </div>
+          <div class="flex items-center gap-4 md:hidden">
+            <a href="tel:+18168048603" class="text-xs font-semibold text-white">(816) 804-8603</a>
+            <button type="button" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Toggle navigation" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-white/20 transition-all">
+              <span id="mobile-menu-btn-text">Menu</span>
+              <svg class="h-3.5 w-3.5 ml-1.5" viewBox="0 0 20 20" fill="none"><path d="M4 7h12M4 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
+            </button>
+          </div>
+        </div>
+        <div id="mobile-nav-panel" class="hidden pb-4 border-t border-white/10 md:hidden" aria-hidden="true">
+          <nav class="flex flex-col gap-2 pt-4 text-sm font-medium">
+            <a href="/" class="py-1 text-white/80 hover:text-white">Home</a>
+            <a href="/contractor-website-design/" class="py-1 text-white/80 hover:text-white">Services</a>
+            <a href="/contractor-website-redesign/" class="py-1 text-white/80 hover:text-white">Rebuild</a>
+            <a href="/contractor-website-pricing/" class="py-1 text-white/80 hover:text-white">Pricing</a>
+            <a href="/contractor-website-examples/" class="py-1 text-white/80 hover:text-white">Examples</a>
+            <a href="/free-website-review/" class="text-accent font-semibold py-1">Business Review</a>
+            <a href="/free-website-review/" class="mt-3 inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg transition-all">Request a Business Review</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="py-16 lg:py-24 bg-navy text-slate-50">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 grid gap-10 lg:grid-cols-2 items-start">
+          <div>
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Request a business review</p>
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">Request a Business Review</h1>
+            <p class="mt-4 text-slate-200 leading-relaxed">We’ll look at the trust, proof, and inquiry flow issues that may be costing your business action — then tell you what looks weakest first.</p>
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 text-sm">
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/50 p-4">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1.5">Who you’ll talk to</p>
+                <p class="font-bold text-slate-50 text-base">Jared — BuckSites</p>
+                <p class="mt-1 text-xs text-slate-400">No sales team. No junior account reps. You get me.</p>
+              </div>
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/50 p-4">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1.5">Small business focus</p>
+                <p class="font-semibold text-slate-50">Roofing, concrete, decks, tree service &amp; more.</p>
+                <p class="mt-1 text-xs text-slate-400">Fixes built for how real people decide and reach out.</p>
+              </div>
+            </div>
+            <div class="mt-7 flex flex-col gap-4 text-sm">
+              <div>
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Call or text Jared directly</p>
+                <a href="tel:+18168048603" class="text-xl font-bold text-slate-50 hover:text-accent transition-colors tracking-tight">(816) 804-8603</a>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Email</p>
+                <a href="mailto:jared@bucksites.com" class="text-sm font-semibold text-slate-100 hover:text-accent transition-colors">jared@bucksites.com</a>
+              </div>
+              <p class="text-sm text-slate-300 pt-2 border-t border-slate-700/60"><span class="font-semibold text-slate-50">Kansas City, Missouri</span> — serving contractors across the U.S.</p>
+            </div>
+          </div>
+          <div>
+            <div class="rounded-[28px] border border-slate-700 bg-slate-900/60 p-6 sm:p-7 shadow-soft">
+              <p class="text-sm font-semibold text-slate-50">Tell me what you’re trying to fix</p>
+              <p class="mt-1 text-xs text-slate-400">Share your current site and the type of jobs you want more of. If you know the leak (trust, inquiry path, follow-up), mention it.</p>
+              <form class="mt-5 space-y-4" name="website-review" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="review-form">
+                <input type="hidden" name="form-name" value="website-review" />
+                <p class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-name">Name</label>
+                  <input id="review-name" type="text" name="name" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Your name" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-company">Company</label>
+                  <input id="review-company" type="text" name="company" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Company name" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-email">Email</label>
+                  <input id="review-email" type="email" name="email" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="you@company.com" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-phone">Phone (optional)</label>
+                  <input id="review-phone" type="tel" name="phone" class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="(555) 555-5555" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-website">Current website (optional)</label>
+                  <input id="review-website" type="text" name="website" class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="https:// or leave blank if you don't have one yet" />
+                </div>
+                <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="review-projects">What kind of jobs do you want more of?</label>
+                  <textarea id="review-projects" name="projects" rows="4" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Driveways, roofs, decks, commercial work, specific neighborhoods, etc."></textarea>
+                </div>
+                <button type="submit" class="w-full inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg hover:bg-[#fb923c] transition-all">Submit for Business Review</button>
+                <p class="text-[11px] text-slate-500">Or email directly at <a href="mailto:jared@bucksites.com" class="text-slate-200 underline-offset-2 hover:underline">jared@bucksites.com</a>.</p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 py-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-8 w-auto flex-shrink-0" fill="none"><path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/><path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/><path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/><path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/><ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/><ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/></svg>
+            <div><p class="text-sm font-extrabold text-navy"><span>Buck</span><span class="text-accent">Sites</span></p><p class="text-xs text-slate-500">Fix the leak. Install the right solution.</p></div>
+          </div>
+          <nav class="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+            <a href="/contractor-website-design/" class="text-slate-600 hover:text-navy">Services</a>
+            <a href="/contractor-website-redesign/" class="text-slate-600 hover:text-navy">Rebuild</a>
+            <a href="/contractor-website-pricing/" class="text-slate-600 hover:text-navy">Pricing</a>
+            <a href="/contractor-website-examples/" class="text-slate-600 hover:text-navy">Examples</a>
+            <a href="/free-website-review/" class="text-navy font-medium hover:text-accent">Business Review</a>
+            <a href="/process/" class="text-slate-600 hover:text-navy">Process</a>
+            <a href="/about/" class="text-slate-600 hover:text-navy">About</a>
+            <a href="/faq/" class="text-slate-600 hover:text-navy">FAQ</a>
+            <a href="/contact/" class="text-slate-600 hover:text-navy">Contact</a>
+          </nav>
+        </div>
+        <p class="mt-6 text-xs text-slate-500">© <span id="year"></span> BuckSites. Built in Kansas City · Working with contractors across the U.S.</p>
+      </div>
+    </footer>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('review-form')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = e.target;
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var formData = new FormData(form);
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      fetch(form.getAttribute('action') || window.location.pathname || '/free-website-review/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      }).then(function(response) {
+        if (response.ok) window.location.href = '/thank-you/';
+        else form.submit();
+      }).catch(function() {
+        form.submit();
+      }).finally(function() {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit for Business Review'; }
+      });
+    });
+  </script>
+  <script>
+  (function(){ var btn = document.getElementById('mobile-menu-btn'); var panel = document.getElementById('mobile-nav-panel'); if (!btn || !panel) return; btn.addEventListener('click', function() { var isHidden = panel.classList.contains('hidden'); panel.classList.toggle('hidden'); btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false'); panel.setAttribute('aria-hidden', !isHidden); var text = document.getElementById('mobile-menu-btn-text'); if (text) text.textContent = isHidden ? 'Close' : 'Menu'; }); })();
+  </script>
+</body>
+</html>

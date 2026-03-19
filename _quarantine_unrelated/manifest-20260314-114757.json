@@ -1,0 +1,107 @@
+[
+  {
+    "from": ".DS_Store",
+    "to": "_quarantine_unrelated/.DS_Store",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "README.md",
+    "to": "_quarantine_unrelated/README.md",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "_redirects",
+    "to": "_quarantine_unrelated/_redirects",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "netlify.toml",
+    "to": "_quarantine_unrelated/netlify.toml",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "index.html",
+    "to": "_quarantine_unrelated/index.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "styles.css",
+    "to": "_quarantine_unrelated/styles.css",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "robots.txt",
+    "to": "_quarantine_unrelated/robots.txt",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "sitemap.xml",
+    "to": "_quarantine_unrelated/sitemap.xml",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "emergency-tree-removal-kansas-city.html",
+    "to": "_quarantine_unrelated/emergency-tree-removal-kansas-city.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "storm-damage-tree-removal-kansas-city.html",
+    "to": "_quarantine_unrelated/storm-damage-tree-removal-kansas-city.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "stump-grinding-kansas-city.html",
+    "to": "_quarantine_unrelated/stump-grinding-kansas-city.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-kansas-city.html",
+    "to": "_quarantine_unrelated/tree-removal-kansas-city.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-independence-mo.html",
+    "to": "_quarantine_unrelated/tree-removal-independence-mo.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-lees-summit-mo.html",
+    "to": "_quarantine_unrelated/tree-removal-lees-summit-mo.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-liberty-mo.html",
+    "to": "_quarantine_unrelated/tree-removal-liberty-mo.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-olathe-ks.html",
+    "to": "_quarantine_unrelated/tree-removal-olathe-ks.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "tree-removal-overland-park-ks.html",
+    "to": "_quarantine_unrelated/tree-removal-overland-park-ks.html",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "locations",
+    "to": "_quarantine_unrelated/locations",
+    "bucket": "unrelated"
+  },
+  {
+    "from": "public/.DS_Store",
+    "to": "_quarantine_unrelated/public/.DS_Store",
+    "bucket": "junk"
+  },
+  {
+    "from": "public-v2/.DS_Store",
+    "to": "_quarantine_unrelated/public-v2/.DS_Store",
+    "bucket": "junk"
+  },
+  {
+    "from": "tmp/bantry-source",
+    "to": "_quarantine_unrelated/needs-review/bantry-source",
+    "bucket": "needs-review"
+  }
+]

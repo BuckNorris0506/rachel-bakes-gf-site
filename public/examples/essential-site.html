@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clearfield Deck Company — Custom Decks in Provo, Utah</title>
+  <meta name="description" content="Clearfield Deck Company builds custom wood and composite decks for Provo homeowners. Licensed deck contractor serving Provo, Orem, Springville, and Lehi, Utah.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            amber:  '#d97706',
+            amberlt:'#f59e0b',
+            wood:   '#3d1f0a',
+            cream:  '#fffbeb',
+            warm:   '#92400e',
+          }
+        }
+      }
+    };
+  </script>
+  <style>body { font-family: 'Inter', system-ui, sans-serif; }</style>
+</head>
+<body class="bg-cream text-wood antialiased">
+
+  <!-- Tier marker -->
+  <div class="bg-wood text-amber text-xs font-bold text-center py-2 px-4 tracking-widest uppercase">
+    Essential Starter Package
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 bg-slate-900 border-b border-white/10">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between py-4">
+      <button data-scroll="home" class="text-left">
+        <span class="text-lg font-extrabold text-white tracking-tight">Clearfield <span class="text-amber">Deck Co.</span></span>
+        <span class="block text-[10px] uppercase tracking-widest text-white/40">Provo, Utah</span>
+      </button>
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
+        <button data-scroll="home"     class="text-white/75 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Home</button>
+        <button data-scroll="services" class="text-white/75 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Services</button>
+        <button data-scroll="gallery"  class="text-white/75 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Gallery</button>
+        <button data-scroll="contact"  class="text-white/75 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Contact</button>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="tel:+18015550140" class="hidden sm:block text-sm font-bold text-white hover:text-amber transition-colors">(801) 555-0140</a>
+        <button data-scroll="contact" class="rounded-full bg-amber px-4 py-2 text-sm font-bold text-wood hover:bg-amberlt transition-colors">Free Estimate</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" class="relative min-h-[85vh] flex items-end">
+      <img src="../images/decks/deck-hero.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Custom backyard deck Provo Utah">
+      <div class="absolute inset-0 bg-gradient-to-t from-wood/95 via-wood/50 to-transparent"></div>
+      <div class="relative w-full">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 pb-14 pt-24">
+          <p class="text-[11px] font-bold tracking-widest uppercase text-amber mb-4">Provo's Deck Builder Since 2013</p>
+          <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight text-white max-w-xl">
+            Backyard Decks Built<br>
+            <span class="text-amber">the Right Way.</span>
+          </h1>
+          <p class="mt-4 text-base text-white/75 max-w-lg leading-relaxed">
+            I build custom wood and composite decks for homeowners in Provo and the Utah Valley. Every project gets my personal attention from the first estimate to the final board.
+          </p>
+          <div class="mt-7 flex flex-col sm:flex-row gap-3">
+            <button data-scroll="contact" class="inline-flex items-center justify-center rounded-full bg-amber px-6 py-3 text-sm font-bold text-wood hover:bg-amberlt transition-colors">
+              Request a Free Estimate
+            </button>
+            <a href="tel:+18015550140" class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
+              Call (801) 555-0140
+            </a>
+          </div>
+        </div>
+        <!-- Trust strip -->
+        <div class="bg-wood/90 border-t border-amber/20">
+          <div class="mx-auto max-w-5xl px-4 sm:px-6 py-3 flex flex-wrap gap-6 text-sm text-white/70">
+            <span class="flex items-center gap-2"><span class="text-amber">✓</span> Licensed &amp; Insured in Utah</span>
+            <span class="flex items-center gap-2"><span class="text-amber">✓</span> Free On-Site Estimates</span>
+            <span class="flex items-center gap-2"><span class="text-amber">✓</span> 10+ Years Building Decks in Provo</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT — owner voice -->
+    <section class="py-14 bg-white border-b border-amber/15">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <div class="max-w-2xl">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-amber mb-3">About Clearfield Deck Co.</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-wood mb-4">Small crew. Big results.</h2>
+          <p class="text-warm/80 leading-relaxed mb-3">
+            I'm Tyler Clearfield, and I've been building decks in Provo for over ten years. I run a small, experienced crew and personally show up to every job. You'll always know who's building your deck and how to reach me.
+          </p>
+          <p class="text-warm/80 leading-relaxed">
+            We build in pressure-treated lumber, cedar, and composite — whatever fits your budget and how you want to use the space. Every deck comes with a written quote, a real timeline, and a clean job site.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-16 bg-cream">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-amber mb-2">What We Build</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-wood mb-10">Our Deck Services</h2>
+        <div class="grid sm:grid-cols-2 gap-6">
+
+          <!-- Deck Construction -->
+          <div class="rounded-2xl overflow-hidden border border-amber/20 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div class="relative h-44 overflow-hidden">
+              <img src="../images/decks/deck-build.jpg" class="w-full h-full object-cover" alt="Deck construction Provo Utah">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-sm font-bold text-white">Deck Construction</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-warm/80 leading-relaxed mb-3">New decks in pressure-treated pine, cedar, or composite. We design around your yard and your budget, then build it right the first time.</p>
+              <button data-scroll="contact" class="text-sm font-bold text-amber hover:underline bg-transparent border-0 cursor-pointer">Get a Quote →</button>
+            </div>
+          </div>
+
+          <!-- Deck Repair -->
+          <div class="rounded-2xl overflow-hidden border border-amber/20 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div class="relative h-44 overflow-hidden">
+              <img src="../images/decks/deck-repair.jpg" class="w-full h-full object-cover" alt="Deck repair Provo Utah">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-sm font-bold text-white">Deck Repair</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-warm/80 leading-relaxed mb-3">Board replacement, stair fixes, railing repair, structural work. We inspect the whole deck and give you an honest answer on what actually needs to be done.</p>
+              <button data-scroll="contact" class="text-sm font-bold text-amber hover:underline bg-transparent border-0 cursor-pointer">Schedule Inspection →</button>
+            </div>
+          </div>
+
+          <!-- Composite Decks -->
+          <div class="rounded-2xl overflow-hidden border border-amber/20 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div class="relative h-44 overflow-hidden">
+              <img src="../images/decks/deck-hero.jpg" class="w-full h-full object-cover" alt="Composite deck Provo Utah">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-sm font-bold text-white">Composite Decks</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-warm/80 leading-relaxed mb-3">Trex, TimberTech, and Fiberon. No staining, no splintering, and they still look great 15 years from now. Great choice for Utah weather.</p>
+              <button data-scroll="contact" class="text-sm font-bold text-amber hover:underline bg-transparent border-0 cursor-pointer">View Options →</button>
+            </div>
+          </div>
+
+          <!-- Pergolas -->
+          <div class="rounded-2xl overflow-hidden border border-amber/20 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div class="relative h-44 overflow-hidden">
+              <img src="../images/decks/deck-pergola.jpg" class="w-full h-full object-cover" alt="Pergola Provo Utah">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-sm font-bold text-white">Pergolas</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-warm/80 leading-relaxed mb-3">Freestanding and attached pergolas in cedar or treated pine. Built to hold up in Provo's heat and snow — designed around your deck or patio layout.</p>
+              <button data-scroll="contact" class="text-sm font-bold text-amber hover:underline bg-transparent border-0 cursor-pointer">Get a Quote →</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="py-16 bg-white">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-amber mb-2">Recent Projects</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-wood mb-8">Decks We've Built</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <!-- Each: replace with a real job site photo showing the labeled work -->
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-build.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Backyard deck Provo">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">New Build · Provo</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-hero.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Composite deck">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">Composite · Orem</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-pergola.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Pergola deck">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">Pergola · Springville</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-lehi.png" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="New deck Lehi">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">New Build · Lehi</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-repair.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Deck repair">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">Repair &amp; Restore · Provo</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/decks/deck-railing.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Deck railing">
+            <div class="absolute inset-0 bg-gradient-to-t from-wood/60 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-semibold text-white">Railing Install · Orem</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS — 2 simple quotes, no full section -->
+    <section class="py-14 bg-amber/10 border-y border-amber/20">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-amber mb-8 text-center">What Homeowners Say</p>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 border border-amber/15">
+            <div class="text-amber text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-warm/80 leading-relaxed mb-4">"Tyler came out the same week, measured everything, and had a quote in my hand before the weekend. The deck came out better than I pictured it. Neighbors have been asking for his number."</p>
+            <p class="font-bold text-wood text-sm">Mike &amp; Sarah T.</p>
+            <p class="text-xs text-warm/60">Provo, Utah</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-amber/15">
+            <div class="text-amber text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-warm/80 leading-relaxed mb-4">"We had an old deck that was sagging and rotting in spots. He came out, looked at everything, and told us what we actually needed — no upsell. Fixed it solid and it looks brand new."</p>
+            <p class="font-bold text-wood text-sm">Karen L.</p>
+            <p class="text-xs text-warm/60">Orem, Utah</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 bg-wood text-white">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-amber mb-3">Get in Touch</p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4">Ready for a Free Estimate?</h2>
+            <p class="text-white/70 leading-relaxed mb-8">Tell me about your project and I'll schedule a free on-site visit. Usually within the same week. No pressure, no pitch — just a straight conversation about your deck.</p>
+            <a href="tel:+18015550140" class="flex items-center gap-4 group mb-5">
+              <div class="h-10 w-10 rounded-full bg-amber/20 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-amber" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-white/40 mb-0.5">Call or Text</p>
+                <p class="text-lg font-bold text-white group-hover:text-amber transition-colors">(801) 555-0140</p>
+              </div>
+            </a>
+            <div class="flex items-center gap-4">
+              <div class="h-10 w-10 rounded-full bg-amber/20 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-white/40 mb-0.5">Service Area</p>
+                <p class="text-sm font-semibold text-white/75">Provo · Orem · Springville · Lehi</p>
+              </div>
+            </div>
+          </div>
+          <form class="bg-white/8 border border-white/12 rounded-2xl p-6 space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-white/50 mb-1">Your Name</label>
+                <input type="text" placeholder="John Smith" class="w-full rounded-xl border border-white/12 bg-white/8 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-amber/50">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-white/50 mb-1">Phone Number</label>
+                <input type="tel" placeholder="(801) 555-xxxx" class="w-full rounded-xl border border-white/12 bg-white/8 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-amber/50">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-white/50 mb-1">What do you need?</label>
+              <select class="w-full rounded-xl border border-white/12 bg-wood px-4 py-3 text-sm text-white/80 focus:outline-none focus:border-amber/50">
+                <option value="">Select a service...</option>
+                <option>New Deck Build</option>
+                <option>Deck Repair</option>
+                <option>Composite Deck</option>
+                <option>Pergola</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-white/50 mb-1">Tell me about your project</label>
+              <textarea rows="3" placeholder="Size, current deck condition, what you're hoping to build..." class="w-full rounded-xl border border-white/12 bg-white/8 px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-amber/50 resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full rounded-full bg-amber py-3 text-sm font-bold text-wood hover:bg-amberlt transition-colors">
+              Send My Estimate Request
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black py-7 text-center">
+    <p class="text-sm text-white/40">&copy; 2025 Clearfield Deck Company &mdash; Provo, Utah &mdash; (801) 555-0140</p>
+    <p class="mt-1 text-xs text-white/25">Licensed deck builder serving Provo, Orem, Springville, and Lehi.</p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('[data-scroll]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById(btn.dataset.scroll);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>

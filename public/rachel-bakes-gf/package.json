@@ -1,0 +1,7 @@
+{
+  "name": "rachel-bakes-gf",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .. -l 3333"
+  }
+}

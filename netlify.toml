@@ -1,0 +1,38 @@
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/api/ordering-status"
+  to = "/.netlify/functions/ordering-status"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/waitlist-signup"
+  to = "/.netlify/functions/waitlist-signup"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/preorder-submit"
+  to = "/.netlify/functions/preorder-submit"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/custom-order-submit"
+  to = "/.netlify/functions/custom-order-submit"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/admin-config"
+  to = "/.netlify/functions/admin-config"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/open-preorder-and-notify"
+  to = "/.netlify/functions/open-preorder-and-notify"
+  status = 200
+  force = true

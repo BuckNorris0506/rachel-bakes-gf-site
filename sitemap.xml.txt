@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://bucksites.com/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/contractor-website-design/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/contractor-website-redesign/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/contractor-website-pricing/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/contractor-website-examples/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/free-website-review/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/process/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/about/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/faq/</loc>
+  </url>
+  <url>
+    <loc>https://bucksites.com/contact/</loc>
+  </url>
+</urlset>

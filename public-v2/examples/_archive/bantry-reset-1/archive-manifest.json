@@ -1,0 +1,46 @@
+[
+  {
+    "from": "public-v2/examples/bantry-plastics/about.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/about.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/capabilities.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/capabilities.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/contact.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/contact.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/gallery.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/gallery.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/home-v2-reset.css",
+    "to": "public-v2/examples/_archive/bantry-reset-1/home-v2-reset.css"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/home-v2-reset.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/home-v2-reset.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/home-v2-reset.js",
+    "to": "public-v2/examples/_archive/bantry-reset-1/home-v2-reset.js"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/index.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/index.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/industries.html",
+    "to": "public-v2/examples/_archive/bantry-reset-1/industries.html"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/script.js",
+    "to": "public-v2/examples/_archive/bantry-reset-1/script.js"
+  },
+  {
+    "from": "public-v2/examples/bantry-plastics/styles.css",
+    "to": "public-v2/examples/_archive/bantry-reset-1/styles.css"
+  }
+]

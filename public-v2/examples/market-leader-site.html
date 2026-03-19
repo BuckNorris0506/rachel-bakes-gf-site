@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redwood Concrete — Springfield's Concrete Contractor Since 2008</title>
+  <meta name="description" content="Redwood Concrete is Springfield, Massachusetts's most trusted concrete contractor. Driveways, stamped patios, pool decks, sidewalks, and concrete repair across the Pioneer Valley.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            carbon:   '#111827',
+            charcoal: '#1f2937',
+            granite:  '#374151',
+            ash:      '#6b7280',
+            fog:      '#f3f4f6',
+            orange:   '#f97316',
+            orangelt: '#fb923c',
+          },
+          boxShadow: {
+            orange: '0 8px 32px rgba(249,115,22,0.28)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>body { font-family: 'Inter', system-ui, sans-serif; }</style>
+</head>
+<body class="bg-fog text-carbon antialiased">
+
+  <!-- Blueprint banner -->
+  <div class="bg-orange text-white text-xs font-bold text-center py-2 px-4 tracking-widest uppercase">
+    Market Leader Contractor Site — built by <a href="/" class="underline opacity-70 hover:opacity-100">BuckSites</a>
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 bg-carbon border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-between py-3">
+      <button data-scroll="home" class="text-left">
+        <span class="text-xl font-black tracking-tight text-white"><span class="text-orange">Redwood</span> Concrete</span>
+        <span class="block text-[10px] uppercase tracking-widest text-white/35">Springfield, Massachusetts · Est. 2008</span>
+      </button>
+      <nav class="hidden xl:flex items-center gap-5 text-[13px] font-semibold">
+        <button data-scroll="home"      class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Home</button>
+        <button data-scroll="services"  class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Services</button>
+        <button data-scroll="driveways" class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Driveways</button>
+        <button data-scroll="stamped"   class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Stamped</button>
+        <button data-scroll="pool"      class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Pool Decks</button>
+        <button data-scroll="projects"  class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Projects</button>
+        <button data-scroll="reviews"   class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Reviews</button>
+        <button data-scroll="areas"     class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Areas</button>
+        <button data-scroll="contact"   class="text-white/65 hover:text-white transition-colors bg-transparent border-0 cursor-pointer">Contact</button>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="tel:+14135550190" class="hidden sm:block text-sm font-bold text-white hover:text-orange transition-colors">(413) 555-0190</a>
+        <button data-scroll="contact" class="rounded bg-orange px-4 py-2 text-sm font-bold text-white hover:bg-orangelt transition-colors shadow-orange">Get a Quote</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO — split layout with image grid and authority signals -->
+    <section id="home" class="relative min-h-[90vh] bg-carbon flex items-center">
+      <div class="absolute inset-0 overflow-hidden">
+        <!-- Replace with: concrete finishing crew, wide shot, workers visible -->
+        <img src="../images/concrete/concrete-hero.jpg" class="absolute inset-0 w-full h-full object-cover opacity-25" alt="Concrete contractor Springfield Massachusetts">
+      </div>
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left: copy -->
+        <div>
+          <div class="inline-flex items-center gap-2 bg-orange/15 border border-orange/30 rounded-full px-4 py-1.5 text-[11px] font-bold tracking-widest uppercase text-orange mb-7">
+            Springfield's #1 Concrete Contractor — Since 2008
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-[56px] font-black leading-[1.06] text-white">
+            Springfield's<br>
+            Concrete<br>
+            <span class="text-orange">Experts.</span>
+          </h1>
+          <p class="mt-5 text-base text-white/65 leading-relaxed max-w-md">
+            Driveways, patios, stamped concrete, pool decks, sidewalks, and concrete repair across the Pioneer Valley. 800+ projects. 15 years in business. Your neighbors already know us.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <button data-scroll="contact" class="inline-flex items-center justify-center rounded bg-orange px-7 py-3.5 text-base font-bold text-white shadow-orange hover:bg-orangelt transition-colors">
+              Request a Free Quote
+            </button>
+            <a href="tel:+14135550190" class="inline-flex items-center justify-center rounded border-2 border-white/20 px-7 py-3.5 text-base font-semibold text-white hover:bg-white/8 transition-colors">
+              Call (413) 555-0190
+            </a>
+          </div>
+        </div>
+        <!-- Right: image grid -->
+        <div class="hidden lg:grid grid-cols-2 gap-3">
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-driveway.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Concrete driveway Springfield MA">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Driveways</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-stamped.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Stamped concrete patio">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Stamped Concrete</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-patio.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Concrete patio">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Patios</p>
+          </div>
+          <div class="relative aspect-[4/3] rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-pool.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Concrete pool deck">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Pool Decks</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <section class="py-8 bg-charcoal border-b border-white/10">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+          <div>
+            <p class="text-3xl font-black text-orange">800+</p>
+            <p class="text-xs text-white/45 mt-1 uppercase tracking-wider">Projects Completed</p>
+          </div>
+          <div>
+            <p class="text-3xl font-black text-orange">15</p>
+            <p class="text-xs text-white/45 mt-1 uppercase tracking-wider">Years in Business</p>
+          </div>
+          <div>
+            <p class="text-3xl font-black text-orange">4</p>
+            <p class="text-xs text-white/45 mt-1 uppercase tracking-wider">Active Crews</p>
+          </div>
+          <div>
+            <p class="text-3xl font-black text-orange">4.9★</p>
+            <p class="text-xs text-white/45 mt-1 uppercase tracking-wider">Google Rating</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES — 6 services, full treatment -->
+    <section id="services" class="py-18 bg-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 pt-12 pb-10">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Complete Concrete Services</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-carbon mb-3">Everything in Concrete — Springfield &amp; Beyond</h2>
+        <p class="text-ash max-w-2xl mb-12">We don't sub out concrete work. Every pour, every finish, every stamp is done by our crews — the same people who've been doing this work for over a decade.</p>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Driveways -->
+          <div id="driveways" class="scroll-mt-24 rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: crew pouring and finishing concrete driveway -->
+              <img src="../images/concrete/concrete-driveway.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Concrete driveway Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <div class="absolute top-3 right-3 bg-orange rounded-full px-3 py-1 text-[10px] font-bold text-white uppercase">Most popular</div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Driveways</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">New concrete driveways, driveway extensions, and replacements. Properly formed, rebar reinforced, control-jointed, and finished for Springfield winters.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Exposed aggregate options</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Broom &amp; smooth finish</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> 3000–4000 PSI mixes</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> 5-year structural warranty</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">Get a Driveway Quote</button>
+            </div>
+          </div>
+
+          <!-- Patios -->
+          <div class="rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: concrete patio slab, residential backyard -->
+              <img src="../images/concrete/concrete-patio.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Concrete patio Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Patios</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">Backyard concrete patios from simple slabs to decorative stamped finishes. We design the layout, handle all forming and grading, and leave a clean, functional outdoor space.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Custom sizes &amp; shapes</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Stamped upgrades available</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Built-in drainage grading</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">Get Patio Quote</button>
+            </div>
+          </div>
+
+          <!-- Stamped Concrete -->
+          <div id="stamped" class="scroll-mt-24 rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: decorative stamped concrete, herringbone or flagstone pattern -->
+              <img src="../images/concrete/concrete-stamped.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Stamped concrete Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Stamped Concrete</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">Flagstone, cobblestone, herringbone, slate patterns. Stamped concrete gives you the look of high-end stone at a fraction of the cost — with none of the maintenance headaches.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> 20+ pattern options</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Integral color &amp; release</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Sealer included</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">View Pattern Options</button>
+            </div>
+          </div>
+
+          <!-- Pool Decks -->
+          <div id="pool" class="scroll-mt-24 rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: concrete pool deck surround, clean finished concrete -->
+              <img src="../images/concrete/concrete-pool.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Concrete pool deck Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Pool Decks</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">Pool deck replacements and new pours around above-ground and inground pools. Slip-resistant finishes, proper drainage slope, and non-heat-absorbing texture options.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Slip-resistant broom finish</span></li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Cool-deck texture options</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Drainage engineered in</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">Get Pool Deck Quote</button>
+            </div>
+          </div>
+
+          <!-- Sidewalks -->
+          <div class="rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: broom-finished sidewalk being poured or freshly finished -->
+              <img src="../images/concrete/concrete-sidewalk.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Concrete sidewalk Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Sidewalks</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">Front walk replacements, side yard paths, and new sidewalk construction. We pull permits where required and set proper grades so water drains away from the foundation.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Permit coordination</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> ADA-compliant where required</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">Get Sidewalk Quote</button>
+            </div>
+          </div>
+
+          <!-- Concrete Repair -->
+          <div class="rounded-2xl overflow-hidden border border-carbon/10 bg-fog group hover:shadow-lg hover:border-orange/30 transition-all">
+            <div class="relative h-48 overflow-hidden">
+              <!-- Replace with: concrete repair, crack repair or resurfacing work visible -->
+              <img src="../images/concrete/concrete-repair.jpg" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Concrete repair Springfield MA">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-base font-black text-white">Concrete Repair</span>
+            </div>
+            <div class="p-5">
+              <p class="text-sm text-ash leading-relaxed mb-4">Crack repair, slab leveling, section replacement, and full resurfacing. We assess the root cause first — frost heave, poor sub-base, drainage problems — and fix that too.</p>
+              <ul class="space-y-1.5 mb-4">
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Crack routing &amp; filling</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Section replacement</li>
+                <li class="flex items-center gap-2 text-sm text-granite"><span class="text-orange font-bold">→</span> Mudjacking / leveling</li>
+              </ul>
+              <button data-scroll="contact" class="w-full rounded-xl bg-orange py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors bg-transparent border-0 cursor-pointer">Get Repair Assessment</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECT -->
+    <section id="projects" class="py-16 bg-charcoal text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Featured Project</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mb-10">From Cracked Asphalt to Full Concrete</h2>
+        <div class="grid lg:grid-cols-5 gap-6">
+          <div class="lg:col-span-3 relative aspect-video rounded-2xl overflow-hidden">
+            <!-- Replace with: wide-angle concrete driveway, finished, crew visible -->
+            <img src="../images/concrete/concrete-driveway.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Concrete driveway project Springfield MA">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/80 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <p class="text-xs text-white/40 uppercase tracking-widest mb-1">Completed 2024</p>
+              <p class="text-lg font-black text-white">3,200 sq ft Driveway — Chicopee, MA</p>
+            </div>
+          </div>
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+              <p class="text-[11px] text-orange uppercase font-bold tracking-wider mb-2">The Problem</p>
+              <p class="text-sm text-white/65 leading-relaxed">Asphalt driveway was cracking, heaving from frost, and had active drainage issues pulling water toward the garage foundation. The homeowner had been patching it for years.</p>
+            </div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+              <p class="text-[11px] text-orange uppercase font-bold tracking-wider mb-2">What We Did</p>
+              <p class="text-sm text-white/65 leading-relaxed">Removed all asphalt. Re-graded the sub-base for drainage. Poured 4" reinforced concrete with proper control joints and a broom finish. Installed a new channel drain at the low point near the garage.</p>
+            </div>
+            <div class="bg-orange/15 border border-orange/25 rounded-xl p-5">
+              <p class="text-[11px] text-orange uppercase font-bold tracking-wider mb-2">Result</p>
+              <p class="text-sm text-white/65 leading-relaxed">Clean, flat surface. Drainage pulls away from the foundation. The homeowner said it was the first winter in eight years they didn't have ice pooling at the garage door.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="py-16 bg-fog">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Project Gallery</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-carbon">800+ Projects Across Western Mass.</h2>
+            <p class="mt-2 text-sm text-ash">Residential and light commercial work across Springfield, Chicopee, Holyoke, and Westfield.</p>
+          </div>
+          <button data-scroll="contact" class="flex-shrink-0 rounded bg-orange px-5 py-2.5 text-sm font-bold text-white hover:bg-orangelt transition-colors shadow-orange bg-transparent border-0 cursor-pointer self-start">Get a Quote</button>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-hero.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Concrete crew">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Crew · Springfield</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden sm:col-span-2 sm:row-span-2">
+            <img src="../images/concrete/concrete-stamped.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Stamped patio">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-3 left-4 text-sm font-bold text-white">Stamped Patio · Holyoke</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-driveway.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Driveway">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Driveway · Chicopee</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-pool.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Pool deck">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Pool Deck · Westfield</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-patio.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Patio">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Patio · Springfield</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-sidewalk.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Sidewalk">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Sidewalk · Chicopee</p>
+          </div>
+          <div class="relative aspect-square rounded-xl overflow-hidden">
+            <img src="../images/concrete/concrete-repair.jpg" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-500" alt="Concrete repair">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 to-transparent"></div>
+            <p class="absolute bottom-2 left-3 text-xs font-bold text-white">Repair · Holyoke</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS — 4 cards -->
+    <section id="reviews" class="py-16 bg-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Homeowner Reviews</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-carbon mb-2">What Springfield Homeowners Say</h2>
+        <p class="text-ash mb-10">4.9 stars — 180+ Google reviews across our service area.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="rounded-2xl border border-carbon/10 bg-fog p-5">
+            <div class="text-orange text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-ash leading-relaxed mb-4">"Showed up exactly when they said, finished the driveway in one day, and the crew cleaned everything up before they left. This is the third contractor I've hired and the first one that actually did what they said."</p>
+            <p class="font-bold text-carbon text-sm">Dan &amp; Lori T.</p>
+            <p class="text-xs text-ash">Springfield, MA</p>
+          </div>
+          <div class="rounded-2xl border-2 border-orange/20 bg-orange/5 p-5">
+            <div class="text-orange text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-ash leading-relaxed mb-4">"We had stamped concrete done around the pool. I was nervous about the pattern but they showed us samples and walked us through everything. The finished product looks incredible — every neighbor asks about it."</p>
+            <p class="font-bold text-carbon text-sm">Maria S.</p>
+            <p class="text-xs text-ash">Westfield, MA</p>
+          </div>
+          <div class="rounded-2xl border border-carbon/10 bg-fog p-5">
+            <div class="text-orange text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-ash leading-relaxed mb-4">"Called about a cracked patio. They came out, diagnosed that the sub-base had settled, and fixed that too — not just the surface. Three years later it still looks perfect. Worth every dollar."</p>
+            <p class="font-bold text-carbon text-sm">James P.</p>
+            <p class="text-xs text-ash">Holyoke, MA</p>
+          </div>
+          <div class="rounded-2xl border border-carbon/10 bg-fog p-5">
+            <div class="text-orange text-lg mb-3">★★★★★</div>
+            <p class="text-sm text-ash leading-relaxed mb-4">"Big project — full driveway, front walk, side path, and two pads for AC units. Redwood managed the whole thing start to finish. Permits, inspections, everything. We didn't have to lift a finger."</p>
+            <p class="font-bold text-carbon text-sm">Rachel &amp; Tom B.</p>
+            <p class="text-xs text-ash">Chicopee, MA</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE AREAS -->
+    <section id="areas" class="py-16 bg-charcoal text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Service Areas</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-white mb-3">We Cover the Pioneer Valley</h2>
+        <p class="text-white/55 mb-10 max-w-xl">Redwood Concrete serves homeowners and light commercial customers throughout Western Massachusetts. Same crews. Same quality. No matter which city you're in.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-2xl border border-orange/25 bg-orange/8 p-5">
+            <div class="text-2xl font-black text-orange mb-1">Springfield</div>
+            <p class="text-sm text-white/55">Our home base. Most of our crews start in Springfield every morning. Longest track record in the city.</p>
+            <p class="mt-3 text-[11px] font-bold uppercase tracking-wider text-orange">Primary Service Area</p>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/5 p-5">
+            <div class="text-2xl font-black text-white mb-1">Chicopee</div>
+            <p class="text-sm text-white/55">Driveways, patios, and pool decks across Chicopee's residential neighborhoods.</p>
+            <p class="mt-3 text-[11px] font-bold uppercase tracking-wider text-orange">100+ Projects</p>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/5 p-5">
+            <div class="text-2xl font-black text-white mb-1">Holyoke</div>
+            <p class="text-sm text-white/55">Sidewalk work, driveway pours, and stamped concrete throughout Holyoke.</p>
+            <p class="mt-3 text-[11px] font-bold uppercase tracking-wider text-orange">75+ Projects</p>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/5 p-5">
+            <div class="text-2xl font-black text-white mb-1">Westfield</div>
+            <p class="text-sm text-white/55">Residential concrete across Westfield — pools, driveways, and repair work.</p>
+            <p class="mt-3 text-[11px] font-bold uppercase tracking-wider text-orange">60+ Projects</p>
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-white/40">Also serving: Agawam, Ludlow, East Longmeadow, Longmeadow, Palmer, and surrounding communities.</p>
+      </div>
+    </section>
+
+    <!-- WHY REDWOOD -->
+    <section class="py-14 bg-white border-y border-carbon/8">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">Why Redwood Concrete</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-carbon mb-10">What Separates Us from Other Concrete Companies</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">Licensed in Massachusetts</h3>
+              <p class="text-sm text-ash leading-relaxed">MA Construction Supervisor license. We pull permits where required and schedule inspections correctly. No shortcuts.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">Own Crew — No Subs</h3>
+              <p class="text-sm text-ash leading-relaxed">We do not sub out concrete work. The crew on your job has done 800+ pours together. You get consistency and accountability.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">Written Quotes Only</h3>
+              <p class="text-sm text-ash leading-relaxed">Every project gets a written, itemized quote before work begins. What you're quoted is what you pay. No verbal estimates, no post-job surprises.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">On Schedule</h3>
+              <p class="text-sm text-ash leading-relaxed">Concrete work is weather-dependent, but we plan around it. We don't pour in freezing temps or rain. You'll know the schedule before we mobilize.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">Mix Design Expertise</h3>
+              <p class="text-sm text-ash leading-relaxed">We specify the right PSI and admixtures for your application — driveways need different mixes than pool decks or sidewalks. We've seen what cuts corners.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-xl bg-orange/12 flex items-center justify-center">
+              <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-carbon mb-1">15 Years of Local Work</h3>
+              <p class="text-sm text-ash leading-relaxed">We've been doing this work in the same towns for 15 years. You can find our pours in your neighborhood. Ask a neighbor — odds are they've seen our truck.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-14 bg-fog border-y border-carbon/8">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-2">FAQ</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-carbon mb-8">Common Concrete Questions</h2>
+        <div class="grid md:grid-cols-2 gap-5 max-w-4xl">
+          <div class="bg-white rounded-xl p-5 border border-carbon/8">
+            <h3 class="font-bold text-carbon mb-2">How long before I can drive on a new concrete driveway?</h3>
+            <p class="text-sm text-ash leading-relaxed">7 days minimum for foot traffic, 28 days before vehicle traffic. We put this in writing and leave signage so your household knows the timeline.</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-carbon/8">
+            <h3 class="font-bold text-carbon mb-2">Do you need to pull a permit for my driveway?</h3>
+            <p class="text-sm text-ash leading-relaxed">Depends on city and scope. We know the permit requirements for every town we serve. We handle permit applications and inspections when required — included in your quote.</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-carbon/8">
+            <h3 class="font-bold text-carbon mb-2">What's the difference between stamped and regular concrete?</h3>
+            <p class="text-sm text-ash leading-relaxed">Same concrete base — stamped adds a decorative pattern pressed into the surface while it's still wet, plus integral color and a sealer. Costs more but looks significantly better.</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-carbon/8">
+            <h3 class="font-bold text-carbon mb-2">Can you replace just part of a cracked driveway?</h3>
+            <p class="text-sm text-ash leading-relaxed">Sometimes, yes. If the rest of the driveway is structurally sound, we can cut out and replace sections. We'll be honest if a full replacement makes more financial sense long-term.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 bg-carbon text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="grid lg:grid-cols-2 gap-14 items-start">
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-orange mb-3">Contact Redwood Concrete</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-white mb-4">Request a Free Concrete Quote</h2>
+            <p class="text-white/60 leading-relaxed mb-8">Tell us what you have in mind — driveway, patio, pool deck, repair — and we'll schedule a site visit to measure and put together a written quote. Usually within 3–5 business days.</p>
+
+            <a href="tel:+14135550190" class="flex items-center gap-4 group mb-5">
+              <div class="h-11 w-11 rounded-xl bg-orange/20 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-orange" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-white/35 mb-0.5">Call or Text</p>
+                <p class="text-xl font-black text-white group-hover:text-orange transition-colors">(413) 555-0190</p>
+              </div>
+            </a>
+            <div class="flex items-center gap-4 mb-5">
+              <div class="h-11 w-11 rounded-xl bg-orange/20 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-white/35 mb-0.5">Email</p>
+                <p class="text-sm font-semibold text-white/70">info@redwoodconcrete.com</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="h-11 w-11 rounded-xl bg-orange/20 flex items-center justify-center flex-shrink-0">
+                <svg class="h-5 w-5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-wider text-white/35 mb-0.5">Service Area</p>
+                <p class="text-sm font-semibold text-white/70">Springfield · Chicopee · Holyoke · Westfield · Pioneer Valley</p>
+              </div>
+            </div>
+          </div>
+          <form class="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-white/40 mb-1">Your Name</label>
+                <input type="text" placeholder="Jane Smith" class="w-full rounded-xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-orange/50">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-white/40 mb-1">Phone Number</label>
+                <input type="tel" placeholder="(413) 555-xxxx" class="w-full rounded-xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-orange/50">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-white/40 mb-1">City</label>
+              <select class="w-full rounded-xl border border-white/12 bg-carbon px-4 py-3 text-sm text-white/80 focus:outline-none focus:border-orange/50">
+                <option value="">Select your city...</option>
+                <option>Springfield</option>
+                <option>Chicopee</option>
+                <option>Holyoke</option>
+                <option>Westfield</option>
+                <option>Agawam</option>
+                <option>Other Pioneer Valley</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-white/40 mb-1">Service Needed</label>
+              <select class="w-full rounded-xl border border-white/12 bg-carbon px-4 py-3 text-sm text-white/80 focus:outline-none focus:border-orange/50">
+                <option value="">Select a service...</option>
+                <option>Driveway</option>
+                <option>Patio</option>
+                <option>Stamped Concrete</option>
+                <option>Pool Deck</option>
+                <option>Sidewalk</option>
+                <option>Concrete Repair</option>
+                <option>Multiple / Not sure</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-white/40 mb-1">Approximate Size &amp; Details</label>
+              <textarea rows="3" placeholder="Approximate square footage, current surface condition, anything else we should know..." class="w-full rounded-xl border border-white/12 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-orange/50 resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full rounded-xl bg-orange py-3.5 text-base font-black text-white hover:bg-orangelt transition-colors shadow-orange">Request Free Quote</button>
+            <p class="text-[11px] text-white/35 text-center">We respond within 1 business day. No pushy sales calls.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black py-10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="grid sm:grid-cols-3 gap-8 mb-8 border-b border-white/8 pb-8">
+        <div>
+          <p class="font-black text-white mb-1"><span class="text-orange">Redwood</span> Concrete</p>
+          <p class="text-xs text-white/35 mb-3">Springfield, Massachusetts · Est. 2008</p>
+          <a href="tel:+14135550190" class="text-sm font-bold text-orange hover:text-orangelt transition-colors">(413) 555-0190</a>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-white/30 mb-3">Services</p>
+          <ul class="space-y-1.5 text-sm text-white/50">
+            <li>Driveways</li>
+            <li>Patios</li>
+            <li>Stamped Concrete</li>
+            <li>Pool Decks</li>
+            <li>Sidewalks</li>
+            <li>Concrete Repair</li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-white/30 mb-3">Service Areas</p>
+          <ul class="space-y-1.5 text-sm text-white/50">
+            <li>Springfield, MA</li>
+            <li>Chicopee, MA</li>
+            <li>Holyoke, MA</li>
+            <li>Westfield, MA</li>
+            <li>Agawam, MA</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-between gap-2">
+        <p class="text-xs text-white/30">&copy; 2025 Redwood Concrete &mdash; Springfield, Massachusetts &mdash; MA License #CS-112433</p>
+        <p class="text-xs text-white/20">Example layout for demonstration purposes. Not a real business. Built by <a href="/" class="text-orange/50 hover:text-orange transition-colors">BuckSites</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('[data-scroll]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById(btn.dataset.scroll);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>

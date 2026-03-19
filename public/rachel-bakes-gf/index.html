@@ -1,0 +1,172 @@
+ <!DOCTYPE html>
+ <html lang="en" class="scroll-smooth">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Rachel Bakes GF | Gluten-Free Bakery in Liberty, Missouri</title>
+   <meta name="description" content="Rachel Bakes GF is a local gluten-free preorder and pickup bakery in Liberty, Missouri offering pretzel bites, cinnamon rolls, seasonal specials, and selective custom work." />
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+   <script src="https://cdn.tailwindcss.com"></script>
+   <script>
+     tailwind.config = { theme: { extend: { colors: { cream:'#fbf6ef', paper:'#fffdf9', ink:'#342a23', rose:'#c56a5f', cocoa:'#7b4d3e', butter:'#f2c98b', sage:'#7d9685' }, boxShadow: { warm:'0 18px 60px rgba(52,42,35,.12)' }, maxWidth: { site:'1100px' } } } };
+   </script>
+   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header x-data="{open:false}" class="sticky top-0 z-50 border-b border-[var(--line)] nav-glass">
+      <div class="mx-auto max-w-site px-5">
+        <div class="header-inner">
+          <a href="./" class="brand-wrap brand-direction-2 header-brand">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span>
+          </a>
+          <nav class="header-nav hidden md:flex">
+            <a class="nav-link nav-active" href="./">Home</a>
+            <a class="nav-link" href="./menu/">Menu</a>
+            <a class="nav-link" href="./order/">Order</a>
+            <a class="nav-link" href="./custom-orders/">Custom Orders</a>
+            <a class="nav-link" href="./pickup-policies/">Policies</a>
+            <a class="nav-link" href="./gallery/">Gallery</a>
+            <a class="nav-link" href="./about/">About</a>
+          </nav>
+          <div class="header-cta-wrap hidden md:block"><a href="./order/" class="cta-header">Order / Preorder</a></div>
+          <button @click="open=!open" class="md:hidden rounded-full border border-[var(--line)] bg-white/80 px-4 py-2 text-sm font-medium" aria-label="Open site navigation">Navigate</button>
+        </div>
+        <div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden">
+          <a class="nav-link nav-active" href="./">Home</a>
+          <a class="nav-link" href="./menu/">Menu</a>
+          <a class="nav-link" href="./order/">Order</a>
+          <a class="nav-link" href="./custom-orders/">Custom Orders</a>
+          <a class="nav-link" href="./pickup-policies/">Policies</a>
+          <a class="nav-link" href="./gallery/">Gallery</a>
+          <a class="nav-link" href="./about/">About</a>
+        </div>
+      </div>
+    </header>
+ 
+     <main>
+       <section class="page-hero overflow-hidden py-16 sm:py-20 lg:py-24">
+         <div class="mx-auto grid max-w-site gap-10 px-5 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
+           <div>
+             <div class="ribbon">Local pickup in Liberty, Missouri</div>
+             <h1 class="mt-6 max-w-xl font-display text-5xl font-semibold leading-tight text-ink sm:text-6xl">Gluten-free bakery pickup, without the ordering guesswork.</h1>
+             <p class="mt-6 max-w-xl text-lg leading-8 text-[var(--muted)]">Gluten-free pretzel bites, cinnamon rolls, seasonal specials, and the occasional custom cake—all made in Liberty and available by preorder for pickup.</p>
+             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="./order/" class="cta-primary">Order / Preorder</a>
+              <a href="./menu/" class="cta-secondary">View Menu</a>
+             </div>
+             <div class="mt-10 grid gap-3 sm:grid-cols-3">
+               <div class="surface rounded-3xl p-4"><p class="text-sm font-semibold text-ink">Pretzel Bites</p><p class="mt-2 text-sm text-[var(--muted)]">A go-to for game days, get-togethers, and anytime you want something to share.</p></div>
+               <div class="surface rounded-3xl p-4"><p class="text-sm font-semibold text-ink">Cinnamon Rolls</p><p class="mt-2 text-sm text-[var(--muted)]">Baked in small batches; reserve ahead and pick up when they’re ready.</p></div>
+               <div class="surface rounded-3xl p-4"><p class="text-sm font-semibold text-ink">Custom Cakes</p><p class="mt-2 text-sm text-[var(--muted)]">Simple celebration cakes when the request fits and there’s enough notice.</p></div>
+             </div>
+           </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <article class="img-card-wrap sm:col-span-2 min-h-[280px]">
+              <img src="Rachel Bakes GF-Pics/pretzel-bites.jpg" alt="Pretzel bites" class="img-card" />
+            </article>
+            <article class="img-card-wrap min-h-[200px]">
+              <img src="Rachel Bakes GF-Pics/cinnrolls.jpg" alt="Cinnamon rolls" class="img-card" />
+            </article>
+            <article class="img-card-wrap min-h-[200px]">
+              <img src="Rachel Bakes GF-Pics/strawberry-cake.jpg" alt="Simple cakes" class="img-card" />
+            </article>
+          </div>
+         </div>
+       </section>
+ 
+       <section class="py-20">
+         <div class="mx-auto max-w-site px-5">
+           <div class="flex items-end justify-between gap-6">
+             <div>
+               <p class="section-label text-xs font-semibold uppercase text-rose">How we work</p>
+               <h2 class="mt-3 font-display text-4xl text-ink">Order without the guesswork.</h2>
+             </div>
+           </div>
+           <div class="mt-10 grid gap-5 md:grid-cols-4">
+             <div class="surface-strong rounded-[1.75rem] p-6"><p class="text-lg font-semibold">See what’s available</p><p class="mt-3 text-sm leading-7 text-[var(--muted)]">The menu shows what’s on offer—pretzel bites, cinnamon rolls, seasonal items, and simple cakes.</p></div>
+             <div class="surface-strong rounded-[1.75rem] p-6"><p class="text-lg font-semibold">Send your request</p><p class="mt-3 text-sm leading-7 text-[var(--muted)]">Tell us what you’d like, when you’d like to pick up, and any notes. We’ll confirm what’s possible.</p></div>
+             <div class="surface-strong rounded-[1.75rem] p-6"><p class="text-lg font-semibold">Pickup in Liberty</p><p class="mt-3 text-sm leading-7 text-[var(--muted)]">Pickup details, timing, and policies are all in one place so you know what to expect.</p></div>
+             <div class="surface-strong rounded-[1.75rem] p-6"><p class="text-lg font-semibold">Clear and reliable</p><p class="mt-3 text-sm leading-7 text-[var(--muted)]">We keep things straightforward so you can order with confidence and pick up when it works.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20">
+        <div class="mx-auto max-w-site px-5 grid gap-8 lg:grid-cols-[.95fr,1.05fr] lg:items-start">
+          <div>
+            <p class="section-label text-xs font-semibold uppercase text-rose">How ordering works</p>
+             <h2 class="mt-3 font-display text-4xl text-ink">Here’s how it works.</h2>
+             <p class="mt-5 max-w-xl text-lg leading-8 text-[var(--muted)]">Most items are made to order. You tell us what you want and when you’d like to pick up; we confirm availability and coordinate from there.</p>
+           </div>
+           <div class="grid gap-4">
+             <div class="surface rounded-[1.75rem] p-6"><div class="flex items-start gap-4"><span class="step-dot">1</span><div><p class="text-lg font-semibold">Check the menu</p><p class="mt-2 text-sm leading-7 text-[var(--muted)]">See what’s available—pretzel bites, cinnamon rolls, seasonal specials, and any open cake slots.</p></div></div></div>
+             <div class="surface rounded-[1.75rem] p-6"><div class="flex items-start gap-4"><span class="step-dot">2</span><div><p class="text-lg font-semibold">Send your request</p><p class="mt-2 text-sm leading-7 text-[var(--muted)]">Use the order form and include what you’d like, your preferred pickup date, and any notes. That way we have everything we need.</p></div></div></div>
+             <div class="surface rounded-[1.75rem] p-6"><div class="flex items-start gap-4"><span class="step-dot">3</span><div><p class="text-lg font-semibold">We’ll confirm and coordinate</p><p class="mt-2 text-sm leading-7 text-[var(--muted)]">Pickup windows depend on the bake schedule—week to week, holidays, events. We’ll confirm your slot once we know it works.</p></div></div></div>
+           </div>
+         </div>
+       </section>
+ 
+       <section class="py-20">
+         <div class="mx-auto max-w-site px-5">
+           <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+             <div>
+               <p class="section-label text-xs font-semibold uppercase text-rose">What we make</p>
+               <h2 class="mt-3 font-display text-4xl text-ink">The things people order again and again.</h2>
+             </div>
+             <a href="./gallery/" class="text-sm font-semibold text-rose">See the gallery</a>
+           </div>
+          <div class="mt-10 grid gap-5 lg:grid-cols-4">
+            <article class="surface-strong rounded-[1.75rem] p-5 lg:col-span-2"><div class="img-card-wrap min-h-[280px]"><img src="Rachel Bakes GF-Pics/pretzelbites1.jpg" alt="Pretzel bites" class="img-card" /></div><h3 class="mt-5 text-2xl font-display">Pretzel Bites</h3><p class="mt-3 text-sm leading-7 text-[var(--muted)]">Our most popular preorder—great for game day, family weekends, or whenever you need a shareable treat.</p></article>
+            <article class="surface-strong rounded-[1.75rem] p-5"><div class="img-card-wrap min-h-[220px]"><img src="Rachel Bakes GF-Pics/cinnrolls3.jpg" alt="Cinnamon rolls" class="img-card" /></div><h3 class="mt-5 text-2xl font-display">Cinnamon Rolls</h3><p class="mt-3 text-sm leading-7 text-[var(--muted)]">Made in small batches; order ahead and we’ll have them ready for your pickup window.</p></article>
+            <article class="surface-strong rounded-[1.75rem] p-5"><div class="img-card-wrap min-h-[220px]"><img src="Rachel Bakes GF-Pics/chiefs-sugar-cookies.jpg" alt="Seasonal specials" class="img-card" /></div><h3 class="mt-5 text-2xl font-display">Seasonal Specials</h3><p class="mt-3 text-sm leading-7 text-[var(--muted)]">Holiday boxes, game-day treats, and other limited items when we have them available.</p></article>
+          </div>
+         </div>
+       </section>
+ 
+       <section class="py-20">
+         <div class="mx-auto max-w-site px-5">
+           <div class="surface-strong grid gap-8 rounded-[2rem] p-8 lg:grid-cols-[1fr,.9fr] lg:items-center">
+             <div>
+               <p class="section-label text-xs font-semibold uppercase text-rose">Ready to order</p>
+               <h2 class="mt-3 font-display text-4xl text-ink">Pickup in Liberty, with clear next steps.</h2>
+               <p class="mt-4 max-w-xl text-lg leading-8 text-[var(--muted)]">Send your order request with what you’d like and when you can pick up. We’ll confirm and go from there.</p>
+             </div>
+             <div class="grid gap-3 sm:grid-cols-2">
+               <a href="./order/" class="cta-primary">Start a preorder</a>
+               <a href="./pickup-policies/" class="cta-secondary">Pickup & policies</a>
+             </div>
+           </div>
+         </div>
+       </section>
+     </main>
+ 
+    <footer class="border-t border-[var(--line)] py-10">
+      <div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm text-[var(--muted)] md:flex-row md:items-end md:justify-between">
+        <div>
+          <a href="./" class="brand-wrap brand-direction-2 inline-block">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span>
+          </a>
+          <p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Preorder pickup for pretzel bites, cinnamon rolls, seasonal specials, and selective custom orders.</p>
+        </div>
+        <nav class="flex flex-wrap gap-4">
+          <a class="footer-link" href="./">Home</a>
+          <a class="footer-link" href="./menu/">Menu</a>
+          <a class="footer-link" href="./order/">Order / Preorder</a>
+          <a class="footer-link" href="./custom-orders/">Custom Orders</a>
+          <a class="footer-link" href="./pickup-policies/">Pickup &amp; Policies</a>
+          <a class="footer-link" href="./gallery/">Gallery</a>
+          <a class="footer-link" href="./about/">About</a>
+        </nav>
+      </div>
+    </footer>
+   </div>
+   <script src="/assets/rachel-bakes-gf/ordering-config.js"></script>
+   <script src="/assets/rachel-bakes-gf/ordering-ui.js"></script>
+ </body>
+ </html>

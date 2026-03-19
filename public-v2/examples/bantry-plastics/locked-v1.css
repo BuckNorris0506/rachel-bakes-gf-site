@@ -1,0 +1,350 @@
+/* Locked v1 — BuckSites base: Header, Hero gallery, Proof, Capabilities, Contact */
+
+:root {
+  --ink: #0d1820;
+  --ink-soft: #3d4f5c;
+  --paper: #f5f8fa;
+  --paper-dark: #eef2f6;
+  --accent: #1a4d6d;
+  --accent-hover: #143d57;
+  --border: #c8d4de;
+  --band-dark: #0d1820;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+/* 1. Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  gap: 1rem;
+}
+
+.logo-link {
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 150px;
+  height: auto;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.site-nav a {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.header-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.header-phone {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: #9fb0be;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #e0e8ee;
+  border-color: rgba(255,255,255,0.4);
+}
+
+.btn-outline:hover {
+  border-color: rgba(255,255,255,0.7);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* 2. Hero — headline + curated product gallery (4 images only) */
+.hero-stage {
+  padding: 2rem 0 2.5rem;
+}
+
+.hero-shell {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-headline h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.hero-headline .subhead {
+  margin: 0.75rem 0 0;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 24em;
+}
+
+.hero-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hero-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.4rem;
+  aspect-ratio: 1;
+  max-height: 420px;
+}
+
+.hero-gallery figure {
+  margin: 0;
+  overflow: hidden;
+  background: #d0dae2;
+}
+
+.hero-gallery img {
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+  object-position: center center;
+}
+
+/* 3. Proof / work — 2 supporting product images */
+.proof-band {
+  padding: 2rem 0;
+  background: var(--paper-dark);
+  border-top: 1px solid var(--border);
+}
+
+.proof-title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  max-width: 700px;
+}
+
+.proof-grid figure {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: #d0dae2;
+}
+
+.proof-grid img {
+  width: 100%;
+  height: 100%;
+  object-position: center center;
+}
+
+/* 4. Capabilities */
+.capability-band {
+  padding: 1.25rem 0;
+  background: var(--band-dark);
+  color: #d5e0e9;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.capability-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+}
+
+.capability-row p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* 5. Contact band */
+.contact-band {
+  padding: 2rem 0;
+  background: var(--band-dark);
+  color: #e0e8ee;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.contact-row h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.contact-row p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  color: #b8c8d4;
+}
+
+.contact-row a:hover {
+  text-decoration: underline;
+}
+
+.contact-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .site-nav,
+  .header-cta {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-header.open .site-nav {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .site-header.open .header-cta {
+    display: flex;
+    position: absolute;
+    top: calc(100% + 140px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-shell {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero-gallery {
+    max-height: 320px;
+    order: -1;
+  }
+
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+}

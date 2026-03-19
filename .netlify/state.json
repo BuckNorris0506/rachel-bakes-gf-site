@@ -1,0 +1,20 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Kansas City",
+			"country": {
+				"code": "US",
+				"name": "United States"
+			},
+			"subdivision": {
+				"code": "MO",
+				"name": "Missouri"
+			},
+			"timezone": "America/Chicago",
+			"latitude": 39.2792,
+			"longitude": -94.4608,
+			"postalCode": "64157"
+		},
+		"timestamp": 1773867501631
+	}
+}

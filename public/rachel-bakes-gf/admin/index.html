@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rachel Bakes GF Admin</title>
+    <meta name="description" content="Admin controls for Rachel Bakes GF ordering." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#342a23",
+              rose: "#c56a5f",
+              cocoa: "#7b4d3e",
+            },
+            maxWidth: { site: "1100px" },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <main>
+        <section class="py-16">
+          <div class="mx-auto max-w-site px-5">
+            <div class="surface-strong rounded-[2rem] p-8">
+              <p class="section-label text-xs font-semibold uppercase text-rose">Admin</p>
+              <h1 class="mt-3 font-display text-4xl text-ink">Rachel Bakes GF controls</h1>
+              <p class="mt-2 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+                Manage ordering windows and notify the waitlist when preorders open.
+              </p>
+
+              <div id="auth-error" class="mt-6 hidden text-sm leading-6 text-[var(--rose)]" aria-live="polite"></div>
+
+              <div id="auth-gate" class="mt-6">
+                <div id="secret-missing" class="hidden text-sm leading-6 text-[var(--rose)]">
+                  Access denied. Missing <code>secret</code> query param.
+                </div>
+
+                <label class="block text-sm font-semibold text-ink" for="admin-password">Admin password</label>
+                <div class="mt-2 flex gap-3 items-start">
+                  <input
+                    id="admin-password"
+                    class="form-field flex-1"
+                    type="password"
+                    placeholder="Enter admin password"
+                    autocomplete="current-password"
+                  />
+                  <button id="auth-submit" type="button" class="cta-primary whitespace-nowrap">Unlock</button>
+                </div>
+                <p class="mt-3 text-sm leading-6 text-[var(--muted)]">
+                  This page is protected by a simple v1 secret + password gate. Your password is only stored for this session.
+                </p>
+              </div>
+
+              <div id="admin-ui" class="hidden mt-8">
+                <div class="grid gap-6 lg:grid-cols-[1fr_1fr]">
+                  <div class="surface rounded-[1.75rem] p-6">
+                    <h2 class="font-display text-2xl">Ordering windows</h2>
+
+                    <div class="mt-6 space-y-5">
+                      <label class="flex items-center gap-3">
+                        <input id="preorder_open" type="checkbox" class="h-5 w-5" />
+                        <span class="text-sm font-semibold text-ink">Preorder open</span>
+                      </label>
+
+                      <label class="flex items-center gap-3">
+                        <input id="custom_orders_open" type="checkbox" class="h-5 w-5" />
+                        <span class="text-sm font-semibold text-ink">Custom orders open</span>
+                      </label>
+
+                      <div>
+                        <label class="block text-sm font-semibold text-ink" for="daily_cap_dollars">Daily cap ($)</label>
+                        <input
+                          id="daily_cap_dollars"
+                          class="form-field mt-2"
+                          type="number"
+                          step="1"
+                          min="0"
+                          placeholder="e.g. 1000"
+                        />
+                      </div>
+
+                      <div>
+                        <label class="block text-sm font-semibold text-ink" for="status_message">Closed-state status message</label>
+                        <textarea
+                          id="status_message"
+                          class="form-field mt-2 min-h-[120px]"
+                          placeholder="Text shown when ordering is closed."
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="mt-6 flex gap-3 flex-wrap">
+                      <button id="save-config" type="button" class="cta-primary">Save</button>
+                      <button id="refresh-config" type="button" class="cta-secondary">Refresh</button>
+                    </div>
+                  </div>
+
+                  <div class="surface rounded-[1.75rem] p-6">
+                    <h2 class="font-display text-2xl">Current totals</h2>
+                    <div class="mt-6 space-y-4 text-sm leading-7 text-[var(--muted)]">
+                      <div>
+                        <span class="font-semibold text-ink">Today’s preorder total:</span>
+                        <span id="today_total_cents" class="font-semibold text-[var(--ink)]"></span>
+                      </div>
+                      <div>
+                        <span class="font-semibold text-ink">Daily cap:</span>
+                        <span id="daily_cap_cents_display" class="font-semibold text-[var(--ink)]"></span>
+                      </div>
+                      <div>
+                        <span class="font-semibold text-ink">Waitlist remaining:</span>
+                        <span id="waitlist_count" class="font-semibold text-[var(--ink)]"></span>
+                      </div>
+                    </div>
+
+                    <div id="notify-message" class="mt-6 text-sm leading-6"></div>
+
+                    <div class="mt-6">
+                      <button id="open-and-notify" type="button" class="cta-primary w-full">
+                        Open preorder and notify waitlist
+                      </button>
+                      <p class="mt-3 text-xs leading-5 text-[var(--muted)]">
+                        Sends an email to all waitlist signups that have not yet been notified.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        var qs = new URLSearchParams(window.location.search);
+        var secret = qs.get("secret") || "";
+
+        var authGate = document.getElementById("auth-gate");
+        var secretMissing = document.getElementById("secret-missing");
+        var authError = document.getElementById("auth-error");
+        var adminUi = document.getElementById("admin-ui");
+        var adminPasswordEl = document.getElementById("admin-password");
+        var authSubmitBtn = document.getElementById("auth-submit");
+
+        var preorderOpenEl = document.getElementById("preorder_open");
+        var customOrdersOpenEl = document.getElementById("custom_orders_open");
+        var dailyCapDollarsEl = document.getElementById("daily_cap_dollars");
+        var statusMessageEl = document.getElementById("status_message");
+
+        var todayTotalEl = document.getElementById("today_total_cents");
+        var dailyCapDisplayEl = document.getElementById("daily_cap_cents_display");
+        var waitlistCountEl = document.getElementById("waitlist_count");
+        var notifyMessageEl = document.getElementById("notify-message");
+
+        function moneyFromCents(cents) {
+          var n = Number(cents);
+          if (!Number.isFinite(n)) return "";
+          return "$" + (n / 100).toFixed(2).replace(/\.00$/, "");
+        }
+
+        function getPassword() {
+          return sessionStorage.getItem("rbgf_admin_password") || "";
+        }
+
+        function setPassword(pw) {
+          sessionStorage.setItem("rbgf_admin_password", pw);
+        }
+
+        function clearNotifyMessage() {
+          notifyMessageEl.textContent = "";
+          notifyMessageEl.classList.remove("text-[var(--rose)]", "text-[var(--cocoa)]");
+        }
+
+        function setAuthError(msg) {
+          if (!authError) return;
+          if (!msg) {
+            authError.classList.add("hidden");
+            authError.textContent = "";
+            return;
+          }
+          authError.textContent = msg;
+          authError.classList.remove("hidden");
+        }
+
+        function headersForAdmin() {
+          return {
+            "x-admin-secret": secret,
+            "x-admin-password": getPassword(),
+          };
+        }
+
+        async function fetchAdminConfig() {
+          var res = await fetch("/api/admin-config", { headers: headersForAdmin() });
+          var data = await res.json().catch(function () { return null; });
+          if (!res.ok) {
+            var msg = (data && data.error) ? data.error : "Request failed.";
+            throw new Error(msg);
+          }
+          return data;
+        }
+
+        function setUIFromConfig(payload) {
+          var cfg = payload.config || {};
+          preorderOpenEl.checked = cfg.preorder_open === true;
+          customOrdersOpenEl.checked = cfg.custom_orders_open === true;
+          dailyCapDollarsEl.value = (Number(cfg.daily_cap_cents) / 100).toString();
+          statusMessageEl.value = cfg.status_message || "";
+
+          todayTotalEl.textContent = moneyFromCents(payload.todayTotalCents);
+          dailyCapDisplayEl.textContent = moneyFromCents(cfg.daily_cap_cents);
+          waitlistCountEl.textContent = String(payload.waitlistCount || 0);
+        }
+
+        async function refreshAll() {
+          clearNotifyMessage();
+          var payload = await fetchAdminConfig();
+          setUIFromConfig(payload);
+        }
+
+        async function saveConfig() {
+          clearNotifyMessage();
+          var dailyDollars = dailyCapDollarsEl.value;
+          var dailyCents = Math.round(Number(dailyDollars) * 100);
+          if (!Number.isFinite(dailyCents) || dailyCents <= 0) {
+            notifyMessageEl.textContent = "Please enter a valid daily cap.";
+            notifyMessageEl.classList.add("text-[var(--rose)]");
+            return;
+          }
+
+          var res = await fetch("/api/admin-config", {
+            method: "PATCH",
+            headers: Object.assign({ "Content-Type": "application/json" }, headersForAdmin()),
+            body: JSON.stringify({
+              preorder_open: preorderOpenEl.checked,
+              custom_orders_open: customOrdersOpenEl.checked,
+              daily_cap_cents: dailyCents,
+              status_message: statusMessageEl.value || "",
+            }),
+          });
+
+          var data = await res.json().catch(function () { return null; });
+          if (!res.ok || !data || !data.success) {
+            notifyMessageEl.textContent = (data && data.error) ? data.error : "Save failed.";
+            notifyMessageEl.classList.add("text-[var(--rose)]");
+            return;
+          }
+
+          notifyMessageEl.textContent = "Saved.";
+          notifyMessageEl.classList.remove("text-[var(--rose)]");
+          notifyMessageEl.classList.add("text-[var(--cocoa)]");
+          await refreshAll();
+        }
+
+        async function openAndNotify() {
+          clearNotifyMessage();
+          var res = await fetch("/api/open-preorder-and-notify", {
+            method: "POST",
+            headers: headersForAdmin(),
+          });
+          var data = await res.json().catch(function () { return null; });
+          if (!res.ok || !data || !data.success) {
+            notifyMessageEl.textContent = (data && data.error) ? data.error : "Action failed.";
+            notifyMessageEl.classList.add("text-[var(--rose)]");
+            return;
+          }
+
+          var sum = data.summary || {};
+          notifyMessageEl.textContent =
+            "Emails attempted: " + (sum.attempted || 0) +
+            ", sent: " + (sum.sent || 0) +
+            ", failed: " + (sum.failed || 0) + ".";
+          notifyMessageEl.classList.remove("text-[var(--rose)]");
+          notifyMessageEl.classList.add("text-[var(--cocoa)]");
+          await refreshAll();
+        }
+
+        async function unlock() {
+          if (!secret) {
+            if (secretMissing) secretMissing.classList.remove("hidden");
+            return;
+          }
+          clearNotifyMessage();
+          setAuthError("");
+
+          var pw = (adminPasswordEl.value || "").trim();
+          if (!pw) {
+            setAuthError("Please enter the admin password.");
+            return;
+          }
+          setPassword(pw);
+          try {
+            await refreshAll();
+            adminUi.classList.remove("hidden");
+            authGate.classList.add("hidden");
+          } catch (err) {
+            setAuthError(err && err.message ? err.message : "Unauthorized.");
+            sessionStorage.removeItem("rbgf_admin_password");
+          }
+        }
+
+        authSubmitBtn.addEventListener("click", unlock);
+        document.getElementById("save-config").addEventListener("click", saveConfig);
+        document.getElementById("refresh-config").addEventListener("click", refreshAll);
+        document.getElementById("open-and-notify").addEventListener("click", function () {
+          if (!confirm("Open preorder and notify the waitlist now?")) return;
+          openAndNotify();
+        });
+
+        // Auto-unlock if password is already in this session.
+        if (getPassword()) {
+          if (!secret) {
+            if (secretMissing) secretMissing.classList.remove("hidden");
+          } else {
+            refreshAll()
+              .then(function () {
+                adminUi.classList.remove("hidden");
+                authGate.classList.add("hidden");
+              })
+              .catch(function (err) {
+                setAuthError(err && err.message ? err.message : "Unauthorized.");
+              });
+          }
+        } else {
+          if (!secret && secretMissing) secretMissing.classList.remove("hidden");
+        }
+      })();
+    </script>
+  </body>
+</html>
+

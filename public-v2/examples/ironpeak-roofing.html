@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>IronPeak Roofing — Roof Replacement & Repair in Dallas, TX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="IronPeak Roofing installs and repairs residential roofs across Dallas-Fort Worth. Hail damage, full replacements, repairs, and gutters. Free same-day inspections." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: { navy: '#0f172a', accent: '#f97316', lightbg: '#f8fafc' },
+          boxShadow: {
+            soft: '0 18px 45px rgba(15,23,42,0.15)',
+            card: '0 12px 30px rgba(15,23,42,0.12)',
+          },
+        }
+      }
+    };
+  </script>
+  <style>body { font-family: 'Inter', system-ui, sans-serif; }</style>
+</head>
+<body class="bg-lightbg text-navy antialiased">
+
+  <!-- Demo banner -->
+  <div class="bg-accent text-navy text-xs font-semibold text-center py-2 px-4">
+    Example contractor website — built by <a href="/" class="underline hover:no-underline">BuckSites</a> to show how roofing contractors can structure their site.
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200/70">
+    <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+      <div class="flex items-center justify-between py-4">
+        <a href="#top" class="flex flex-col leading-tight">
+          <span class="text-xl font-extrabold tracking-tight text-navy">IronPeak <span class="text-accent">Roofing</span></span>
+          <span class="text-[11px] uppercase tracking-[0.16em] text-slate-500">Dallas, Texas</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="#services" class="text-slate-600 hover:text-navy transition-colors">Services</a>
+          <a href="#gallery" class="text-slate-600 hover:text-navy transition-colors">Gallery</a>
+          <a href="#reviews" class="text-slate-600 hover:text-navy transition-colors">Reviews</a>
+          <a href="#contact" class="text-slate-600 hover:text-navy transition-colors">Contact</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:block text-right">
+            <p class="text-[11px] uppercase tracking-[0.16em] text-slate-500">24/7 Emergency</p>
+            <a href="tel:+12145550187" class="text-sm font-semibold text-navy hover:text-accent transition-colors">(214) 555-0187</a>
+          </div>
+          <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200">
+            Free Inspection
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="relative min-h-[85vh] flex items-center">
+      <div class="absolute inset-0 bg-[url('https://images.pexels.com/photos/1146020/pexels-photo-1146020.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-navy/92 via-navy/75 to-navy/30"></div>
+      <div class="relative mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 py-24">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase text-accent mb-6">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            Dallas-Fort Worth Roofing Specialists
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-[56px] font-extrabold leading-[1.1] tracking-tight text-white">
+            Roof Replacement<br/>
+            <span class="text-accent">&amp; Storm Repair in Dallas</span>
+          </h1>
+          <p class="mt-6 text-lg text-slate-200 leading-relaxed max-w-xl">
+            IronPeak handles hail damage, full replacements, and roof repairs across DFW. We work directly with insurance adjusters and get your roof done fast — with no surprise costs.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a href="tel:+12145550187" class="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 text-base font-semibold text-navy shadow-soft hover:-translate-y-0.5 hover:bg-[#fb923c] transition-all">
+              Call for Same-Day Inspection
+            </a>
+            <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-8 py-3.5 text-base font-semibold text-white hover:bg-white/20 transition-all">
+              Request Free Estimate
+            </a>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2.5">
+            <div class="flex items-center gap-2 text-sm text-slate-300">
+              <svg class="h-4 w-4 text-accent flex-shrink-0" viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/></svg>
+              Insurance claim assistance
+            </div>
+            <div class="flex items-center gap-2 text-sm text-slate-300">
+              <svg class="h-4 w-4 text-accent flex-shrink-0" viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/></svg>
+              Same-day storm response
+            </div>
+            <div class="flex items-center gap-2 text-sm text-slate-300">
+              <svg class="h-4 w-4 text-accent flex-shrink-0" viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z"/></svg>
+              10-year labor warranty
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-20 lg:py-24 bg-white">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <div class="max-w-2xl mb-12">
+          <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">What we do</p>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">Roofing Services</h2>
+          <p class="mt-4 text-base text-slate-600">From hail-damaged shingles to a complete tear-off and re-roof — we handle the full scope with no subcontractors.</p>
+        </div>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Full Roof Replacement</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Complete tear-off and re-roof with GAF, Owens Corning, or CertainTeed shingles. 50-year manufacturer warranty available.</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Hail &amp; Storm Damage</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">We document damage, work with your adjuster, and handle the claim from inspection to completion. No out-of-pocket surprises.</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Roof Repairs</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Flashing repairs, leak diagnosis, missing shingles, ridge cap replacement, and chimney flashing. Same-week scheduling.</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Gutters &amp; Downspouts</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Seamless gutters, guards, and downspout re-routing. Sized correctly for Texas rain events so you don't get overflow damage.</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Emergency Tarping</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Storm blew off sections of your roof? We tarp and secure within hours to prevent interior water damage while you plan repairs.</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="h-10 w-10 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
+              <svg class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-navy mb-2">Free Roof Inspections</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">Not sure if your roof was damaged? We climb up, photograph everything, and give you a plain-language report with no sales pressure.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-20 lg:py-24 bg-lightbg">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <div class="max-w-2xl mb-12">
+          <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Our work</p>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">Recent Roofing Projects</h2>
+          <p class="mt-4 text-base text-slate-600">Every job is photographed before, during, and after. You know exactly what we did and why.</p>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/1146020/pexels-photo-1146020.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/1105754/pexels-photo-1105754.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/1642125/pexels-photo-1642125.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+          <div class="rounded-2xl overflow-hidden shadow-card aspect-[4/3] bg-[url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="py-20 lg:py-24 bg-white">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <div class="max-w-2xl mb-12">
+          <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Homeowner reviews</p>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">What Dallas Homeowners Say</h2>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="flex gap-0.5 mb-4">
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-4">"April hail storm took out half our shingles. IronPeak was on-site the next morning, tarped everything, and had the full replacement done in two days. Dealt with my insurance adjuster directly. Zero headaches on our end."</p>
+            <p class="text-sm font-semibold text-navy">— Lisa M., Plano</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="flex gap-0.5 mb-4">
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-4">"Had a leak around the chimney for two years. Two other companies missed it. IronPeak found it in 20 minutes, fixed the flashing the same day, and it hasn't leaked since. Should have called them first."</p>
+            <p class="text-sm font-semibold text-navy">— Tom R., Frisco</p>
+          </article>
+          <article class="rounded-3xl border border-slate-200 bg-lightbg p-6 shadow-card">
+            <div class="flex gap-0.5 mb-4">
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="h-4 w-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed mb-4">"Full replacement on a 2,800 sq ft home. They were done in one day, cleaned up the yard completely, and the dumpster was gone by 5pm. Highly professional crew."</p>
+            <p class="text-sm font-semibold text-navy">— Kevin &amp; Diane B., Southlake</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Area -->
+    <section class="py-14 bg-lightbg border-t border-slate-200/60">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Where we work</p>
+        <h3 class="text-xl font-bold text-navy mb-4">Service Area — Dallas-Fort Worth Metroplex</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Dallas</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Fort Worth</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Plano</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Frisco</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">McKinney</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Allen</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Southlake</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Arlington</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Irving</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Garland</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Mesquite</span>
+          <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-600">Carrollton</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="py-20 lg:py-24 bg-navy text-slate-50">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 text-center">
+        <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-4">Get on the schedule</p>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight mb-4">Call for a Free Roof Inspection</h2>
+        <p class="text-slate-300 text-base max-w-lg mx-auto mb-8">We inspect, photograph, and report. If there's no damage, we'll tell you that too. No obligation, no pressure.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="tel:+12145550187" class="inline-flex items-center justify-center rounded-full bg-accent px-8 py-3.5 text-base font-semibold text-navy shadow-soft hover:-translate-y-0.5 hover:bg-[#fb923c] transition-all">
+            Call (214) 555-0187
+          </a>
+          <a href="mailto:inspect@ironpeakroofing.example" class="inline-flex items-center justify-center rounded-full border border-slate-600 bg-transparent px-8 py-3.5 text-base font-semibold text-slate-100 hover:bg-slate-800 transition-all">
+            Request Online
+          </a>
+        </div>
+        <p class="mt-6 text-xs text-slate-500">Licensed &amp; insured in Texas · Dallas, TX · Serving DFW since 2011</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-navy">
+    <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <p class="text-sm font-extrabold tracking-tight text-white">IronPeak <span class="text-accent">Roofing</span></p>
+        <p class="text-xs text-slate-500 mt-0.5">Dallas, Texas · Residential Roof Replacement</p>
+      </div>
+      <p class="text-xs text-slate-600">Example site built by <a href="/" class="text-slate-400 hover:text-accent transition-colors">BuckSites</a> · Not a real business.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

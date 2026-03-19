@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact / RFQ | Bantry Plastics</title>
+  <meta name="description" content="Contact Bantry Plastics for custom plastic fabrication quote requests in O'Fallon, Missouri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a class="logo-wrap" href="index.html">
+        <img src="images/logo.png" alt="Bantry Plastics logo" />
+        <p class="logo-sub">Custom Plastic Fabrication</p>
+      </a>
+      <button class="nav-toggle" type="button">Menu</button>
+      <nav class="top-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">Capabilities</a>
+        <a href="industries.html">Industries</a>
+        <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a class="active" href="contact.html">Contact / RFQ</a>
+      </nav>
+      <div class="header-cta">
+        <a class="header-phone" href="tel:+16362721398">(636) 272-1398</a>
+        <a class="btn btn-primary" href="mailto:sales@bantryplastics.com">Request a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Contact / RFQ</p>
+        <h1>Request a Quote or Project Conversation</h1>
+        <p class="section-intro">
+          Bantry's current contact path is phone and email. This v1 draft keeps that direct route and adds a simple RFQ-style intake form.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contact-grid">
+        <div class="info-list">
+          <article class="info-item">
+            <strong>Phone</strong>
+            <p><a href="tel:+16362721398">(636) 272-1398</a></p>
+          </article>
+          <article class="info-item">
+            <strong>General Email</strong>
+            <p><a href="mailto:sales@bantryplastics.com">sales@bantryplastics.com</a></p>
+          </article>
+          <article class="info-item">
+            <strong>Address</strong>
+            <p>74 N. Central Dr.<br />O'Fallon, MO 63366</p>
+          </article>
+          <article class="info-item">
+            <strong>Public Team Contacts</strong>
+            <p><a href="mailto:jeff.buckman@bantryplastics.com">Jeff Buckman</a> — Production Manager and Designer</p>
+            <p><a href="mailto:nicklanham@bantryplastics.com">Nick Lanham</a> — Director of Business Development</p>
+          </article>
+        </div>
+
+        <form class="form-card" action="mailto:sales@bantryplastics.com" method="post" enctype="text/plain">
+          <h3 style="margin-bottom:0.35rem;">RFQ Intake (Draft)</h3>
+          <p style="margin-top:0;color:var(--muted);">This sends by email in the draft version. Final build can route to a preferred CRM or form endpoint.</p>
+
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
+
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Company name" />
+
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="(###) ###-####" required />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="name@company.com" required />
+
+          <label for="need">Need Type</label>
+          <select id="need" name="need">
+            <option value="">Select one</option>
+            <option value="Prototype">Prototype</option>
+            <option value="Production Run">Production Run</option>
+            <option value="Assembly">Assembly Support</option>
+            <option value="Design Assistance">Design / CAD Support</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="message">Project Details</label>
+          <textarea id="message" name="message" placeholder="Material, quantity, timeline, drawing availability, and any constraints."></textarea>
+
+          <div style="margin-top:0.9rem; display:flex; gap:0.7rem; flex-wrap:wrap;">
+            <button class="btn btn-dark" type="submit">Send RFQ</button>
+            <a class="btn btn-primary" href="mailto:sales@bantryplastics.com">Email Directly</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <article class="photo-card">
+          <img src="images/medical-1.jpg" alt="Medical storage product example" />
+          <div class="meta">
+            <p>Medical solutions imagery from Bantry's current public pages.</p>
+          </div>
+        </article>
+        <article class="photo-card">
+          <img src="images/medical-2.jpg" alt="Custom storage container example" />
+          <div class="meta">
+            <p>Custom product imagery supporting RFQ context for specialized applications.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Bantry Plastics</h3>
+        <p>74 N. Central Dr.</p>
+        <p>O'Fallon, MO 63366</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p><a href="tel:+16362721398">(636) 272-1398</a></p>
+        <p><a href="mailto:sales@bantryplastics.com">sales@bantryplastics.com</a></p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="capabilities.html">Capabilities</a></li>
+          <li><a href="industries.html">Industries</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>Draft direction for Bantry Plastics v1.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

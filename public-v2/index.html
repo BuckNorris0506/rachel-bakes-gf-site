@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>BuckSites – Contractor Websites That Generate Calls</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="BuckSites builds high-converting contractor websites that turn local homeowners into real phone calls, estimate requests, and booked jobs." />
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            navy: '#0f172a',
+            accent: '#f97316',
+            lightbg: '#f8fafc',
+          },
+          boxShadow: {
+            'soft': '0 18px 45px rgba(15,23,42,0.15)',
+            'card': '0 12px 30px rgba(15,23,42,0.12)',
+          },
+        }
+      }
+    };
+  </script>
+
+  <!-- AOS for scroll animations -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+
+  <!-- Alpine.js -->
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+  </style>
+</head>
+<body class="bg-lightbg text-navy antialiased">
+  <!-- Page wrapper -->
+  <div class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header
+      x-data="{ open: false }"
+      class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-white/10"
+    >
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+        <div class="flex items-center justify-between py-4">
+          <!-- Logo -->
+          <a href="#top" class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-9 w-auto flex-shrink-0" fill="none" aria-label="BuckSites logo">
+              <!-- Shield: minimal dark frame -->
+              <path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/>
+              <path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/>
+              <!-- Left antler: wide, bold, two-tined -->
+              <path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- Right antler: mirror -->
+              <path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- Ears -->
+              <path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/>
+              <path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/>
+              <!-- Head: large dominant oval -->
+              <ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/>
+              <!-- Nose: orange accent -->
+              <ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/>
+            </svg>
+            <div class="flex flex-col leading-tight">
+              <span class="text-lg font-extrabold tracking-tight">
+                <span class="text-navy">Buck</span><span class="text-accent">Sites</span>
+              </span>
+              <span class="text-[11px] uppercase tracking-[0.16em] text-slate-500">Contractor Web Studio</span>
+            </div>
+          </a>
+
+          <!-- Desktop nav -->
+          <nav class="hidden md:flex items-center gap-10 text-sm font-medium">
+            <a href="#why" class="text-white/80 hover:text-white transition-colors">Problems</a>
+            <a href="#examples" class="text-white/80 hover:text-white transition-colors">Examples</a>
+            <a href="#process" class="text-white/80 hover:text-white transition-colors">Process</a>
+            <a href="#about" class="text-white/80 hover:text-white transition-colors">About</a>
+          </nav>
+
+          <!-- Right actions -->
+          <div class="hidden md:flex items-center gap-6">
+            <div class="text-right">
+              <p class="text-[11px] uppercase tracking-[0.16em] text-white/50">Call or text</p>
+              <a href="tel:+18162821059" class="text-sm font-semibold text-white hover:text-accent transition-colors">
+                (816) 282-1059
+              </a>
+            </div>
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Request Review
+            </a>
+          </div>
+
+          <!-- Mobile controls -->
+          <div class="flex items-center gap-4 md:hidden">
+            <a
+              href="tel:+18162821059"
+              class="text-xs font-semibold text-white"
+            >
+              (816) 282-1059
+            </a>
+            <button
+              type="button"
+              @click="open = !open"
+              class="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-white/20 hover:border-white/50 transition-all"
+              aria-label="Toggle navigation"
+            >
+              <span x-show="!open" class="flex items-center gap-1.5">
+                <span>Menu</span>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 7h12M4 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span x-show="open" x-cloak class="flex items-center gap-1.5">
+                <span>Close</span>
+                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none">
+                  <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div
+          x-show="open"
+          x-collapse
+          x-cloak
+          class="pb-4 border-t border-white/10 md:hidden"
+        >
+          <nav class="flex flex-col gap-2 pt-4 text-sm font-medium">
+            <a href="#why" class="py-1 text-white/80 hover:text-white">Why Contractor Sites Struggle</a>
+            <a href="#examples" class="py-1 text-white/80 hover:text-white">Example Websites</a>
+            <a href="#process" class="py-1 text-white/80 hover:text-white">How I Build</a>
+            <a href="#about" class="py-1 text-white/80 hover:text-white">Why Contractors</a>
+            <a
+              href="#contact"
+              class="mt-3 inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg hover:-translate-y-0.5 transition-all"
+            >
+              Request Review
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main id="top" class="flex-1">
+      <!-- Hero -->
+      <section
+        class="py-20 lg:py-28"
+      >
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 flex flex-col lg:flex-row items-center gap-14 lg:gap-20 min-h-[85vh]">
+          <!-- Left -->
+          <div class="w-full lg:w-1/2" data-aos="fade-right">
+            <div class="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase text-accent shadow-sm mb-6">
+              <span class="inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
+              Contractor Websites Built to Ring Your Phone
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl lg:text-[50px] font-extrabold leading-[1.12] tracking-tight text-navy">
+              Websites Built to Make
+              <span class="block text-accent">Homeowners Call You</span>
+            </h1>
+
+            <p class="mt-5 text-base sm:text-lg leading-relaxed text-slate-600 max-w-xl">
+              BuckSites builds contractor websites designed to generate real phone calls, estimate requests, and booked jobs —
+              not just traffic reports.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a
+                href="#contact"
+                class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-3 text-sm sm:text-base font-semibold text-navy shadow-soft hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all duration-200"
+              >
+                Get a Free Website Review
+              </a>
+              <a
+                href="tel:+18162821059"
+                class="inline-flex items-center justify-center gap-2 rounded-full border border-navy/20 bg-white px-7 py-3 text-sm sm:text-base font-semibold text-navy shadow-card hover:-translate-y-0.5 hover:border-navy/40 hover:shadow-md transition-all duration-200"
+              >
+                <svg class="h-4 w-4 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                Call or Text (816) 282-1059
+              </a>
+            </div>
+
+            <div class="mt-7 pt-6 border-t border-slate-200/80 flex flex-wrap gap-x-6 gap-y-3">
+              <div class="flex items-center gap-2 text-sm text-slate-700">
+                <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                  <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="font-medium">Mobile-first design</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm text-slate-700">
+                <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                  <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="font-medium">Built for Google search</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm text-slate-700">
+                <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                  <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="font-medium">Designed for phone calls</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm text-slate-700">
+                <span class="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                  <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+                </span>
+                <span class="font-medium">Contractor-focused layouts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Mockup -->
+          <div class="w-full lg:w-1/2" data-aos="fade-left">
+            <div class="relative">
+              <!-- Background photo block -->
+              <div class="absolute -inset-x-8 -top-8 -bottom-10 rounded-[32px] bg-[url('https://images.pexels.com/photos/6476584/pexels-photo-6476584.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center opacity-30 blur-[0.5px]"></div>
+
+              <!-- Foreground card -->
+              <div class="relative rounded-[32px] border border-slate-200/80 bg-white/95 shadow-soft overflow-hidden">
+                <!-- Fake browser bar -->
+                <div class="flex items-center justify-between px-5 py-3 border-b border-slate-200 bg-slate-50/80">
+                  <div class="flex items-center gap-1.5">
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-400"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-amber-300"></span>
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+                  </div>
+                  <div class="text-xs text-slate-500 truncate max-w-[60%]">
+                    www.localcontractor-example.com
+                  </div>
+                  <div class="h-6 w-16 rounded-full bg-slate-200/80"></div>
+                </div>
+
+                <div class="p-6 sm:p-7 lg:p-8 space-y-5">
+                  <!-- Hero comparison -->
+                  <div class="grid grid-cols-5 gap-4">
+                    <div class="col-span-3">
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 mb-2">Typical contractor website</p>
+                      <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50/80 px-4 py-3 text-xs text-slate-600 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="font-semibold text-slate-700">"Welcome to Our Company"</span>
+                          <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-0.5 text-[10px] font-semibold text-red-600">
+                            <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span> Weak headline
+                          </span>
+                        </div>
+                        <p>Paragraph about being "family-owned" and "serving the area since 1992" but no clear next step.</p>
+                      </div>
+                    </div>
+                    <div class="col-span-2">
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 mb-2">Key issues</p>
+                      <ul class="space-y-1.5 text-xs text-slate-600">
+                        <li class="flex items-start gap-1.5">
+                          <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                          <span>Phone number buried in the footer.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                          <span class="mt-1 h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                          <span>No "Call Now" button above the fold.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                          <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                          <span>Service pages thin, no real proof.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Call-focused overlay -->
+                  <div class="mt-4 rounded-2xl bg-navy text-slate-50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+                    <div class="flex-1">
+                      <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-1.5">BuckSites layout</p>
+                      <p class="text-sm font-semibold sm:text-base">
+                        "Concrete Driveways in Denver That Last — Book a Free Estimate"
+                      </p>
+                      <p class="mt-1.5 text-xs text-slate-300">
+                        Phone and call-to-action locked in the header and hero, with service pages that answer homeowner questions line by line.
+                      </p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                      <a
+                        href="#examples"
+                        class="inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-xs font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all"
+                      >
+                        View Example Layout
+                      </a>
+                      <button
+                        type="button"
+                        class="inline-flex items-center justify-center rounded-full border border-slate-500/70 bg-transparent px-4 py-2 text-[11px] font-medium text-slate-100 hover:bg-slate-800/80 transition-all"
+                      >
+                        Highlight Call Issues
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Bottom stats -->
+                  <div class="pt-3 border-t border-slate-200/70 flex flex-col sm:flex-row gap-4 text-[11px] text-slate-500">
+                    <div class="flex-1">
+                      <p class="font-semibold text-slate-700">Built for mobile first</p>
+                      <p>Fast-loading layouts that make it easy to tap, call, and request an estimate from a phone.</p>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-slate-700">Designed like a local pro</p>
+                      <p>Photography, copy, and structure that feel like a serious, established contractor — not a tech startup.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating badge -->
+              <div class="absolute -bottom-8 -right-4 sm:-right-8">
+                <div class="rounded-2xl bg-white border border-slate-200 shadow-card px-4 py-3 flex items-center gap-3">
+                  <div class="h-9 w-9 rounded-full bg-[url('https://images.pexels.com/photos/8486181/pexels-photo-8486181.jpeg?auto=compress&cs=tinysrgb&w=400')] bg-cover bg-center border border-white shadow-md"></div>
+                  <div class="text-[11px] leading-snug text-slate-600">
+                    <p class="font-semibold text-navy">Typical visitor path:</p>
+                    <p>Homeowner → Finds you on Google → Lands on site → Calls, texts, or books within 30 seconds.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Credibility strip -->
+      <section class="border-y border-slate-200/70 bg-white py-8 sm:py-10">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 mb-5">Built for how homeowners actually choose a contractor</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              <p class="text-sm text-slate-600 leading-snug">Built by someone who worked in foundation repair sales</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              <p class="text-sm text-slate-600 leading-snug">Designed for homeowners who want to call quickly</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              <p class="text-sm text-slate-600 leading-snug">Focused on booked estimates, not marketing metrics</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <svg class="h-3 w-3 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              <p class="text-sm text-slate-600 leading-snug">No marketing agency retainers or complicated software</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why most contractor websites don't generate calls -->
+      <section id="why" class="py-20 lg:py-28 border-t border-slate-200/60 bg-white">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <div class="max-w-3xl" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">The problem</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">
+              Why Most Contractor Websites Don’t Generate Calls
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600">
+              Good crews lose work every week because the website makes it hard for homeowners to take the next step. These are the patterns
+              I fix first.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-7 md:grid-cols-2" data-aos="fade-up" data-aos-delay="80">
+            <!-- Card 1 -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-6 sm:p-7 shadow-card">
+              <h3 class="text-lg font-semibold text-navy mb-2">Slow mobile load</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Heavy sliders, stock themes, and uncompressed photos mean a homeowner on their phone waits 7–10 seconds for anything to show.
+                By then they’ve tapped back and picked a competitor.
+              </p>
+              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <span class="inline-flex h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                <span>Every extra two seconds of load time means fewer calls.</span>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-6 sm:p-7 shadow-card">
+              <h3 class="text-lg font-semibold text-navy mb-2">Weak call-to-action placement</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                The phone number lives in a thin header or buried at the bottom of the page. Buttons say “Learn More” instead of
+                “Call Now” or “Request an Estimate”.
+              </p>
+              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <span class="inline-flex h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+                <span>Homeowners shouldn’t have to hunt to figure out how to reach you.</span>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-6 sm:p-7 shadow-card">
+              <h3 class="text-lg font-semibold text-navy mb-2">Poor service page structure</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                “Services” is one generic page instead of clear, deep pages for each job type — driveway replacement, roof repair, staining,
+                and so on. Google and homeowners both get confused.
+              </p>
+              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <span class="inline-flex h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                <span>Strong service pages line up exactly with what homeowners are searching for.</span>
+              </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-6 sm:p-7 shadow-card">
+              <h3 class="text-lg font-semibold text-navy mb-2">Visitors leave without contacting</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                No proof, no photos that feel local, and no simple way to ask, “Can you come look at this?” The result: people bounce,
+                even if they liked what they saw.
+              </p>
+              <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                <span class="inline-flex h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                <span>The website doesn’t close the gap between interest and calling.</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Example Website Blueprints -->
+      <section id="examples" class="py-20 lg:py-28 bg-lightbg">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <div class="max-w-2xl mb-4" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Blueprints</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">
+              Example Website Blueprints
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600">
+              These examples show how BuckSites structures contractor websites depending on the size of the business and number of services offered.
+            </p>
+          </div>
+
+          <div class="mt-12 space-y-12">
+
+            <!-- Essential Contractor Site -->
+            <article class="flex flex-col md:flex-row gap-8 items-center" data-aos="fade-up" data-aos-delay="40">
+              <!-- Visual side -->
+              <a href="examples/essential-site.html"
+                 class="group block w-full md:w-1/2 rounded-[32px] overflow-hidden shadow-soft border border-slate-200 bg-slate-900/90">
+                <div class="relative aspect-[16/10]">
+                  <img src="assets/examples/deck.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Essential contractor site">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-navy/85 via-navy/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                  <div class="absolute inset-x-5 bottom-5">
+                    <div class="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-navy shadow-sm mb-3">
+                      Essential Contractor Site — $2,500
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Homepage</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Services</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Gallery</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Contact</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <!-- Text side -->
+              <div class="w-full md:w-1/2">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-semibold text-accent uppercase tracking-[0.14em]">Essential · 4 Pages</span>
+                </div>
+                <h3 class="text-2xl font-bold text-navy">Essential Contractor Site</h3>
+                <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+                  A simple contractor website designed to give small crews a professional online presence. Covers your homepage, services overview, project gallery, and a contact page with click-to-call buttons.
+                </p>
+                <div class="mt-5 grid grid-cols-2 gap-2 text-sm text-slate-600 mb-6">
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Homepage</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Services Overview</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Project Gallery</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Contact Page</span>
+                </div>
+                <a href="examples/essential-site.html"
+                   class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all">
+                  View Essential Example
+                </a>
+              </div>
+            </article>
+
+            <!-- Professional Contractor Site -->
+            <article class="flex flex-col md:flex-row-reverse gap-8 items-center" data-aos="fade-up" data-aos-delay="80">
+              <!-- Visual side -->
+              <a href="examples/professional-site.html"
+                 class="group block w-full md:w-1/2 rounded-[32px] overflow-hidden shadow-soft border border-slate-200 bg-slate-900/90">
+                <div class="relative aspect-[16/10]">
+                  <img src="assets/examples/deck.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Professional contractor site">
+                  <div class="absolute inset-0 bg-gradient-to-tl from-navy/88 via-navy/50 to-transparent opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                  <div class="absolute inset-x-5 bottom-5">
+                    <div class="inline-flex items-center rounded-full bg-accent px-3 py-1 text-[11px] font-semibold text-navy shadow-sm mb-3">
+                      Professional · Most Popular — $4,500
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Home</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Service Pages</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Gallery</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Reviews</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Contact</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <!-- Text side -->
+              <div class="w-full md:w-1/2">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-semibold text-accent uppercase tracking-[0.14em]">Professional · 8 Pages</span>
+                  <span class="inline-flex items-center rounded-full bg-accent px-2.5 py-1 text-[10px] font-bold text-navy uppercase tracking-[0.1em]">Most Popular</span>
+                </div>
+                <h3 class="text-2xl font-bold text-navy">Professional Contractor Site</h3>
+                <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+                  A call-generating contractor website with individual service pages and a strong conversion layout. Built for contractors who want homeowners to call — not just browse.
+                </p>
+                <div class="mt-5 grid grid-cols-2 gap-2 text-sm text-slate-600 mb-6">
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Homepage</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Individual Service Pages</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Gallery</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Reviews</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Service Area</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Contact</span>
+                </div>
+                <a href="examples/professional-site.html"
+                   class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all">
+                  View Professional Example
+                </a>
+              </div>
+            </article>
+
+            <!-- Market Leader Site -->
+            <article class="flex flex-col md:flex-row gap-8 items-center" data-aos="fade-up" data-aos-delay="120">
+              <!-- Visual side -->
+              <a href="examples/market-leader-site.html"
+                 class="group block w-full md:w-1/2 rounded-[32px] overflow-hidden shadow-soft border border-slate-200 bg-slate-900/90">
+                <div class="relative aspect-[16/10]">
+                  <img src="assets/examples/deck.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Market leader site">
+                  <div class="absolute inset-0 bg-gradient-to-br from-navy/90 via-navy/55 to-transparent opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                  <div class="absolute inset-x-5 bottom-5">
+                    <div class="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-navy shadow-sm mb-3">
+                      Market Leader Site — $6,500
+                    </div>
+                    <div class="flex flex-wrap gap-1.5">
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Home</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Service Pages</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">Project Galleries</span>
+                      <span class="rounded-full bg-white/15 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-white">City Pages</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <!-- Text side -->
+              <div class="w-full md:w-1/2">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-semibold text-accent uppercase tracking-[0.14em]">Market Leader · 12–15 Pages</span>
+                </div>
+                <h3 class="text-2xl font-bold text-navy">Market Leader Site</h3>
+                <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+                  A larger contractor website designed for businesses expanding across services and multiple areas. Includes neighborhood pages to capture homeowners searching in specific cities.
+                </p>
+                <div class="mt-5 grid grid-cols-2 gap-2 text-sm text-slate-600 mb-6">
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Homepage</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Multiple Service Pages</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Project Galleries</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Service Area Pages</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Reviews</span>
+                  <span class="flex items-center gap-1.5"><span class="text-accent font-bold">→</span> Contact</span>
+                </div>
+                <a href="examples/market-leader-site.html"
+                   class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all">
+                  View Market Leader Example
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Typical vs Call-Focused -->
+      <section id="comparison" class="py-20 lg:py-28 bg-white border-y border-slate-200/70">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <div class="max-w-3xl" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Side by side</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">
+              Typical Contractor Website vs. Call-Focused Website
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600">
+              A “nice-looking” site isn’t the same thing as a site that reliably turns strangers into booked estimates. Here’s how
+              I design around calls.
+            </p>
+          </div>
+
+          <div
+            x-data="{ view: 'call-focused' }"
+            class="mt-10 grid gap-6 lg:grid-cols-2"
+          >
+            <!-- Typical -->
+            <article
+              class="rounded-3xl border border-slate-200 bg-slate-50/80 p-6 sm:p-7 shadow-card relative overflow-hidden"
+              data-aos="fade-right"
+            >
+              <div class="absolute inset-0 bg-gradient-to-br from-slate-100 via-transparent to-transparent pointer-events-none"></div>
+              <div class="relative">
+                <div class="flex items-center justify-between gap-3">
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      Typical contractor website
+                    </p>
+                    <h3 class="mt-2 text-lg font-semibold text-navy">Looks fine, loses calls</h3>
+                  </div>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-1 text-[11px] font-semibold text-red-600">
+                    <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+                    Missed opportunities
+                  </span>
+                </div>
+
+                <ul class="mt-4 space-y-2.5 text-sm text-slate-600">
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>Home page headline talks about the company, not what the homeowner needs solved.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>Navigation tucks “Contact” all the way to the right, with no clear secondary actions.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>Service pages look identical, thin on detail, and don’t answer common cost or timing questions.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>Portfolio is a scattered gallery without context — no locations, job size, or what was actually done.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-slate-400"></span>
+                    <span>On mobile, it takes multiple taps to find a phone number or form that actually works.</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- Call-focused -->
+            <article
+              class="rounded-3xl border border-navy/10 bg-navy text-slate-50 p-6 sm:p-7 shadow-soft relative overflow-hidden"
+              data-aos="fade-left"
+            >
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_#f97316_0,_transparent_60%)] opacity-70 pointer-events-none"></div>
+              <div class="relative">
+                <div class="flex items-center justify-between gap-3">
+                  <div>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
+                      Call-focused BuckSites build
+                    </p>
+                    <h3 class="mt-2 text-lg font-semibold">Built around booked estimates</h3>
+                  </div>
+                  <span class="inline-flex items-center gap-1 rounded-full bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-200">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-300"></span>
+                    Clear next steps
+                  </span>
+                </div>
+
+                <ul class="mt-4 space-y-2.5 text-sm text-slate-100/90">
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span>Hero line focused on the job and region: “Driveways in Overland Park That Don’t Crack in Two Winters”.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span>Call, text, and estimate buttons locked in the header and visible on mobile at all times.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span>Deep service pages by job type with timelines, process, warranties, and real photos from similar homes.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span>Before/after and neighborhood callouts that help homeowners think “this looks like my house.”</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="mt-1 h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span>Forms designed for phones: minimal fields, ability to attach photos, and clear promise on follow-up time.</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- How BuckSites Builds Contractor Websites -->
+      <section id="process" class="py-20 lg:py-28 bg-lightbg">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <div class="max-w-3xl" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">The process</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">
+              How BuckSites Builds Contractor Websites
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600">
+              You don’t need another complicated software tool. You need a straightforward process that ends with a site you’re proud
+              to send homeowners to.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-7 md:grid-cols-3" data-aos="fade-up" data-aos-delay="60">
+            <!-- Step 1 -->
+            <article class="relative rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-card">
+              <div class="absolute -top-4 left-5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-xs font-extrabold text-navy shadow-md shadow-accent/40">
+                1
+              </div>
+              <h3 class="mt-4 text-lg font-semibold text-navy">Review your current website</h3>
+              <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                I go through your site on desktop and mobile like a homeowner would: how long it takes to load, how clear your services
+                are, and how easy it is to call, text, or request an estimate.
+              </p>
+              <p class="mt-3 text-xs text-slate-500">
+                You’ll get a plain-language report, not a jargon-filled audit.
+              </p>
+            </article>
+
+            <!-- Step 2 -->
+            <article class="relative rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-card">
+              <div class="absolute -top-4 left-5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-xs font-extrabold text-navy shadow-md shadow-accent/40">
+                2
+              </div>
+              <h3 class="mt-4 text-lg font-semibold text-navy">Identify the call blockers</h3>
+              <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                Together we prioritize what’s actually hurting your calls — weak headlines, missing service pages, buried contact info,
+                or visuals that don’t match the size of jobs you want.
+              </p>
+              <p class="mt-3 text-xs text-slate-500">
+                We’ll decide what to keep, what to scrap, and what to rebuild.
+              </p>
+            </article>
+
+            <!-- Step 3 -->
+            <article class="relative rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 shadow-card">
+              <div class="absolute -top-4 left-5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-accent text-xs font-extrabold text-navy shadow-md shadow-accent/40">
+                3
+              </div>
+              <h3 class="mt-4 text-lg font-semibold text-navy">Build a call-focused website</h3>
+              <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                I design and build a new site that feels like your best salesperson: clear, confident, and focused on booking
+                qualified jobs in your service area.
+              </p>
+              <p class="mt-3 text-xs text-slate-500">
+                When we launch, you’ll know exactly how visitors move from landing to calling.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Website Pricing -->
+      <section id="pricing" class="py-20 lg:py-28 bg-white border-t border-slate-200/60">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+
+          <div class="max-w-2xl mb-4" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Investment</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">Website Pricing</h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600">Three packages to match the size of your business. Pay upfront or spread the cost across 12 months.</p>
+          </div>
+
+          <!-- Tier cards -->
+          <div class="grid gap-6 md:grid-cols-3 mt-10" data-aos="fade-up" data-aos-delay="40">
+
+            <!-- Essential Contractor Website -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-7 shadow-card flex flex-col">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 mb-3">Essential Contractor Website</p>
+              <div class="mt-2 mb-5 flex items-start gap-3 text-sm">
+                <div class="flex-1 rounded-xl bg-slate-100 border border-slate-200 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-navy text-xs uppercase tracking-wide mb-0.5">Pay Upfront</p>
+                  <p class="text-navy font-semibold text-lg">$2,500</p>
+                </div>
+                <div class="self-center text-slate-400 text-xs font-semibold">or</div>
+                <div class="flex-1 rounded-xl bg-accent/8 border border-accent/20 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-accent text-xs uppercase tracking-wide mb-0.5">12-Month Plan</p>
+                  <p class="text-navy font-semibold text-lg">$275<span class="text-sm font-medium text-slate-500">/mo</span></p>
+                </div>
+              </div>
+              <ul class="space-y-2.5 flex-1 mb-7 text-sm text-slate-600">
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>4 pages</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Homepage</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Services overview</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Gallery</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Contact page</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Mobile optimized</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Click-to-call buttons</li>
+              </ul>
+              <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-navy hover:border-navy/30 hover:bg-slate-50 transition-all">
+                Get a Free Review
+              </a>
+            </article>
+
+            <!-- Professional Contractor Website (highlighted) -->
+            <article class="rounded-3xl border border-navy/10 bg-navy text-slate-50 p-7 shadow-soft flex flex-col relative overflow-hidden">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#f97316_0,_transparent_55%)] opacity-60 pointer-events-none"></div>
+              <div class="relative flex flex-col flex-1">
+                <div class="flex items-start justify-between gap-2 mb-3">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">Professional Contractor Website</p>
+                  <span class="inline-flex items-center rounded-full bg-accent/20 px-2.5 py-1 text-[10px] font-bold text-accent uppercase tracking-[0.12em] whitespace-nowrap">Most Popular</span>
+                </div>
+              <div class="mt-2 mb-5 flex items-start gap-3 text-sm">
+                <div class="flex-1 rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-accent text-xs uppercase tracking-wide mb-0.5">Pay Upfront</p>
+                  <p class="text-white font-semibold text-lg">$4,500</p>
+                </div>
+                <div class="self-center text-slate-400 text-xs font-semibold">or</div>
+                <div class="flex-1 rounded-xl bg-accent/20 border border-accent/30 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-accent text-xs uppercase tracking-wide mb-0.5">12-Month Plan</p>
+                  <p class="text-white font-semibold text-lg">$475<span class="text-sm font-medium">/mo</span></p>
+                </div>
+              </div>
+                <p class="text-xs text-accent/80 font-semibold mb-5">Includes everything in Essential, plus:</p>
+                <ul class="space-y-2.5 flex-1 mb-7 text-sm text-slate-200">
+                  <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/20"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>8 total pages</li>
+                  <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/20"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Individual service pages</li>
+                  <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/20"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Review section</li>
+                  <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/20"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Stronger call-to-action structure</li>
+                  <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/20"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Service area coverage</li>
+                </ul>
+                <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all">
+                  Request a Free Review
+                </a>
+              </div>
+            </article>
+
+            <!-- Market Leader Contractor Website -->
+            <article class="rounded-3xl border border-slate-200 bg-slate-50/70 p-7 shadow-card flex flex-col">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 mb-3">Market Leader Contractor Website</p>
+              <div class="mt-2 mb-5 flex items-start gap-3 text-sm">
+                <div class="flex-1 rounded-xl bg-slate-100 border border-slate-200 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-navy text-xs uppercase tracking-wide mb-0.5">Pay Upfront</p>
+                  <p class="text-navy font-semibold text-lg">$6,500</p>
+                </div>
+                <div class="self-center text-slate-400 text-xs font-semibold">or</div>
+                <div class="flex-1 rounded-xl bg-accent/8 border border-accent/20 px-3.5 py-2.5 text-center">
+                  <p class="font-bold text-accent text-xs uppercase tracking-wide mb-0.5">12-Month Plan</p>
+                  <p class="text-navy font-semibold text-lg">$675<span class="text-sm font-medium text-slate-500">/mo</span></p>
+                </div>
+              </div>
+              <p class="text-xs text-accent font-semibold mb-5">Includes everything in Professional, plus:</p>
+              <ul class="space-y-2.5 flex-1 mb-7 text-sm text-slate-600">
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>12&ndash;15 pages</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Additional service pages</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Neighborhood / city pages</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Expanded project galleries</li>
+                <li class="flex items-start gap-2"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Stronger internal linking</li>
+              </ul>
+              <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-navy hover:border-navy/30 hover:bg-slate-50 transition-all">
+                Get a Free Review
+              </a>
+            </article>
+
+          </div>
+
+          <!-- Payment note -->
+          <p class="mt-8 text-sm text-slate-500 text-center" data-aos="fade-up" data-aos-delay="60">All tiers available upfront or split into monthly installments. <a href="#contact" class="text-accent font-semibold hover:underline">Ask about payment options →</a></p>
+
+          <!-- Hosting & Support add-on -->
+          <div class="mt-14" data-aos="fade-up" data-aos-delay="80">
+            <div class="rounded-3xl border border-slate-200 bg-slate-50/70 p-7 shadow-card flex flex-col sm:flex-row sm:items-center gap-6">
+              <div class="flex-1">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 mb-1">Hosting &amp; Support</p>
+                <div class="flex items-baseline gap-1 mb-1">
+                  <span class="text-3xl font-extrabold text-navy tracking-tight">$99</span>
+                  <span class="text-base font-medium text-slate-500">/month</span>
+                </div>
+                <p class="text-sm text-slate-500">Keeps your site live and maintained after launch.</p>
+              </div>
+              <ul class="flex flex-wrap gap-x-6 gap-y-2 sm:max-w-xs">
+                <li class="flex items-center gap-1.5 text-sm text-slate-600"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Hosting</li>
+                <li class="flex items-center gap-1.5 text-sm text-slate-600"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Backups</li>
+                <li class="flex items-center gap-1.5 text-sm text-slate-600"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Updates</li>
+                <li class="flex items-center gap-1.5 text-sm text-slate-600"><span class="mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-accent/10"><svg class="h-2.5 w-2.5 text-accent" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span>Small edits</li>
+              </ul>
+              <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-navy hover:border-navy/30 hover:bg-slate-50 transition-all sm:self-center flex-shrink-0">
+                Get a Free Review
+              </a>
+            </div>
+          </div>
+
+          <p class="mt-10 text-sm text-center text-slate-500" data-aos="fade-up" data-aos-delay="100">
+            Most contractors only need one new job to cover the cost of their site.
+            <a href="#contact" class="text-accent font-semibold hover:underline ml-1">Request a free review →</a>
+          </p>
+
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="py-20 lg:py-28 bg-lightbg border-t border-slate-200/60">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
+          <div class="max-w-2xl mb-12" data-aos="fade-up">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">FAQ</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">Common Questions</h2>
+          </div>
+
+          <div class="max-w-3xl space-y-4" x-data="{ open: null }">
+
+            <!-- Q1 -->
+            <div class="rounded-3xl border border-slate-200 bg-white shadow-card overflow-hidden" data-aos="fade-up" data-aos-delay="40">
+              <button
+                class="w-full flex items-center justify-between px-6 py-5 text-left"
+                @click="open = open === 1 ? null : 1"
+              >
+                <span class="text-base font-semibold text-navy pr-4">How long does it take to build a contractor website?</span>
+                <svg class="h-5 w-5 text-slate-400 flex-shrink-0 transition-transform duration-200" :class="{ 'rotate-180': open === 1 }" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div x-show="open === 1" x-collapse class="px-6 pb-5">
+                <p class="text-sm text-slate-600 leading-relaxed">Most projects are completed within 2–4 weeks from the first call. The timeline depends on how quickly we can gather your photos, services list, and any content you want included. I keep it moving so there’s no months-long wait.</p>
+              </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="rounded-3xl border border-slate-200 bg-white shadow-card overflow-hidden" data-aos="fade-up" data-aos-delay="60">
+              <button
+                class="w-full flex items-center justify-between px-6 py-5 text-left"
+                @click="open = open === 2 ? null : 2"
+              >
+                <span class="text-base font-semibold text-navy pr-4">Do you handle Google rankings or marketing?</span>
+                <svg class="h-5 w-5 text-slate-400 flex-shrink-0 transition-transform duration-200" :class="{ 'rotate-180': open === 2 }" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div x-show="open === 2" x-collapse class="px-6 pb-5">
+                <p class="text-sm text-slate-600 leading-relaxed">BuckSites focuses only on building contractor websites. The goal is to create a site that clearly explains your services and makes it easy for homeowners to call you.</p>
+                <p class="mt-3 text-sm text-slate-600 leading-relaxed">Marketing services like SEO, advertising, and lead generation are separate specialties. Many contractors choose to work with a marketing company later if they want to invest in that. BuckSites focuses on building the website foundation.</p>
+              </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="rounded-3xl border border-slate-200 bg-white shadow-card overflow-hidden" data-aos="fade-up" data-aos-delay="80">
+              <button
+                class="w-full flex items-center justify-between px-6 py-5 text-left"
+                @click="open = open === 3 ? null : 3"
+              >
+                <span class="text-base font-semibold text-navy pr-4">What do you need from me to get started?</span>
+                <svg class="h-5 w-5 text-slate-400 flex-shrink-0 transition-transform duration-200" :class="{ 'rotate-180': open === 3 }" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div x-show="open === 3" x-collapse class="px-6 pb-5">
+                <p class="text-sm text-slate-600 leading-relaxed">A phone call or email to talk through your services and target jobs. Any photos you have of your work are helpful, but not required. I’ll write the copy and structure the pages around what homeowners in your market are looking for. The less work it is for you, the better.</p>
+              </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="rounded-3xl border border-slate-200 bg-white shadow-card overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+              <button
+                class="w-full flex items-center justify-between px-6 py-5 text-left"
+                @click="open = open === 4 ? null : 4"
+              >
+                <span class="text-base font-semibold text-navy pr-4">Will I own the website?</span>
+                <svg class="h-5 w-5 text-slate-400 flex-shrink-0 transition-transform duration-200" :class="{ 'rotate-180': open === 4 }" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </button>
+              <div x-show="open === 4" x-collapse class="px-6 pb-5">
+                <p class="text-sm text-slate-600 leading-relaxed">Yes. Once the project is complete and paid, you own the site. The hosting plan keeps it running and maintained, but you’re not locked in. If you ever want to move it, the files are yours.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Why I Focus on Contractor Websites -->
+      <section id="about" class="py-20 lg:py-28 bg-white">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 grid gap-10 lg:grid-cols-5 items-center">
+          <!-- Image / photography block -->
+          <div class="lg:col-span-2" data-aos="fade-right">
+            <div class="relative rounded-[32px] overflow-hidden shadow-soft border border-slate-200 bg-slate-900">
+              <div class="relative aspect-[4/5]">
+                <img src="assets/examples/about-consult.jpg" class="absolute inset-0 w-full h-full object-cover object-center" alt="Contractor explaining options to homeowners at a kitchen table">
+              </div>
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy via-navy/50 to-transparent p-6">
+                <p class="text-[11px] font-semibold tracking-[0.18em] uppercase text-accent mb-1">
+                  Field experience
+                </p>
+                <p class="text-sm font-semibold text-slate-50">
+                  Built from time spent at kitchen tables talking repairs, timelines, and budgets — not from behind a software dashboard.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div class="lg:col-span-3" data-aos="fade-left">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">About</p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-navy">
+              Why I Focus on Contractor Websites
+            </h2>
+            <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+              Before building websites, I worked in foundation repair sales. Most days were spent crawling around basements and
+              crawlspaces — then sitting at the kitchen table explaining options and pricing.
+            </p>
+            <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+              Over and over, homeowners told me the same thing when I asked how they found us: “We just looked up companies online.”
+              They’d mention specific phrases they typed, how quickly a site loaded, or how clear it was to request an inspection.
+            </p>
+            <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+              I saw great crews lose out on easy jobs because their competitor’s website simply made it easier to call. BuckSites exists
+              to close that gap — especially for owner-led and local teams who take pride in their work but don’t want to become
+              marketers or software experts.
+            </p>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <div>
+                <p class="text-base font-bold text-navy">Jared — BuckSites</p>
+                <p class="text-xs text-slate-500">Kansas City, Missouri · Contractor websites specialist</p>
+              </div>
+              <a
+                href="#contact"
+                class="inline-flex items-center justify-center rounded-full border border-navy/20 bg-navy text-slate-50 px-5 py-2.5 text-sm font-semibold hover:bg-transparent hover:text-navy hover:border-navy/40 transition-all"
+              >
+                Get a Free Website Review
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final CTA / Contact -->
+      <section id="contact" class="py-20 lg:py-28 bg-navy text-slate-50">
+        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 grid gap-10 lg:grid-cols-2 items-start">
+          <div data-aos="fade-right">
+            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">
+              Free contractor website review
+            </p>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
+              Get a Free Contractor<br class="hidden sm:block"/> Website Review
+            </h2>
+            <p class="mt-4 text-sm sm:text-base text-slate-200 leading-relaxed">
+              I’ll record a short, plain-language walkthrough of your current website from a homeowner’s point of view:
+              what’s working, what’s costing you calls, and where a call-focused rebuild would make the biggest difference.
+            </p>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 text-sm">
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/50 p-4">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1.5">Who you’ll talk to</p>
+                <p class="font-bold text-slate-50 text-base">Jared — BuckSites</p>
+                <p class="mt-1 text-xs text-slate-400">No sales team. No junior account reps. You get me.</p>
+              </div>
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/50 p-4">
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1.5">Contractor specialist</p>
+                <p class="font-semibold text-slate-50">Roofing, concrete, decks, tree service &amp; more.</p>
+                <p class="mt-1 text-xs text-slate-400">Sites built for how homeowners actually hire.</p>
+              </div>
+            </div>
+
+            <div class="mt-7 flex flex-col gap-4 text-sm">
+              <div>
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Call or text Jared directly</p>
+                <a href="tel:+18162821059" class="text-xl font-bold text-slate-50 hover:text-accent transition-colors tracking-tight">
+                  (816) 282-1059
+                </a>
+              </div>
+              <div>
+                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Email</p>
+                <a href="mailto:jared@bucksites.com" class="text-sm font-semibold text-slate-100 hover:text-accent transition-colors">
+                  jared@bucksites.com
+                </a>
+              </div>
+              <div class="flex items-center gap-2 mt-1 pt-2 border-t border-slate-700/60">
+                <svg class="h-3.5 w-3.5 text-accent flex-shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zM8 4a.75.75 0 01.75.75v3.5h2a.75.75 0 010 1.5H7.25a.75.75 0 010-1.5H7.5V5.5h-.25A.75.75 0 018 4z"/></svg>
+                <p class="text-sm text-slate-300">
+                  <span class="font-semibold text-slate-50">Kansas City, Missouri</span> — serving contractors across the U.S.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simple contact form block -->
+          <div data-aos="fade-left">
+            <div class="rounded-[28px] border border-slate-700 bg-slate-900/60 p-6 sm:p-7 shadow-soft">
+              <p class="text-sm font-semibold text-slate-50">Tell me about your website</p>
+              <p class="mt-1 text-xs text-slate-400">
+                Share your current site and the type of jobs you’d like more of. I’ll follow up personally.
+              </p>
+
+              <form class="mt-5 space-y-4" action="mailto:jared@bucksites.com" method="post" enctype="text/plain">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Company</label>
+                  <input
+                    type="text"
+                    name="company"
+                    class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="Company name"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">Current website</label>
+                  <input
+                    type="url"
+                    name="website"
+                    class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="https://"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1.5">What kind of jobs do you want more of?</label>
+                  <textarea
+                    name="projects"
+                    rows="4"
+                    class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="Driveways, roofs, decks, commercial work, specific neighborhoods, etc."
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  class="w-full inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#fb923c] transition-all"
+                >
+                  Email My Website Details
+                </button>
+                <p class="text-[11px] text-slate-500">
+                  Or email directly at
+                  <a href="mailto:jared@bucksites.com" class="text-slate-200 underline-offset-2 hover:underline">
+                    jared@bucksites.com
+                  </a>.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white">
+      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-8 w-auto flex-shrink-0" fill="none" aria-label="BuckSites logo">
+            <!-- Shield: minimal dark frame -->
+            <path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/>
+            <path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/>
+            <!-- Left antler: wide, bold, two-tined -->
+            <path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Right antler: mirror -->
+            <path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Ears -->
+            <path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/>
+            <path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/>
+            <!-- Head: large dominant oval -->
+            <ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/>
+            <!-- Nose: orange accent -->
+            <ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/>
+          </svg>
+          <div>
+            <p class="text-sm font-extrabold tracking-tight text-navy">
+              <span>Buck</span><span class="text-accent">Sites</span>
+            </p>
+            <p class="text-xs text-slate-500">
+              Websites That Generate Calls for Contractors
+            </p>
+          </div>
+        </div>
+        <div class="text-xs text-slate-500 space-y-1">
+          <p>© <span x-data x-text="new Date().getFullYear()"></span> BuckSites. All rights reserved.</p>
+          <p>Built in Kansas City · Working with contractors across the U.S.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        once: true,
+        duration: 700,
+        easing: 'ease-out-cubic'
+      });
+    });
+  </script>
+
+  <!-- Scroll-to-top button -->
+  <button
+    id="scrollTopBtn"
+    onclick="window.scrollTo({top:0,behavior:'smooth'})"
+    aria-label="Scroll to top"
+    class="fixed bottom-6 right-6 z-50 h-11 w-11 rounded-full bg-accent shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+    style="transition:opacity .25s,transform .25s"
+  >
+    <svg class="h-5 w-5 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7 7 7M12 3v18"/></svg>
+  </button>
+
+  <script>
+    // Scroll-to-top visibility
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        scrollBtn.style.opacity = '1';
+        scrollBtn.style.pointerEvents = 'auto';
+      } else {
+        scrollBtn.style.opacity = '0';
+        scrollBtn.style.pointerEvents = 'none';
+      }
+    }, { passive: true });
+
+    // Anchor navigation without history entries
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a[href^="#"]');
+      if (!link) return;
+      const targetId = link.getAttribute('href').slice(1);
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+</body>
+</html>
