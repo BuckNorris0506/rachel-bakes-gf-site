@@ -1,6 +1,6 @@
 /**
- * Rachel Bakes GF — BakeSites command center (admin prototype)
- * Orders, bake list, controls, profit, customer email actions.
+ * Rachel Bakes GF — BakeSites owner command center
+ * Orders, bake list, ordering & capacity, ledger, customer email actions.
  *
  * Local dev (localhost / 127.0.0.1): if the URL has no ?secret=, we send a
  * default header value so you can open /admin/ without a query string. Set
@@ -20,22 +20,24 @@
       id: "demo-pre-1",
       name: "Jordan Lee",
       contact: "jordan@example.com",
-      order_details: "3 packs pretzel bites, 1 tray cinnamon rolls",
+      order_details: "2× 20-bite pretzel · 1× cinnamon 6-pk",
+      line_items: { pretzel_20_orders: 2, cinnamon_6: 1, cinnamon_12: 0, cream_pies: 0, rolls_6: 0, rolls_12: 0 },
       pickup_date: new Date().toISOString().slice(0, 10),
-      pickup_window: "4–6 pm",
+      pickup_window: "Afternoon",
       notes: "Nut-free household",
-      amount_cents: 4800,
+      amount_cents: 4000,
       created_at: new Date(Date.now() - 86400000).toISOString(),
     },
     {
       id: "demo-pre-2",
       name: "Sam Rivera",
       contact: "sam@example.com",
-      order_details: "2 dozen sugar cookies, 1 simple cake",
+      order_details: "1× 20-bite pretzel · 2× cream pie",
+      line_items: { pretzel_20_orders: 1, cinnamon_6: 0, cinnamon_12: 0, cream_pies: 2, rolls_6: 0, rolls_12: 0 },
       pickup_date: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
-      pickup_window: "morning",
+      pickup_window: "Late morning",
       notes: "",
-      amount_cents: 9200,
+      amount_cents: 1800,
       created_at: new Date(Date.now() - 3600000).toISOString(),
     },
   ];
@@ -67,11 +69,19 @@
   var MENU_COST_CENTS = {
     pretzel_bites: 350,
     cinnamon_rolls: 900,
+    cinnamon_6: 700,
+    cinnamon_12: 1400,
+    cream_pies: 180,
+    rolls_6: 500,
+    rolls_12: 1000,
     cupcakes: 1200,
     cookies: 800,
     cake: 2500,
     custom_default: 1500,
   };
+
+  /** Pretzel 20-bite orders: production batches (extensible pattern for other SKUs) */
+  var PRETZEL_ORDERS_PER_BATCH = 5;
 
   var STATUS_FLOW = ["new", "confirmed", "baking", "ready", "picked_up"];
 
@@ -85,6 +95,8 @@
     bakeDate: "",
     emailLog: [],
     offlineMode: false,
+    preorderScheduleNorm: [],
+    dailyCapCents: 100000,
   };
 
   function $(id) {
@@ -129,6 +141,33 @@
       if (MENU_ROLLUP[i].rx.test(t)) return MENU_ROLLUP[i];
     }
     return null;
+  }
+
+  function lineItemsToRollupLines(lineItems) {
+    if (!lineItems || typeof lineItems !== "object") return [];
+    var li = lineItems;
+    var lines = [];
+    var n = function (k) {
+      return Number(li[k]) || 0;
+    };
+    if (n("pretzel_20_orders"))
+      lines.push({
+        id: "pretzel_bites",
+        label: "Pretzel 20-bite orders",
+        qty: n("pretzel_20_orders"),
+        unit: "order",
+      });
+    if (n("cinnamon_6")) lines.push({ id: "cinnamon_6", label: "Cinnamon 6-pk", qty: n("cinnamon_6"), unit: "6-pk" });
+    if (n("cinnamon_12")) lines.push({ id: "cinnamon_12", label: "Cinnamon 12-pk", qty: n("cinnamon_12"), unit: "12-pk" });
+    if (n("cream_pies")) lines.push({ id: "cream_pies", label: "Oatmeal cream pies", qty: n("cream_pies"), unit: "each" });
+    if (n("rolls_6")) lines.push({ id: "rolls_6", label: "Dinner rolls 6-pk", qty: n("rolls_6"), unit: "6-pk" });
+    if (n("rolls_12")) lines.push({ id: "rolls_12", label: "Dinner rolls 12-pk", qty: n("rolls_12"), unit: "12-pk" });
+    return lines;
+  }
+
+  function getPreorderLines(o) {
+    if (o.line_items && typeof o.line_items === "object") return lineItemsToRollupLines(o.line_items);
+    return parseOrderDetailsToLines(o.items);
   }
 
   function parseOrderDetailsToLines(orderDetails) {
@@ -221,6 +260,8 @@
         pickup_date: r.pickup_date || "",
         pickup_window: r.pickup_window || "",
         notes: r.notes || "",
+        payment_preference: r.payment_preference || "",
+        line_items: r.line_items && typeof r.line_items === "object" ? r.line_items : null,
         amount_cents: r.amount_cents != null ? Number(r.amount_cents) : 0,
         created_at: r.created_at || "",
         status: getStatus("preorder", r.id, "new"),
@@ -242,6 +283,7 @@
         pickup_date: r.pickup_date || r.event_date || "",
         pickup_window: "",
         notes: r.extra_details || "",
+        payment_preference: r.payment_preference || "",
         amount_cents: 0,
         created_at: r.created_at || "",
         status: getStatus("custom", r.id, "new"),
@@ -279,7 +321,7 @@
     state.preorders.forEach(function (o) {
       var pd = o.pickup_date || (o.created_at ? o.created_at.slice(0, 10) : "");
       if (pd !== ymd) return;
-      addLine(parseOrderDetailsToLines(o.items));
+      addLine(getPreorderLines(o));
     });
     return Object.keys(totals).map(function (k) {
       return totals[k];
@@ -288,7 +330,7 @@
 
   function estimateCostForOrder(o) {
     if (o.kind === "custom") return MENU_COST_CENTS.custom_default;
-    var lines = parseOrderDetailsToLines(o.items);
+    var lines = getPreorderLines(o);
     var sum = 0;
     for (var i = 0; i < lines.length; i++) {
       var c = MENU_COST_CENTS[lines[i].id];
@@ -339,12 +381,14 @@
       state.source = data.source || "demo";
       state.preorders = normalizePreorders(data.preorders);
       state.customOrders = normalizeCustom(data.custom_orders);
+      renderPreorderDateSnapshot();
     } catch (e) {
       if (e && e.message === "Unauthorized") throw e;
-      /* Static server / no Netlify: use embedded demo so the prototype is usable */
+      /* Static server / no API: use embedded demo data */
       state.source = "demo";
       state.preorders = normalizePreorders(DEMO_PREORDERS);
       state.customOrders = normalizeCustom(DEMO_CUSTOM);
+      renderPreorderDateSnapshot();
     }
   }
 
@@ -406,16 +450,18 @@
     return "rbgf-ux-pill rbgf-ux-pill--" + (st === "picked_up" ? "picked_up" : st);
   }
 
-  function renderOrders() {
-    var el = $("orders-list");
+  function renderOrderListInto(el, filter) {
     if (!el) return;
-    var filter = state.filter;
     var all = state.preorders.concat(state.customOrders);
     var rows = all.filter(function (o) {
       return passesFilter(o, filter);
     });
+    var emptyMsg =
+      filter === "custom"
+        ? "No custom inquiries yet."
+        : "No orders match this filter.";
     if (!rows.length) {
-      el.innerHTML = '<p class="text-sm" style="color:#64748b">No orders match this filter.</p>';
+      el.innerHTML = '<p class="text-sm" style="color:#64748b">' + emptyMsg + "</p>";
       return;
     }
     var html = rows
@@ -453,7 +499,9 @@
           (o.pickup_window ? " · " + escapeHtml(o.pickup_window) : "") +
           "</div>" +
           (o.notes ? '<div class="rbgf-ux-meta">Notes: ' + escapeHtml(o.notes) + "</div>" : "") +
-          '<div class="rbgf-ux-meta">Payment: <strong>placeholder</strong> · ' +
+          '<div class="rbgf-ux-meta">Pay preference: ' +
+          escapeHtml(o.payment_preference || "—") +
+          " · Rev est. " +
           pay +
           "</div>" +
           '<div class="rbgf-ux-status-row"><label>Status</label><div class="rbgf-ux-actions">' +
@@ -508,6 +556,11 @@
         sendCustomerEmail(btn.getAttribute("data-email"), order);
       });
     });
+  }
+
+  function renderOrders() {
+    renderOrderListInto($("orders-list"), state.filter);
+    renderOrderListInto($("orders-list-custom"), "custom");
   }
 
   function findOrder(kind, id) {
@@ -600,7 +653,7 @@
 
   function setView(v) {
     state.view = v;
-    ["view-orders", "view-bake", "view-controls", "view-profit"].forEach(function (id) {
+    ["view-orders", "view-custom", "view-bake", "view-controls", "view-ledger"].forEach(function (id) {
       var el = $(id);
       if (el) el.classList.add("rbgf-ux-hidden");
     });
@@ -628,7 +681,12 @@
       tab.addEventListener("click", function () {
         setView(tab.getAttribute("data-view"));
         if (state.view === "bake") renderBake();
-        if (state.view === "profit") renderProfit();
+        if (state.view === "ledger") {
+          renderProfit();
+          renderEmailLog();
+        }
+        if (state.view === "custom") renderOrders();
+        if (state.view === "controls") renderPreorderDateSnapshot();
       });
     });
   }
@@ -643,36 +701,327 @@
     return data;
   }
 
+  function appendScheduleRow(container, row) {
+    var hint = container.querySelector(".rbgf-schedule-empty-hint");
+    if (hint) hint.remove();
+    row = row || { date: "", windows: [] };
+    var wset = {};
+    (row.windows || []).forEach(function (x) {
+      wset[x] = true;
+    });
+    var wrap = document.createElement("div");
+    wrap.className = "rbgf-schedule-row border border-slate-200 rounded-md p-3 space-y-2";
+    wrap.setAttribute("data-schedule-row", "1");
+    var top = document.createElement("div");
+    top.className = "flex flex-wrap gap-2 items-center justify-between";
+    var lab = document.createElement("label");
+    lab.className = "text-sm font-semibold text-slate-800";
+    lab.style.display = "block";
+    lab.appendChild(document.createTextNode("Pickup date "));
+    var di = document.createElement("input");
+    di.type = "date";
+    di.className = "form-field mt-1 rbgf-schedule-date";
+    di.style.maxWidth = "200px";
+    di.value = row.date || "";
+    lab.appendChild(di);
+    var rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "rbgf-schedule-remove text-sm";
+    rm.style.color = "#e11d48";
+    rm.textContent = "Remove";
+    rm.addEventListener("click", function () {
+      wrap.remove();
+      if (container && !container.querySelector("[data-schedule-row]")) {
+        var p = document.createElement("p");
+        p.className = "rbgf-schedule-empty-hint text-sm text-slate-500";
+        p.textContent = "No dates yet — add one for preorder pickup.";
+        container.insertBefore(p, container.firstChild);
+      }
+    });
+    top.appendChild(lab);
+    top.appendChild(rm);
+    var winRow = document.createElement("div");
+    winRow.className = "flex flex-wrap gap-3 text-sm text-slate-800";
+    ["Late morning", "Afternoon", "Early evening"].forEach(function (label) {
+      var lbl = document.createElement("label");
+      lbl.className = "flex items-center gap-2 cursor-pointer";
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.className = "rbgf-schedule-w h-5 w-5";
+      cb.setAttribute("data-window", label);
+      cb.checked = !!wset[label];
+      var sp = document.createElement("span");
+      sp.textContent = label;
+      lbl.appendChild(cb);
+      lbl.appendChild(sp);
+      winRow.appendChild(lbl);
+    });
+    var meta = document.createElement("div");
+    meta.className = "flex flex-wrap gap-4 items-end text-sm text-slate-700";
+    var tgtWrap = document.createElement("label");
+    tgtWrap.className = "flex flex-col gap-1";
+    var tgtSpan = document.createElement("span");
+    tgtSpan.textContent = "Day revenue target ($) — optional (overrides default baseline above)";
+    var tgtIn = document.createElement("input");
+    tgtIn.type = "number";
+    tgtIn.min = "0";
+    tgtIn.step = "1";
+    tgtIn.className = "form-field mt-0.5 rbgf-schedule-target";
+    tgtIn.placeholder = "default = daily cap";
+    if (row.revenue_target_cents != null && row.revenue_target_cents > 0) {
+      tgtIn.value = String(Math.round(row.revenue_target_cents / 100));
+    }
+    tgtWrap.appendChild(tgtSpan);
+    tgtWrap.appendChild(tgtIn);
+    var closedLbl = document.createElement("label");
+    closedLbl.className = "flex items-center gap-2 cursor-pointer";
+    var closedCb = document.createElement("input");
+    closedCb.type = "checkbox";
+    closedCb.className = "rbgf-schedule-closed h-5 w-5";
+    closedCb.checked = row.closed === true;
+    closedLbl.appendChild(closedCb);
+    closedLbl.appendChild(
+      document.createTextNode(" Closed to new requests (uncheck + Save to reopen; may auto-enable when that date hits its target)")
+    );
+    meta.appendChild(tgtWrap);
+    meta.appendChild(closedLbl);
+    wrap.appendChild(top);
+    wrap.appendChild(winRow);
+    wrap.appendChild(meta);
+    container.appendChild(wrap);
+  }
+
+  function renderScheduleEditor(schedule) {
+    var el = $("preorder_schedule_editor");
+    if (!el) return;
+    el.innerHTML = "";
+    var rows = Array.isArray(schedule) ? schedule : [];
+    if (!rows.length) {
+      var empty = document.createElement("p");
+      empty.className = "rbgf-schedule-empty-hint text-sm text-slate-500";
+      empty.textContent = "No dates yet — add one for preorder pickup.";
+      el.appendChild(empty);
+      return;
+    }
+    rows.forEach(function (r) {
+      appendScheduleRow(el, r);
+    });
+  }
+
+  function readScheduleFromDom() {
+    var el = $("preorder_schedule_editor");
+    if (!el) return [];
+    var out = [];
+    el.querySelectorAll("[data-schedule-row]").forEach(function (row) {
+      var dateInput = row.querySelector(".rbgf-schedule-date");
+      var date = dateInput ? String(dateInput.value || "").trim() : "";
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+      var windows = [];
+      row.querySelectorAll(".rbgf-schedule-w:checked").forEach(function (cb) {
+        var t = cb.getAttribute("data-window");
+        if (t) windows.push(t);
+      });
+      if (!windows.length) return;
+      var o = { date: date, windows: windows };
+      var tgtIn = row.querySelector(".rbgf-schedule-target");
+      var td = tgtIn ? parseFloat(String(tgtIn.value || "").trim(), 10) : NaN;
+      if (Number.isFinite(td) && td > 0) o.revenue_target_cents = Math.round(td * 100);
+      var closedCb = row.querySelector(".rbgf-schedule-closed");
+      if (closedCb && closedCb.checked) o.closed = true;
+      out.push(o);
+    });
+    return out;
+  }
+
   function fallbackConfigPayload() {
     return {
       config: {
         preorder_open: false,
         custom_orders_open: false,
         daily_cap_cents: 100000,
-        status_message: "Ordering is currently closed. (Local preview — connect Netlify for live config.)",
+        status_message: "Ordering is currently closed.",
+        preorder_pickup_schedule: [],
       },
       todayTotalCents: 0,
       waitlistCount: 0,
     };
   }
 
+  function targetCentsForPickupDate(ymd) {
+    var row = (state.preorderScheduleNorm || []).find(function (r) {
+      return r && r.date === ymd;
+    });
+    if (row && row.revenue_target_cents != null && row.revenue_target_cents > 0) {
+      return Number(row.revenue_target_cents);
+    }
+    var cap = state.dailyCapCents;
+    return Number.isFinite(cap) && cap > 0 ? cap : null;
+  }
+
+  function accumLineFromPreorder(o) {
+    var z = { pretzel: 0, c6: 0, c12: 0, cream: 0, r6: 0, r12: 0, rev: 0 };
+    z.rev = o.amount_cents || 0;
+    var li = o.line_items;
+    if (li && typeof li === "object") {
+      z.pretzel += Number(li.pretzel_20_orders) || 0;
+      z.c6 += Number(li.cinnamon_6) || 0;
+      z.c12 += Number(li.cinnamon_12) || 0;
+      z.cream += Number(li.cream_pies) || 0;
+      z.r6 += Number(li.rolls_6) || 0;
+      z.r12 += Number(li.rolls_12) || 0;
+    }
+    return z;
+  }
+
+  function renderPreorderDateSnapshot() {
+    var el = $("preorder_date_snapshot");
+    if (!el) return;
+    var datesMap = {};
+    function ensure(d) {
+      if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return;
+      if (!datesMap[d]) {
+        datesMap[d] = {
+          pretzel: 0,
+          c6: 0,
+          c12: 0,
+          cream: 0,
+          r6: 0,
+          r12: 0,
+          rev: 0,
+          closed: false,
+        };
+      }
+    }
+    (state.preorderScheduleNorm || []).forEach(function (r) {
+      if (r && r.date) {
+        ensure(r.date);
+        if (r.closed) datesMap[r.date].closed = true;
+      }
+    });
+    state.preorders.forEach(function (o) {
+      if (o.kind !== "preorder") return;
+      var d = o.pickup_date;
+      if (!d) return;
+      ensure(d);
+      var a = accumLineFromPreorder(o);
+      datesMap[d].pretzel += a.pretzel;
+      datesMap[d].c6 += a.c6;
+      datesMap[d].c12 += a.c12;
+      datesMap[d].cream += a.cream;
+      datesMap[d].r6 += a.r6;
+      datesMap[d].r12 += a.r12;
+      datesMap[d].rev += a.rev;
+    });
+    var dates = Object.keys(datesMap).sort();
+    if (!dates.length) {
+      el.innerHTML =
+        '<p class="text-sm text-slate-500">Add pickup dates in Ordering &amp; cap, or load preorders from the API when deployed.</p>';
+      return;
+    }
+    el.innerHTML =
+      '<p class="text-sm font-semibold text-slate-800 mb-1">Preorder load by pickup date</p>' +
+      '<p class="text-xs text-slate-500 mb-3">Targets are soft: the order that reaches the target is still stored; that date then auto-closes for new requests until you reopen it below.</p>' +
+      '<div class="space-y-3">' +
+      dates
+        .map(function (d) {
+          var x = datesMap[d];
+          var target = targetCentsForPickupDate(d);
+          var ratio = target && target > 0 ? x.rev / target : 0;
+          var statusLabel = "Comfortable";
+          var statusClass = "text-emerald-700";
+        if (x.closed) {
+          statusLabel = "Closed to new requests (reopen in schedule above)";
+          statusClass = "text-slate-600";
+        } else if (ratio >= 1) {
+          statusLabel = "At / over target (auto-close may apply if not already closed)";
+          statusClass = "text-rose-700";
+          } else if (ratio >= 0.85) {
+            statusLabel = "Near target";
+            statusClass = "text-amber-700";
+          } else if (ratio >= 0.5) {
+            statusLabel = "On track";
+            statusClass = "text-slate-700";
+          }
+          var pretzelBatches = x.pretzel > 0 ? Math.ceil(x.pretzel / PRETZEL_ORDERS_PER_BATCH) : 0;
+          var pretzelPartial = x.pretzel > 0 && x.pretzel % PRETZEL_ORDERS_PER_BATCH !== 0;
+          var tgtStr = target ? money(target) : "—";
+          return (
+            '<div class="border border-slate-200 rounded-lg p-3 text-sm" style="background:#fafafa">' +
+            '<div class="flex flex-wrap justify-between gap-2 font-semibold text-slate-900">' +
+            "<span>" +
+            d +
+            "</span>" +
+            '<span class="' +
+            statusClass +
+            '">' +
+            statusLabel +
+            "</span>" +
+            "</div>" +
+            '<div class="mt-1 text-slate-600">Est. revenue (tentative): <strong>' +
+            money(x.rev) +
+            "</strong> · Target: " +
+            tgtStr +
+            "</div>" +
+            '<div class="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1 text-xs text-slate-600">' +
+            "<span>Pretzel 20-ct orders: <strong>" +
+            x.pretzel +
+            "</strong></span>" +
+            "<span>Cin. 6-pk: <strong>" +
+            x.c6 +
+            "</strong></span>" +
+            "<span>Cin. 12-pk: <strong>" +
+            x.c12 +
+            "</strong></span>" +
+            "<span>Cream pies: <strong>" +
+            x.cream +
+            "</strong></span>" +
+            "<span>Rolls 6: <strong>" +
+            x.r6 +
+            "</strong></span>" +
+            "<span>Rolls 12: <strong>" +
+            x.r12 +
+            "</strong></span>" +
+            "</div>" +
+            '<div class="mt-2 text-xs text-slate-600">' +
+            "Pretzel batches (5 orders/batch): <strong>" +
+            pretzelBatches +
+            "</strong>" +
+            (pretzelPartial
+              ? ' · <span class="text-amber-700">Partial last batch</span>'
+              : "") +
+            "</div>" +
+            "</div>"
+          );
+        })
+        .join("") +
+      "</div>";
+  }
+
   function setUiFromConfig(payload) {
     var cfg = payload.config || {};
     var capCents = Number(cfg.daily_cap_cents);
     if (!Number.isFinite(capCents) || capCents < 0) capCents = 100000;
+    state.dailyCapCents = capCents;
+    state.preorderScheduleNorm = Array.isArray(cfg.preorder_pickup_schedule) ? cfg.preorder_pickup_schedule : [];
     $("preorder_open").checked = cfg.preorder_open === true;
+    renderScheduleEditor(cfg.preorder_pickup_schedule || []);
     $("custom_orders_open").checked = cfg.custom_orders_open === true;
     $("daily_cap_dollars").value = (capCents / 100).toString();
     $("status_message").value = cfg.status_message || "";
     $("today_total_cents").textContent = money(payload.todayTotalCents);
     $("daily_cap_cents_display").textContent = money(capCents);
     $("waitlist_count").textContent = String(payload.waitlistCount || 0);
+    renderPreorderDateSnapshot();
   }
 
   async function saveConfig() {
+    var saveFb = $("ordering-cap-save-msg");
+    function setSaveFeedback(t) {
+      if (saveFb) saveFb.textContent = t || "";
+    }
     var dailyCents = Math.round(Number($("daily_cap_dollars").value) * 100);
     if (!Number.isFinite(dailyCents) || dailyCents <= 0) {
-      $("notify-message").textContent = "Enter a valid daily cap.";
+      setSaveFeedback("Enter a valid daily cap.");
       return;
     }
     var res = await fetch("/api/admin-config", {
@@ -683,16 +1032,17 @@
         custom_orders_open: $("custom_orders_open").checked,
         daily_cap_cents: dailyCents,
         status_message: $("status_message").value || "",
+        preorder_pickup_schedule: readScheduleFromDom(),
       }),
     });
     var data = await res.json().catch(function () {
       return null;
     });
     if (!res.ok || !data || !data.success) {
-      $("notify-message").textContent = (data && data.error) || "Save failed.";
+      setSaveFeedback((data && data.error) || "Save failed.");
       return;
     }
-    $("notify-message").textContent = "Saved.";
+    setSaveFeedback("Saved.");
     setUiFromConfig(data);
   }
 
@@ -716,6 +1066,38 @@
     setUiFromConfig(p);
   }
 
+  function initAdminGateRedirectOnly() {
+    if (getPassword() && state.secret) {
+      window.location.replace("./dashboard/" + (window.location.search || ""));
+      return;
+    }
+    $("auth-submit").addEventListener("click", function () {
+      var pw = ($("admin-password").value || "").trim();
+      if (!pw) {
+        $("auth-error").classList.remove("rbgf-ux-hidden");
+        $("auth-error").textContent = "Enter password.";
+        return;
+      }
+      setPassword(pw);
+      $("auth-error").classList.add("rbgf-ux-hidden");
+      $("auth-error").textContent = "";
+      fetchBakery()
+        .then(function () {
+          return fetchAdminConfig().catch(function (err) {
+            if (err && err.message === "Unauthorized") throw err;
+            return fallbackConfigPayload();
+          });
+        })
+        .then(function () {
+          window.location.href = "./dashboard/" + (window.location.search || "");
+        })
+        .catch(function (err) {
+          $("auth-error").classList.remove("rbgf-ux-hidden");
+          $("auth-error").textContent = (err && err.message) || "Unauthorized.";
+        });
+    });
+  }
+
   function init() {
     var qs = new URLSearchParams(window.location.search);
     state.secret = qs.get("secret") || "";
@@ -724,14 +1106,21 @@
       if ($("local-dev-hint")) $("local-dev-hint").classList.remove("rbgf-ux-hidden");
     }
     if (!state.secret) {
-      $("secret-missing").classList.remove("rbgf-ux-hidden");
+      if ($("secret-missing")) $("secret-missing").classList.remove("rbgf-ux-hidden");
       return;
     }
 
-    $("bake-date").addEventListener("change", function () {
-      state.bakeDate = $("bake-date").value;
-      renderBake();
-    });
+    if (!$("app-root")) {
+      initAdminGateRedirectOnly();
+      return;
+    }
+
+    if ($("bake-date")) {
+      $("bake-date").addEventListener("change", function () {
+        state.bakeDate = $("bake-date").value;
+        renderBake();
+      });
+    }
 
     $("auth-submit").addEventListener("click", function () {
       var pw = ($("admin-password").value || "").trim();
@@ -777,11 +1166,19 @@
         });
     });
 
-    $("save-config").addEventListener("click", saveConfig);
-    $("refresh-config").addEventListener("click", function () {
-      fetchAdminConfig().then(setUiFromConfig).catch(function () {});
-    });
-    $("open-and-notify").addEventListener("click", openAndNotify);
+    if ($("save-config")) $("save-config").addEventListener("click", saveConfig);
+    if ($("preorder_schedule_add"))
+      $("preorder_schedule_add").addEventListener("click", function () {
+        var el = $("preorder_schedule_editor");
+        if (!el) return;
+        appendScheduleRow(el, { date: "", windows: [] });
+      });
+    if ($("refresh-config"))
+      $("refresh-config").addEventListener("click", function () {
+        if ($("ordering-cap-save-msg")) $("ordering-cap-save-msg").textContent = "";
+        fetchAdminConfig().then(setUiFromConfig).catch(function () {});
+      });
+    if ($("open-and-notify")) $("open-and-notify").addEventListener("click", openAndNotify);
 
     if (getPassword()) {
       setPassword(getPassword());

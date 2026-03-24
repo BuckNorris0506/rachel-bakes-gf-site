@@ -361,6 +361,23 @@
   display: none !important;
 }
 
+/* Preorder schedule editor — always visibly bounded (Ordering & cap tab) */
+.rbgf-preorder-schedule-panel {
+  scroll-margin-top: 0.5rem;
+}
+.rbgf-preorder-schedule-editor-host {
+  min-height: 3.5rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px dashed var(--ux-line);
+  border-radius: 10px;
+  background: #f8fafc;
+}
+.rbgf-preorder-schedule-editor-host:empty::before {
+  content: "Loading schedule…";
+  font-size: 0.85rem;
+  color: var(--ux-muted);
+}
+
 .rbgf-ux input[type="date"],
 .rbgf-ux input[type="number"],
 .rbgf-ux input[type="password"],
