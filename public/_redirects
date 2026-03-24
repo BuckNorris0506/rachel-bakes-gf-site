@@ -1,0 +1,7 @@
+/api/ordering-status /.netlify/functions/ordering-status 200
+/api/waitlist-signup /.netlify/functions/waitlist-signup 200
+/api/preorder-submit /.netlify/functions/preorder-submit 200
+/api/custom-order-submit /.netlify/functions/custom-order-submit 200
+/api/contact-submit /.netlify/functions/contact-submit 200
+/api/admin-config /.netlify/functions/admin-config 200
+/api/open-preorder-and-notify /.netlify/functions/open-preorder-and-notify 200
