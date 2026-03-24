@@ -1012,6 +1012,11 @@
     $("daily_cap_cents_display").textContent = money(capCents);
     $("waitlist_count").textContent = String(payload.waitlistCount || 0);
     renderPreorderDateSnapshot();
+    try {
+      window.dispatchEvent(new CustomEvent("rbgf-config-applied"));
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   async function saveConfig() {
@@ -1098,6 +1103,44 @@
     });
   }
 
+  function finishAdminDashboardLoad(payload) {
+    $("auth-gate").classList.add("rbgf-ux-hidden");
+    $("app-root").classList.remove("rbgf-ux-hidden");
+    if (state.source === "demo") {
+      if ($("demo-banner")) $("demo-banner").classList.remove("rbgf-ux-hidden");
+    } else {
+      if ($("demo-banner")) $("demo-banner").classList.add("rbgf-ux-hidden");
+    }
+    if ($("orders-list")) renderOrders();
+    if ($("bake-list") && $("bake-date")) renderBake();
+    if ($("profit-stats")) renderProfit();
+    if ($("email-log")) renderEmailLog();
+    if (document.querySelector(".rbgf-ux-chip")) wireFilters();
+    if (document.querySelector(".rbgf-ux-tab")) {
+      wireTabs();
+      setView("orders");
+      document.querySelectorAll(".rbgf-ux-chip").forEach(function (c) {
+        c.setAttribute("aria-pressed", c.getAttribute("data-filter") === "all" ? "true" : "false");
+      });
+    }
+    setUiFromConfig(payload);
+    if (state.offlineMode && $("offline-banner")) $("offline-banner").classList.remove("rbgf-ux-hidden");
+    else if ($("offline-banner")) $("offline-banner").classList.add("rbgf-ux-hidden");
+    try {
+      window.dispatchEvent(
+        new CustomEvent("rbgf-admin-ready", {
+          detail: {
+            source: state.source,
+            preorders: state.preorders,
+            customOrders: state.customOrders,
+          },
+        })
+      );
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
   function init() {
     var qs = new URLSearchParams(window.location.search);
     state.secret = qs.get("secret") || "";
@@ -1142,23 +1185,7 @@
           });
         })
         .then(function (payload) {
-          $("auth-gate").classList.add("rbgf-ux-hidden");
-          $("app-root").classList.remove("rbgf-ux-hidden");
-          if (state.source === "demo") $("demo-banner").classList.remove("rbgf-ux-hidden");
-          else $("demo-banner").classList.add("rbgf-ux-hidden");
-          renderOrders();
-          renderBake();
-          renderProfit();
-          renderEmailLog();
-          wireFilters();
-          wireTabs();
-          setView("orders");
-          document.querySelectorAll(".rbgf-ux-chip").forEach(function (c) {
-            c.setAttribute("aria-pressed", c.getAttribute("data-filter") === "all" ? "true" : "false");
-          });
-          setUiFromConfig(payload);
-          if (state.offlineMode && $("offline-banner")) $("offline-banner").classList.remove("rbgf-ux-hidden");
-          else if ($("offline-banner")) $("offline-banner").classList.add("rbgf-ux-hidden");
+          finishAdminDashboardLoad(payload);
         })
         .catch(function (err) {
           $("auth-error").classList.remove("rbgf-ux-hidden");
@@ -1192,23 +1219,7 @@
           });
         })
         .then(function (payload) {
-          $("auth-gate").classList.add("rbgf-ux-hidden");
-          $("app-root").classList.remove("rbgf-ux-hidden");
-          if (state.source === "demo") $("demo-banner").classList.remove("rbgf-ux-hidden");
-          else $("demo-banner").classList.add("rbgf-ux-hidden");
-          renderOrders();
-          renderBake();
-          renderProfit();
-          renderEmailLog();
-          wireFilters();
-          wireTabs();
-          setView("orders");
-          document.querySelectorAll(".rbgf-ux-chip").forEach(function (c) {
-            c.setAttribute("aria-pressed", c.getAttribute("data-filter") === "all" ? "true" : "false");
-          });
-          setUiFromConfig(payload);
-          if (state.offlineMode && $("offline-banner")) $("offline-banner").classList.remove("rbgf-ux-hidden");
-          else if ($("offline-banner")) $("offline-banner").classList.add("rbgf-ux-hidden");
+          finishAdminDashboardLoad(payload);
         })
         .catch(function (err) {
           $("auth-error").classList.remove("rbgf-ux-hidden");

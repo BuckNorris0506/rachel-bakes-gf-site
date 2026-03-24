@@ -1,10 +1,88 @@
 /**
- * Rachel Bakes GF — production + pickup board (mocked data only).
+ * Rachel Bakes GF — production + pickup board (kitchen layout).
+ * When #preorder_schedule_editor exists, orders hydrate from admin-command.js after rbgf-admin-ready.
  */
 (function () {
   'use strict';
 
   var orders = [];
+
+  function ymdToday() {
+    return new Date().toISOString().slice(0, 10);
+  }
+  function ymdTomorrow() {
+    var d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function adminStatusToKanban(s) {
+    var map = { new: 'new', confirmed: 'confirmed', baking: 'in_prep', ready: 'ready', picked_up: 'picked_up' };
+    return map[s] || 'new';
+  }
+
+  function buildLineItemsFromPreorder(o) {
+    var li = o.line_items;
+    if (!li || typeof li !== 'object') {
+      return [{ label: o.items || 'Preorder', prep: 'tonight', bucket: 'cinnamon', qty: 1 }];
+    }
+    var n = function (k) {
+      return Number(li[k]) || 0;
+    };
+    var out = [];
+    if (n('pretzel_20_orders')) out.push({ label: 'Pretzel bites', prep: 'day_of', bucket: 'pretzel', qty: n('pretzel_20_orders') });
+    if (n('cinnamon_6') || n('cinnamon_12'))
+      out.push({
+        label: 'Cinnamon rolls',
+        prep: 'tonight',
+        bucket: 'cinnamon',
+        qty: n('cinnamon_6') + n('cinnamon_12'),
+      });
+    if (n('cream_pies')) out.push({ label: 'Oatmeal cream pies', prep: 'tonight', bucket: 'oatmeal', qty: n('cream_pies') });
+    if (n('rolls_6') || n('rolls_12'))
+      out.push({ label: 'Dinner rolls', prep: 'tonight', bucket: 'dinner', qty: n('rolls_6') + n('rolls_12') });
+    return out.length ? out : [{ label: o.items || 'Preorder', prep: 'tonight', bucket: 'custom', qty: 1 }];
+  }
+
+  function mapOneAdminOrder(o, kind) {
+    var id = kind + '-' + String(o.id);
+    var pd = o.pickup_date || '';
+    var board = pd === ymdToday() ? 'today' : pd === ymdTomorrow() ? 'tomorrow' : 'today';
+    var total = (o.amount_cents != null ? Number(o.amount_cents) : 0) / 100;
+    var lineItems =
+      kind === 'preorder'
+        ? buildLineItemsFromPreorder(o)
+        : [{ label: o.items || 'Custom order', prep: 'tonight', bucket: 'cake', qty: 1 }];
+    return {
+      id: id,
+      customer: o.name || '—',
+      summary: o.items || '',
+      total: total,
+      pickupLabel: (pd || 'TBD') + (o.pickup_window ? ' · ' + o.pickup_window : ''),
+      pickupDate: pd,
+      pickupBoard: board,
+      status: adminStatusToKanban(o.status),
+      payment: 'unpaid',
+      paymentMethodKey: 'card_stripe',
+      lineItems: lineItems,
+      orderNotes: o.notes || '',
+      pickupNotes: '',
+      contact: o.contact || '',
+    };
+  }
+
+  function hydrateFromAdmin(detail) {
+    var pre = (detail && detail.preorders) || [];
+    var cu = (detail && detail.customOrders) || [];
+    orders = [];
+    pre.forEach(function (o) {
+      orders.push(mapOneAdminOrder(o, 'preorder'));
+    });
+    cu.forEach(function (o) {
+      orders.push(mapOneAdminOrder(o, 'custom'));
+    });
+    orders.forEach(normalizePaymentMethodKey);
+  }
 
   /** status: new | confirmed | in_prep | ready | picked_up */
   /** payment: unpaid | pay_at_pickup | paid */
@@ -324,15 +402,28 @@
       sales += o.total;
       if (o.payment === 'unpaid') unpaid += 1;
     });
-    document.getElementById('sum-preorder').innerHTML =
-      state.preorderOpen ? '<span class="ob-pill-open">Open</span>' : '<span class="ob-pill-closed">Closed</span>';
-    document.getElementById('sum-custom').innerHTML =
-      state.customOpen ? '<span class="ob-pill-open">Open</span>' : '<span class="ob-pill-closed">Closed</span>';
+    var po = document.getElementById('preorder_open');
+    var co = document.getElementById('custom_orders_open');
+    var capEl = document.getElementById('daily_cap_dollars');
+    var wl = document.getElementById('waitlist_count');
+    var preorderOpen = po ? po.checked : state.preorderOpen;
+    var customOpen = co ? co.checked : state.customOpen;
+    var capDollars = capEl ? parseFloat(String(capEl.value || '0'), 10) : state.dailyCap;
+    if (!Number.isFinite(capDollars)) capDollars = state.dailyCap;
+    var waitN = wl ? parseInt(String(wl.textContent || '0').replace(/[^\d]/g, ''), 10) : state.waitlist;
+    if (!Number.isFinite(waitN)) waitN = state.waitlist;
+
+    document.getElementById('sum-preorder').innerHTML = preorderOpen
+      ? '<span class="ob-pill-open">Open</span>'
+      : '<span class="ob-pill-closed">Closed</span>';
+    document.getElementById('sum-custom').innerHTML = customOpen
+      ? '<span class="ob-pill-open">Open</span>'
+      : '<span class="ob-pill-closed">Closed</span>';
     document.getElementById('sum-pickup-count').textContent = String(count);
     document.getElementById('sum-today-sales').textContent = money(sales);
     document.getElementById('sum-unpaid').textContent = String(unpaid);
-    document.getElementById('sum-waitlist').textContent = String(state.waitlist);
-    document.getElementById('sum-daily-cap').textContent = money(state.dailyCap);
+    document.getElementById('sum-waitlist').textContent = String(waitN);
+    document.getElementById('sum-daily-cap').textContent = money(capDollars);
   }
 
   function rollupPlanner() {
@@ -801,6 +892,18 @@
     });
   }
 
+  function wireConfigEchoListeners() {
+    ['preorder_open', 'custom_orders_open', 'daily_cap_dollars'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('change', function () {
+        renderSummary();
+      });
+    });
+    var sm = document.getElementById('status_message');
+    if (sm) sm.addEventListener('input', renderSummary);
+  }
+
   function wireChrome() {
     document.getElementById('drawer-backdrop').addEventListener('click', closeDrawer);
     document.getElementById('drawer-close').addEventListener('click', closeDrawer);
@@ -808,38 +911,49 @@
       if (e.key === 'Escape') closeDrawer();
     });
 
-    var po = document.getElementById('ctrl-preorder-open');
-    var co = document.getElementById('ctrl-custom-open');
-    var cap = document.getElementById('ctrl-daily-cap');
-    var msg = document.getElementById('ctrl-status-msg');
-    po.checked = state.preorderOpen;
-    co.checked = state.customOpen;
-    cap.value = String(state.dailyCap);
-    msg.value = state.statusMessage;
+    var liveAdmin = !!document.getElementById('preorder_schedule_editor');
 
-    po.addEventListener('change', function () {
-      state.preorderOpen = po.checked;
-      renderSummary();
-    });
-    co.addEventListener('change', function () {
-      state.customOpen = co.checked;
-      renderSummary();
-    });
-    cap.addEventListener('change', function () {
-      state.dailyCap = parseInt(cap.value, 10) || 0;
-      renderSummary();
-    });
-    msg.addEventListener('input', function () {
-      state.statusMessage = msg.value;
-    });
+    if (!liveAdmin) {
+      var po = document.getElementById('ctrl-preorder-open');
+      var co = document.getElementById('ctrl-custom-open');
+      var cap = document.getElementById('ctrl-daily-cap');
+      var msg = document.getElementById('ctrl-status-msg');
+      if (po && co && cap && msg) {
+        po.checked = state.preorderOpen;
+        co.checked = state.customOpen;
+        cap.value = String(state.dailyCap);
+        msg.value = state.statusMessage;
 
-    document.getElementById('btn-open-notify').addEventListener('click', function () {
-      state.preorderOpen = true;
-      po.checked = true;
-      state.waitlist = 0;
-      logMessage('Preorder opened · waitlist notified (prototype)');
-      refresh();
-    });
+        po.addEventListener('change', function () {
+          state.preorderOpen = po.checked;
+          renderSummary();
+        });
+        co.addEventListener('change', function () {
+          state.customOpen = co.checked;
+          renderSummary();
+        });
+        cap.addEventListener('change', function () {
+          state.dailyCap = parseInt(cap.value, 10) || 0;
+          renderSummary();
+        });
+        msg.addEventListener('input', function () {
+          state.statusMessage = msg.value;
+        });
+      }
+
+      var btnN = document.getElementById('btn-open-notify');
+      if (btnN) {
+        btnN.addEventListener('click', function () {
+          state.preorderOpen = true;
+          if (po) po.checked = true;
+          state.waitlist = 0;
+          logMessage('Preorder opened · waitlist notified (prototype)');
+          refresh();
+        });
+      }
+    } else {
+      wireConfigEchoListeners();
+    }
 
     document.querySelectorAll('.ob-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -849,6 +963,17 @@
   }
 
   function init() {
+    if (document.getElementById('preorder_schedule_editor')) {
+      document.addEventListener('rbgf-admin-ready', function onReady(ev) {
+        document.removeEventListener('rbgf-admin-ready', onReady);
+        hydrateFromAdmin(ev.detail);
+        wireChrome();
+        refresh();
+        setActiveTab('kitchen');
+      });
+      return;
+    }
+
     orders = initialOrders.map(function (o) {
       return JSON.parse(JSON.stringify(o));
     });
@@ -857,6 +982,10 @@
     refresh();
     setActiveTab('kitchen');
   }
+
+  document.addEventListener('rbgf-config-applied', function () {
+    if (document.getElementById('sum-preorder')) renderSummary();
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
