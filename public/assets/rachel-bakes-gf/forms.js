@@ -1,7 +1,7 @@
 /**
  * Rachel Bakes GF — customer forms (preorder, custom order, waitlist, contact).
  *
- * POST /api/preorder-submit      — preorder rows + daily cap
+ * POST /api/preorder-submit      — structured line items + tentative revenue + per-date soft cap
  * POST /api/custom-order-submit  — custom inquiries (gated by custom_orders_open)
  * POST /api/waitlist-signup      — notification interests + email
  * POST /api/contact-submit       — general questions (always when Supabase configured)
@@ -17,20 +17,39 @@ function ensurePreorderStatusEl(form) {
   return statusEl;
 }
 
+function collectPreorderLineItems(form) {
+  var keys = ["pretzel_20_orders", "cinnamon_6", "cinnamon_12", "cream_pies", "rolls_6", "rolls_12"];
+  var out = {};
+  var any = false;
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i];
+    var el = form.querySelector('[name="' + k + '"]');
+    var v = el ? parseInt(String(el.value || "0"), 10) : 0;
+    if (!Number.isFinite(v) || v < 0) v = 0;
+    if (v > 999) v = 999;
+    out[k] = v;
+    if (v > 0) any = true;
+  }
+  return any ? out : null;
+}
+
 function handlePreorderSubmit(e) {
   e.preventDefault();
   var form = e.target;
   var nameEl = form.querySelector('[name="name"]');
   var contactEl = form.querySelector('[name="contact"]');
-  var orderEl = form.querySelector('[name="order"]');
-  var totalEl = form.querySelector('[name="order_total_dollars"]');
+  var dateSel = form.querySelector('select[name="pickup_date"]');
+  var pickupSel = form.querySelector('select[name="pickup_window"]');
+  var paySel = form.querySelector('select[name="payment_preference"]');
 
-  if (!nameEl || !contactEl || !orderEl || !totalEl) return;
+  if (!nameEl || !contactEl) return;
 
   var nameVal = (nameEl.value || '').trim();
   var contactVal = (contactEl.value || '').trim();
-  var orderDetailsVal = (orderEl.value || '').trim();
-  var totalValRaw = (totalEl.value || '').trim();
+  var lineItems = collectPreorderLineItems(form);
+  var dateVal = dateSel && !dateSel.disabled ? (dateSel.value || '').trim() : '';
+  var pickupVal = pickupSel && !pickupSel.disabled ? (pickupSel.value || '').trim() : '';
+  var payVal = paySel ? (paySel.value || '').trim() : '';
 
   var statusEl = ensurePreorderStatusEl(form);
   statusEl.textContent = '';
@@ -46,15 +65,44 @@ function handlePreorderSubmit(e) {
     contactEl.focus();
     return;
   }
-  if (!orderDetailsVal) {
-    orderEl.focus();
+  if (!lineItems) {
+    statusEl.textContent = 'Choose at least one item (quantity greater than zero).';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    var firstQty = form.querySelector('input[name="pretzel_20_orders"]');
+    if (firstQty) firstQty.focus();
     return;
   }
 
-  var totalNum = parseFloat(totalValRaw);
-  if (!Number.isFinite(totalNum) || totalNum <= 0) {
-    totalEl.focus();
-    statusEl.textContent = 'Please enter a valid estimated total.';
+  if (dateSel && dateSel.disabled) {
+    statusEl.textContent = 'No pickup dates are available right now. Please try again later or use Contact.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
+  if (!dateVal) {
+    if (dateSel) dateSel.focus();
+    statusEl.textContent = 'Please choose a pickup date.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
+  if (pickupSel && pickupSel.disabled) {
+    statusEl.textContent = 'No pickup windows are available for that date.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
+  if (!pickupVal) {
+    if (pickupSel) pickupSel.focus();
+    statusEl.textContent = 'Please choose a pickup window.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
+  if (!payVal || (payVal !== 'Card' && payVal !== 'Cash at pickup')) {
+    if (paySel) paySel.focus();
+    statusEl.textContent = 'Please choose how you would like to pay.';
     statusEl.classList.add('text-[var(--rose)]');
     statusEl.classList.remove('text-[var(--muted)]');
     return;
@@ -73,11 +121,11 @@ function handlePreorderSubmit(e) {
     body: JSON.stringify({
       name: nameVal,
       contact: contactVal,
-      order_details: orderDetailsVal,
-      pickup_date: (form.querySelector('[name="pickup_date"]') && form.querySelector('[name="pickup_date"]').value) || '',
-      pickup_window: (form.querySelector('[name="pickup_window"]') && form.querySelector('[name="pickup_window"]').value) || '',
+      line_items: lineItems,
+      pickup_date: dateVal,
+      pickup_window: pickupVal,
+      payment_preference: payVal,
       notes: (form.querySelector('[name="notes"]') && form.querySelector('[name="notes"]').value) || '',
-      order_total_dollars: totalNum,
     }),
   })
     .then(function (res) {
@@ -86,15 +134,19 @@ function handlePreorderSubmit(e) {
     .then(function (out) {
       if (!out || !out.data) throw new Error('Invalid response from server.');
       if (out.data.success) {
-        var capReached = out.data.capReached === true;
         var msg = out.data.message || 'Thanks! Your preorder request is saved.';
-        if (capReached) {
-          msg = 'Thanks! Your preorder request is saved. Preorders for today may close as we reach capacity.';
-        }
         statusEl.textContent = msg;
         statusEl.classList.remove('text-[var(--rose)]');
         statusEl.classList.add('text-[var(--cocoa)]');
         form.reset();
+        try {
+          form.dispatchEvent(new Event("input", { bubbles: true }));
+        } catch (err) {
+          /* ignore */
+        }
+        if (typeof window.rbgfRefreshPreorderPickupSelect === 'function') {
+          window.rbgfRefreshPreorderPickupSelect();
+        }
       } else {
         statusEl.textContent = out.data.error || "We couldn't save your preorder. Please try again.";
         statusEl.classList.remove('text-[var(--cocoa)]');
@@ -135,6 +187,9 @@ function handleCustomOrderSubmit(e) {
     return;
   }
 
+  var paySel = form.querySelector('[name="payment_preference"]');
+  var payVal = paySel ? (paySel.value || '').trim() : '';
+
   function ensureCustomStatusEl() {
     var statusEl = form.querySelector('.ordering-custom-status');
     if (statusEl) return statusEl;
@@ -149,6 +204,14 @@ function handleCustomOrderSubmit(e) {
   statusEl.textContent = '';
   statusEl.classList.remove('text-[var(--rose)]');
   statusEl.classList.add('text-[var(--muted)]');
+
+  if (!payVal || (payVal !== 'Card' && payVal !== 'Cash at pickup')) {
+    if (paySel) paySel.focus();
+    statusEl.textContent = 'Please choose how you would like to pay.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
 
   var itemTypeEl = form.querySelector('[name="item_type"]');
   var itemTypeVal = itemTypeEl && itemTypeEl.value ? itemTypeEl.value : '';
@@ -183,6 +246,7 @@ function handleCustomOrderSubmit(e) {
         flavor: flavorVal,
         allergy_notes: allergyNotesVal,
         extra_details: extraDetailsVal,
+        payment_preference: payVal,
       }),
     })
       .then(function (res) {

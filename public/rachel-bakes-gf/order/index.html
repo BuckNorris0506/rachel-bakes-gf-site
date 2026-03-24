@@ -58,9 +58,9 @@
         <div class="mx-auto max-w-site px-5">
           <p class="section-label text-xs font-semibold uppercase">Order / Preorder</p>
           <h1 class="mt-2 text-4xl sm:text-5xl">Order ahead, pick up in Liberty.</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7">Most items are made to order. Send us what you’d like and when you can pick up; we’ll confirm availability and get you on the schedule.</p>
+          <p class="mt-3 max-w-2xl text-base leading-7">Most items are made to order. Choose from the pickup dates and windows we’ve opened for this run, tell us how you’d like to pay, and send your request. We’ll confirm availability and your order before you pay.</p>
           <p class="mt-3 max-w-2xl text-sm leading-7 text-[var(--sf-muted)]">
-            Live preorder status appears below when the site is connected. Pickup is always coordinated after we confirm your order — see
+            Live preorder status appears below when the site is connected. Pickup windows are the options we’ve opened for this preorder — final timing is confirmed after we reply — see
             <a href="../pickup-policies/" class="text-rose font-medium hover:underline">pickup &amp; policies</a>
             or <a href="../contact/" class="text-rose font-medium hover:underline">ask a question</a>.
           </p>
@@ -76,8 +76,8 @@
               <h2>How preorder works</h2>
               <ol class="mt-3 space-y-2 text-sm leading-7">
                 <li><span class="font-semibold text-[var(--sf-text)]">1.</span> Check the menu and decide what you’d like.</li>
-                <li><span class="font-semibold text-[var(--sf-text)]">2.</span> Send your request with what you want, your preferred pickup date, and any notes.</li>
-                <li><span class="font-semibold text-[var(--sf-text)]">3.</span> We’ll confirm what’s available and coordinate pickup with you.</li>
+                <li><span class="font-semibold text-[var(--sf-text)]">2.</span> Set quantities for pretzel bites, cinnamon rolls, cream pies, and/or dinner rolls; pick your date and window; choose payment preference — then send the request.</li>
+                <li><span class="font-semibold text-[var(--sf-text)]">3.</span> We’ll confirm availability and your order; payment details are finalized after approval.</li>
               </ol>
             </div>
             <div class="rbgf-request-ledger compact-panel">
@@ -85,7 +85,7 @@
               <ul class="info-list mt-3 space-y-2 text-sm leading-7">
                 <li><strong>Where:</strong> Liberty, Missouri — exact pickup details are sent when your order is confirmed.</li>
                 <li><strong>When:</strong> Windows depend on the bake schedule; weekends and holidays can shift availability.</li>
-                <li><strong>Confirmation:</strong> Your slot isn’t final until we reply — we’ll align on time and any order tweaks.</li>
+                <li><strong>Confirmation:</strong> Your request isn’t final until we reply — we’ll confirm details, pickup, and payment.</li>
               </ul>
             </div>
             <div class="featured-photo rbgf-featured-photo min-h-[170px]">
@@ -99,21 +99,46 @@
 
           <div id="request" class="rbgf-request-slab compact-form-panel">
             <h2>Send your order request</h2>
-            <p class="mt-3 text-sm leading-7 text-[var(--sf-muted)]">Fill in the details below and hit send. Your preorder request will be saved and we’ll reply with pickup details.</p>
+            <p class="mt-3 text-sm leading-7 text-[var(--sf-muted)]">Fill in the details below and send. We’ll confirm what’s available, then follow up with pickup and payment.</p>
             <form id="preorder-form" class="mt-4 grid gap-3 sm:grid-cols-2" novalidate>
               <input class="form-field" type="text" name="name" placeholder="Your name" required />
               <input class="form-field" type="text" name="contact" placeholder="Email or phone" required />
-              <input class="form-field sm:col-span-2" type="text" name="order" placeholder="What would you like to order?" />
-              <input class="form-field" type="text" name="pickup_date" placeholder="Preferred pickup date" />
-              <input class="form-field" type="text" name="pickup_window" placeholder="Preferred pickup window" />
-              <input class="form-field" type="number" name="order_total_dollars" placeholder="Estimated total ($)" step="0.01" min="0.01" required />
-              <p class="text-sm leading-6 text-[var(--sf-muted)] sm:col-span-2 -mt-1">Your best guess for what this order will cost. We’ll confirm the exact total with you.</p>
-              <textarea class="form-field min-h-[140px] sm:col-span-2" name="notes" placeholder="Quantity, flavor, event timing, allergy notes, or anything else we should know."></textarea>
+              <div class="sm:col-span-2 border border-[var(--line)] rounded-xl p-4 space-y-3 bg-[var(--paper)]">
+                <p class="text-sm font-semibold text-[var(--sf-text)]">Your order</p>
+                <p class="text-xs text-[var(--sf-muted)] leading-relaxed">Choose quantities. Carrot cake and other custom work stay on the Custom orders page.</p>
+                <div class="grid gap-2 sm:grid-cols-2 text-sm">
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Soft pretzel bites <span class="text-xs">($10 / 20-bite order)</span></span><input class="form-field" type="number" name="pretzel_20_orders" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Cinnamon rolls — 6-pack <span class="text-xs">($20)</span></span><input class="form-field" type="number" name="cinnamon_6" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Cinnamon rolls — 12-pack <span class="text-xs">($40)</span></span><input class="form-field" type="number" name="cinnamon_12" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Oatmeal cream pies <span class="text-xs">($4 each)</span></span><input class="form-field" type="number" name="cream_pies" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Dinner rolls — 6-pack <span class="text-xs">($12)</span></span><input class="form-field" type="number" name="rolls_6" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Dinner rolls — 12-pack <span class="text-xs">($24)</span></span><input class="form-field" type="number" name="rolls_12" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                </div>
+                <div class="pt-2 border-t border-[var(--line)] flex flex-wrap items-baseline justify-between gap-2">
+                  <span class="text-sm font-semibold text-[var(--sf-text)]">Estimated subtotal (tentative)</span>
+                  <span id="preorder-tentative-subtotal" class="text-lg font-semibold text-[var(--sf-text)]" aria-live="polite">$0.00</span>
+                </div>
+                <p class="text-xs text-[var(--sf-muted)] leading-relaxed">This is an estimate only. Rachel confirms the final total after reviewing your request.</p>
+              </div>
+              <select class="form-field" name="pickup_date" aria-label="Pickup date" required>
+                <option value="">Loading pickup dates…</option>
+              </select>
+              <select class="form-field" name="pickup_window" aria-label="Pickup window" required>
+                <option value="">Loading pickup windows…</option>
+              </select>
+              <p id="preorder-pickup-window-hint" class="hidden text-sm leading-6 text-[var(--sf-muted)] sm:col-span-2 -mt-1" role="status"></p>
+              <label class="sm:col-span-2 text-sm font-medium text-[var(--sf-muted)]">How would you like to pay?</label>
+              <select class="form-field sm:col-span-2" name="payment_preference" aria-label="Payment preference" required>
+                <option value="">Choose one</option>
+                <option value="Card">Card</option>
+                <option value="Cash at pickup">Cash at pickup</option>
+              </select>
+              <textarea class="form-field min-h-[120px] sm:col-span-2" name="notes" placeholder="Allergies, flavor notes, event timing, or anything else we should know."></textarea>
               <div class="sm:col-span-2">
                 <button type="submit" class="cta-primary">Send my request</button>
               </div>
             </form>
-            <div class="rbgf-request-note mt-4 p-3 text-sm leading-6">Pickup slots are confirmed after availability check. Timing may shift around holidays and events.</div>
+            <div class="rbgf-request-note mt-4 p-3 text-sm leading-6">We confirm your order before payment. Pickup timing may shift around holidays and events.</div>
           </div>
         </div>
       </section>
@@ -143,6 +168,7 @@
   </div>
   <script src="/assets/rachel-bakes-gf/ordering-config.js"></script>
   <script src="/assets/rachel-bakes-gf/ordering-ui.js"></script>
+  <script src="/assets/rachel-bakes-gf/preorder-builder.js"></script>
   <script src="/assets/rachel-bakes-gf/forms.js"></script>
 </body>
 </html>

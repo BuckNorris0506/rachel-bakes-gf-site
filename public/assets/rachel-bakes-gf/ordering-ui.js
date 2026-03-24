@@ -16,6 +16,21 @@
   var dailyCapCents = null;
   var todayTotalCents = null;
 
+  var preorderPickupSchedule = Array.isArray(fallbackConfig.preorderPickupSchedule)
+    ? fallbackConfig.preorderPickupSchedule
+    : [];
+
+  function formatPickupDateLabel(ymd) {
+    if (!ymd || typeof ymd !== 'string') return '';
+    try {
+      var d = new Date(ymd + 'T12:00:00');
+      if (isNaN(d.getTime())) return ymd;
+      return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    } catch (e) {
+      return ymd;
+    }
+  }
+
   function getOrderPagePath() {
     var pathname = (typeof window.location !== 'undefined' && window.location.pathname) || '';
     if (pathname.indexOf('custom-orders') !== -1) return 'custom-orders';
@@ -317,6 +332,118 @@
     return div.innerHTML;
   }
 
+  function populatePreorderPickupFields() {
+    var form = document.getElementById('preorder-form');
+    if (!form) return;
+    var dateSel = form.querySelector('select[name="pickup_date"]');
+    var winSel = form.querySelector('select[name="pickup_window"]');
+    if (!dateSel || !winSel) return;
+    var hint = document.getElementById('preorder-pickup-window-hint');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var schedule = Array.isArray(preorderPickupSchedule) ? preorderPickupSchedule : [];
+
+    function fillWindowsForDate(ymd) {
+      winSel.innerHTML = '';
+      var row = schedule.find(function (r) {
+        return r && r.date === ymd;
+      });
+      if (!row || !row.windows || !row.windows.length) {
+        var ox = document.createElement('option');
+        ox.value = '';
+        ox.textContent = ymd ? 'No windows for this date' : 'Choose a date first';
+        winSel.appendChild(ox);
+        winSel.disabled = true;
+        winSel.removeAttribute('required');
+        return;
+      }
+      winSel.disabled = false;
+      winSel.setAttribute('required', 'required');
+      if (row.windows.length === 1) {
+        var only = document.createElement('option');
+        only.value = row.windows[0];
+        only.textContent = row.windows[0];
+        only.selected = true;
+        winSel.appendChild(only);
+        return;
+      }
+      var phw = document.createElement('option');
+      phw.value = '';
+      phw.textContent = 'Choose a pickup window';
+      winSel.appendChild(phw);
+      row.windows.forEach(function (w) {
+        var o = document.createElement('option');
+        o.value = w;
+        o.textContent = w;
+        winSel.appendChild(o);
+      });
+    }
+
+    function onDateChange() {
+      fillWindowsForDate(dateSel.value);
+    }
+
+    if (!form._rbgfPreorderPickupWired) {
+      form._rbgfPreorderPickupWired = true;
+      dateSel.addEventListener('change', onDateChange);
+    }
+
+    dateSel.innerHTML = '';
+    winSel.innerHTML = '';
+
+    if (!schedule.length) {
+      var od = document.createElement('option');
+      od.value = '';
+      od.textContent = 'No pickup dates available';
+      dateSel.appendChild(od);
+      dateSel.disabled = true;
+      dateSel.removeAttribute('required');
+      var ow = document.createElement('option');
+      ow.value = '';
+      ow.textContent = '—';
+      winSel.appendChild(ow);
+      winSel.disabled = true;
+      winSel.removeAttribute('required');
+      if (submitBtn) submitBtn.disabled = true;
+      if (hint) {
+        hint.textContent =
+          'No pickup dates are open yet. Check back soon or reach out through Contact.';
+        hint.classList.remove('hidden');
+      }
+      return;
+    }
+
+    dateSel.disabled = false;
+    dateSel.setAttribute('required', 'required');
+    if (submitBtn) submitBtn.disabled = false;
+    if (hint) {
+      hint.textContent = '';
+      hint.classList.add('hidden');
+    }
+
+    if (schedule.length === 1) {
+      var dOnly = document.createElement('option');
+      dOnly.value = schedule[0].date;
+      dOnly.textContent = formatPickupDateLabel(schedule[0].date);
+      dateSel.appendChild(dOnly);
+      dateSel.selectedIndex = 0;
+      fillWindowsForDate(schedule[0].date);
+    } else {
+      var phd = document.createElement('option');
+      phd.value = '';
+      phd.textContent = 'Choose a pickup date';
+      dateSel.appendChild(phd);
+      schedule.forEach(function (row) {
+        var o = document.createElement('option');
+        o.value = row.date;
+        o.textContent = formatPickupDateLabel(row.date);
+        dateSel.appendChild(o);
+      });
+      fillWindowsForDate('');
+    }
+  }
+
+  window.rbgfRefreshPreorderPickupSelect = populatePreorderPickupFields;
+
   function applyStatusStrip() {
     var el = document.getElementById('rbgf-ordering-status-strip');
     if (!el) return;
@@ -331,11 +458,11 @@
       var capD = Math.round(Number(dailyCapCents) / 100);
       var todayD = Math.round(Number(todayTotalCents) / 100);
       capMsg =
-        ' · Today’s preorder volume: ~$' +
+        ' · Today’s preorder submissions: ~$' +
         todayD +
-        ' of $' +
+        ' (site baseline $' +
         capD +
-        ' daily cap';
+        '). Pickup-date limits are separate — your order is not blocked mid-form when a date is near full.';
     }
     if (preorderOpen) {
       var policiesHref = './pickup-policies/';
@@ -362,6 +489,7 @@
     applyOrderPage();
     applyCustomOrdersPage();
     applyStatusStrip();
+    populatePreorderPickupFields();
   }
 
   function loadOrderingStatusFromApi() {
@@ -379,6 +507,9 @@
         if (typeof data.statusMessage === 'string') statusMessage = data.statusMessage;
         if (data.dailyCapCents != null) dailyCapCents = Number(data.dailyCapCents);
         if (data.todayTotalCents != null) todayTotalCents = Number(data.todayTotalCents);
+        if (data.preorderPickupSchedule != null && Array.isArray(data.preorderPickupSchedule)) {
+          preorderPickupSchedule = data.preorderPickupSchedule;
+        }
       });
   }
 
