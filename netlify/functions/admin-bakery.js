@@ -39,54 +39,6 @@ async function supabaseRestGet(pathWithQuery) {
   return text ? JSON.parse(text) : [];
 }
 
-function demoPayload() {
-  const iso = (d) => new Date(d).toISOString();
-  return {
-    success: true,
-    source: "demo",
-    preorders: [
-      {
-        id: "demo-pre-1",
-        name: "Jordan Lee",
-        contact: "jordan@example.com",
-        order_details: "2× 20-bite pretzel · 1× cinnamon 6-pk",
-        line_items: { pretzel_20_orders: 2, cinnamon_6: 1, cinnamon_12: 0, cream_pies: 0, rolls_6: 0, rolls_12: 0 },
-        pickup_date: new Date().toISOString().slice(0, 10),
-        pickup_window: "Afternoon",
-        notes: "Nut-free household",
-        amount_cents: 4000,
-        created_at: iso(Date.now() - 86400000),
-      },
-      {
-        id: "demo-pre-2",
-        name: "Sam Rivera",
-        contact: "8165550142",
-        order_details: "1× 20-bite pretzel · 2× cream pie",
-        line_items: { pretzel_20_orders: 1, cinnamon_6: 0, cinnamon_12: 0, cream_pies: 2, rolls_6: 0, rolls_12: 0 },
-        pickup_date: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
-        pickup_window: "Late morning",
-        notes: "",
-        amount_cents: 1800,
-        created_at: iso(Date.now() - 3600000),
-      },
-    ],
-    custom_orders: [
-      {
-        id: "demo-cu-1",
-        name: "Alex Morgan",
-        contact: "alex@example.com",
-        event_date: new Date(Date.now() + 5 * 86400000).toISOString().slice(0, 10),
-        pickup_date: new Date(Date.now() + 4 * 86400000).toISOString().slice(0, 10),
-        item_type: "Celebration cake",
-        servings: "12",
-        flavor: "Vanilla / strawberry",
-        design_notes: "Minimal piping, gluten-free only",
-        created_at: iso(Date.now() - 7200000),
-      },
-    ],
-  };
-}
-
 module.exports.handler = async function handler(event) {
   try {
     if (!ADMIN_SECRET || !ADMIN_PASSWORD) {
@@ -114,9 +66,12 @@ module.exports.handler = async function handler(event) {
 
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       return {
-        statusCode: 200,
+        statusCode: 500,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(demoPayload()),
+        body: JSON.stringify({
+          success: false,
+          error: "Server misconfigured (Supabase env missing).",
+        }),
       };
     }
 
@@ -137,11 +92,14 @@ module.exports.handler = async function handler(event) {
           custom_orders: Array.isArray(custom_orders) ? custom_orders : [],
         }),
       };
-    } catch (_) {
+    } catch (err) {
       return {
-        statusCode: 200,
+        statusCode: 502,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(demoPayload()),
+        body: JSON.stringify({
+          success: false,
+          error: err && err.message ? err.message : "Supabase request failed",
+        }),
       };
     }
   } catch (err) {

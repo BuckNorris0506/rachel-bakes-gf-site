@@ -84,147 +84,7 @@
     orders.forEach(normalizePaymentMethodKey);
   }
 
-  /** status: new | confirmed | in_prep | ready | picked_up */
-  /** payment: unpaid | pay_at_pickup | paid */
-  /** pickupBoard: today | tomorrow — kanban shows `today` only */
-  var initialOrders = [
-    {
-      id: 'r42-901',
-      customer: 'Sarah M.',
-      summary: '2 dz pretzel bites + dip',
-      total: 48,
-      pickupLabel: 'Today · 10:30a',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'new',
-      payment: 'unpaid',
-      orderNotes: 'Extra salt on half the tray. Birthday party for 8yo.',
-      pickupNotes: 'Text when ready — front lot.',
-      contact: 'sarah.m@email.com · (816) 555-0142',
-      lineItems: [
-        { label: 'Pretzel bites (2 dz)', prep: 'day_of', bucket: 'pretzel', qty: 2 },
-        { label: 'Honey mustard dip', prep: 'day_of', bucket: 'other', qty: 1 },
-      ],
-    },
-    {
-      id: 'r42-902',
-      customer: 'James K.',
-      summary: '1 dz cinn rolls + 1 dz pretzel',
-      total: 52,
-      pickupLabel: 'Today · 2:00p',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'confirmed',
-      payment: 'pay_at_pickup',
-      orderNotes: 'First time ordering. Nut-free for kids.',
-      pickupNotes: '',
-      contact: 'james.k@email.com',
-      lineItems: [
-        { label: 'Cinnamon rolls (1 dz)', prep: 'tonight', bucket: 'cinnamon', qty: 1 },
-        { label: 'Pretzel bites (1 dz)', prep: 'day_of', bucket: 'pretzel', qty: 1 },
-      ],
-    },
-    {
-      id: 'r42-903',
-      customer: 'Liberty Youth Soccer',
-      summary: '4 dz pretzel bites (game day)',
-      total: 88,
-      pickupLabel: 'Today · 8:45a',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'in_prep',
-      payment: 'paid',
-      paymentMethodKey: 'zelle',
-      orderNotes: 'Split into two boxes labeled A / B.',
-      pickupNotes: 'White SUV.',
-      contact: 'treasurer@lysoccer.org',
-      lineItems: [{ label: 'Pretzel bites (4 dz)', prep: 'day_of', bucket: 'pretzel', qty: 4 }],
-    },
-    {
-      id: 'r42-904',
-      customer: 'Maria L.',
-      summary: 'Carrot cake (custom)',
-      total: 65,
-      pickupLabel: 'Today · 11:00a',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'ready',
-      payment: 'pay_at_pickup',
-      orderNotes: 'Cream cheese frosting; chopped nuts on top.',
-      pickupNotes: 'Fragile — top rack.',
-      contact: '(816) 555-0199',
-      lineItems: [{ label: 'Carrot cake (custom)', prep: 'tonight', bucket: 'cake', qty: 1 }],
-    },
-    {
-      id: 'r42-905',
-      customer: 'Chris P.',
-      summary: '1 dz cinn + 1 dz oatmeal cream pies',
-      total: 44,
-      pickupLabel: 'Today · 5:30p',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'picked_up',
-      payment: 'paid',
-      paymentMethodKey: 'card_stripe',
-      soldDate: 'Mar 22, 2025',
-      orderNotes: '',
-      pickupNotes: 'Picked up.',
-      contact: 'chris.p@email.com',
-      lineItems: [
-        { label: 'Cinnamon rolls (1 dz)', prep: 'tonight', bucket: 'cinnamon', qty: 1 },
-        { label: 'Oatmeal cream pies (1 dz)', prep: 'tonight', bucket: 'oatmeal', qty: 1 },
-      ],
-    },
-    {
-      id: 'r42-906',
-      customer: 'PTA bake sale',
-      summary: '2 dz oatmeal cream pies',
-      total: 36,
-      pickupLabel: 'Today · 7:00a',
-      pickupDate: 'Mar 22, 2025',
-      pickupBoard: 'today',
-      status: 'confirmed',
-      payment: 'unpaid',
-      orderNotes: 'No peanuts — school policy.',
-      pickupNotes: 'Side door.',
-      contact: 'pta@schools.org',
-      lineItems: [{ label: 'Oatmeal cream pies (2 dz)', prep: 'tonight', bucket: 'oatmeal', qty: 2 }],
-    },
-    {
-      id: 'r42-907',
-      customer: 'Andrea W.',
-      summary: 'Carrot cake (custom) + 1 dz pretzel',
-      total: 92,
-      pickupLabel: 'Tomorrow · 6:00p',
-      pickupDate: 'Mar 23, 2025',
-      pickupBoard: 'tomorrow',
-      status: 'new',
-      payment: 'unpaid',
-      orderNotes: 'Message on cake: "Ten years — still sweet."',
-      pickupNotes: '',
-      contact: '(913) 555-0220',
-      lineItems: [
-        { label: 'Carrot cake (custom)', prep: 'tonight', bucket: 'cake', qty: 1 },
-        { label: 'Pretzel bites (1 dz)', prep: 'day_of', bucket: 'pretzel', qty: 1 },
-      ],
-    },
-    {
-      id: 'r42-908',
-      customer: 'Hannah R.',
-      summary: '2 dz dinner rolls (holiday table)',
-      total: 48,
-      pickupLabel: 'Tomorrow · 12:00p',
-      pickupDate: 'Mar 23, 2025',
-      pickupBoard: 'tomorrow',
-      status: 'confirmed',
-      payment: 'pay_at_pickup',
-      orderNotes: 'Pull-apart tray for family dinner.',
-      pickupNotes: '',
-      contact: 'hannah.r@email.com',
-      lineItems: [{ label: 'Dinner rolls (2 dz)', prep: 'tonight', bucket: 'dinner', qty: 2 }],
-    },
-  ];
-
+  /** Kanban status: new | confirmed | in_prep | ready | picked_up */
   var STATUS_ORDER = ['new', 'confirmed', 'in_prep', 'ready', 'picked_up'];
   var STATUS_LABEL = {
     new: 'New',
@@ -281,10 +141,20 @@
     }
   }
 
-  /** Mar 22, 2025 — mock “today” for summary cards */
-  var MOCK_TODAY_START = new Date(2025, 2, 22);
-  var MOCK_WEEK_START = new Date(2025, 2, 16);
-  var MOCK_WEEK_END = new Date(2025, 2, 22, 23, 59, 59);
+  function startOfToday() {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  function weekBoundsNow() {
+    var end = new Date();
+    end.setHours(23, 59, 59, 999);
+    var start = new Date(end);
+    start.setDate(start.getDate() - 6);
+    start.setHours(0, 0, 0, 0);
+    return { start: start, end: end };
+  }
 
   function parseSoldDate(s) {
     if (!s) return null;
@@ -297,7 +167,9 @@
   }
 
   function soldDateInWeek(d) {
-    return d && d >= MOCK_WEEK_START && d <= MOCK_WEEK_END;
+    if (!d) return false;
+    var w = weekBoundsNow();
+    return d >= w.start && d <= w.end;
   }
 
   /**
@@ -345,9 +217,10 @@
     var weekTotal = 0;
     var pretzelRev = 0;
     var cakesRev = 0;
+    var todayStart = startOfToday();
     rows.forEach(function (o) {
       var d = parseSoldDate(o.soldDate);
-      if (d && sameCalendarDay(d, MOCK_TODAY_START)) todayTotal += o.total;
+      if (d && sameCalendarDay(d, todayStart)) todayTotal += o.total;
       if (d && soldDateInWeek(d)) weekTotal += o.total;
       var cat = ledgerCategory(o);
       if (cat === 'Pretzel Bites') pretzelRev += o.total;
@@ -361,17 +234,14 @@
 
   var state = {
     activeTab: 'kitchen',
-    preorderOpen: true,
-    customOpen: true,
-    dailyCap: 1200,
-    waitlist: 14,
-    statusMessage: 'Holiday week — may close early if the day fills.',
+    preorderOpen: false,
+    customOpen: false,
+    dailyCap: 0,
+    waitlist: 0,
+    statusMessage: '',
     selectedId: null,
     expandedPlanner: {},
-    messageLog: [
-      { t: '7:12a', text: 'Confirmation sent · Sarah M.' },
-      { t: '7:08a', text: 'Ready for pickup · Maria L.' },
-    ],
+    messageLog: [],
   };
 
   function money(n) {
@@ -911,49 +781,7 @@
       if (e.key === 'Escape') closeDrawer();
     });
 
-    var liveAdmin = !!document.getElementById('preorder_schedule_editor');
-
-    if (!liveAdmin) {
-      var po = document.getElementById('ctrl-preorder-open');
-      var co = document.getElementById('ctrl-custom-open');
-      var cap = document.getElementById('ctrl-daily-cap');
-      var msg = document.getElementById('ctrl-status-msg');
-      if (po && co && cap && msg) {
-        po.checked = state.preorderOpen;
-        co.checked = state.customOpen;
-        cap.value = String(state.dailyCap);
-        msg.value = state.statusMessage;
-
-        po.addEventListener('change', function () {
-          state.preorderOpen = po.checked;
-          renderSummary();
-        });
-        co.addEventListener('change', function () {
-          state.customOpen = co.checked;
-          renderSummary();
-        });
-        cap.addEventListener('change', function () {
-          state.dailyCap = parseInt(cap.value, 10) || 0;
-          renderSummary();
-        });
-        msg.addEventListener('input', function () {
-          state.statusMessage = msg.value;
-        });
-      }
-
-      var btnN = document.getElementById('btn-open-notify');
-      if (btnN) {
-        btnN.addEventListener('click', function () {
-          state.preorderOpen = true;
-          if (po) po.checked = true;
-          state.waitlist = 0;
-          logMessage('Preorder opened · waitlist notified (prototype)');
-          refresh();
-        });
-      }
-    } else {
-      wireConfigEchoListeners();
-    }
+    wireConfigEchoListeners();
 
     document.querySelectorAll('.ob-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -963,24 +791,14 @@
   }
 
   function init() {
-    if (document.getElementById('preorder_schedule_editor')) {
-      document.addEventListener('rbgf-admin-ready', function onReady(ev) {
-        document.removeEventListener('rbgf-admin-ready', onReady);
-        hydrateFromAdmin(ev.detail);
-        wireChrome();
-        refresh();
-        setActiveTab('kitchen');
-      });
-      return;
-    }
-
-    orders = initialOrders.map(function (o) {
-      return JSON.parse(JSON.stringify(o));
+    if (!document.getElementById('preorder_schedule_editor')) return;
+    document.addEventListener('rbgf-admin-ready', function onReady(ev) {
+      document.removeEventListener('rbgf-admin-ready', onReady);
+      hydrateFromAdmin(ev.detail);
+      wireChrome();
+      refresh();
+      setActiveTab('kitchen');
     });
-    orders.forEach(normalizePaymentMethodKey);
-    wireChrome();
-    refresh();
-    setActiveTab('kitchen');
   }
 
   document.addEventListener('rbgf-config-applied', function () {

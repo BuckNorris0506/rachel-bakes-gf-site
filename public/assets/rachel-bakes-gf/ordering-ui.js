@@ -2,9 +2,15 @@
  * Ordering status UI controller (API-backed).
  *
  * Primary: fetch GET /api/ordering-status and use it as the source of truth.
- * Temporary fallback: uses window.RACHEL_BAKES_ORDERING when the API fails/unavailable.
+ * Local dev only: when the API fails, uses window.RACHEL_BAKES_ORDERING from ordering-config.js.
+ * Production: API failure shows an error state — no silent static config.
  */
 (function () {
+  function isLocalDevHostname() {
+    var h = window.location.hostname || '';
+    return h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+  }
+
   var fallbackConfig = window.RACHEL_BAKES_ORDERING;
   if (!fallbackConfig) return;
 
@@ -495,14 +501,40 @@
       });
   }
 
+  function applyProductionApiFailureState() {
+    var strip = document.getElementById('rbgf-ordering-status-strip');
+    if (strip) {
+      strip.hidden = false;
+      strip.innerHTML =
+        '<div class="mx-auto max-w-site px-5 py-3">' +
+        '<p class="text-sm leading-6 text-red-900 bg-red-50 border border-red-200 rounded-lg p-3" role="alert">' +
+        'We couldn’t load ordering status from the server. Please refresh the page or try again later.' +
+        '</p></div>';
+    }
+    preorderOpen = false;
+    customOrdersOpen = false;
+    preorderPickupSchedule = [];
+    statusMessage = 'Ordering status is temporarily unavailable.';
+    applyAll();
+  }
+
   function init() {
+    if (isLocalDevHostname()) {
+      loadOrderingStatusFromApi()
+        .then(function () {
+          applyAll();
+        })
+        .catch(function () {
+          applyAll();
+        });
+      return;
+    }
     loadOrderingStatusFromApi()
       .then(function () {
         applyAll();
       })
       .catch(function () {
-        // Graceful fallback: keep whatever ordering-config.js set.
-        applyAll();
+        applyProductionApiFailureState();
       });
   }
 

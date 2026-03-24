@@ -15,6 +15,10 @@
     var h = window.location.hostname || "";
     return h === "localhost" || h === "127.0.0.1" || h === "[::1]";
   }
+
+  function isProductionDeploy() {
+    return !isLocalDevHostname();
+  }
   var DEMO_PREORDERS = [
     {
       id: "demo-pre-1",
@@ -87,7 +91,7 @@
 
   var state = {
     secret: "",
-    source: "demo",
+    source: "pending",
     preorders: [],
     customOrders: [],
     filter: "all",
@@ -378,13 +382,15 @@
       });
       if (res.status === 401) throw new Error("Unauthorized");
       if (!res.ok || !data || !data.success) throw new Error((data && data.error) || "Load failed");
-      state.source = data.source || "demo";
+      state.source = data.source || "live";
       state.preorders = normalizePreorders(data.preorders);
       state.customOrders = normalizeCustom(data.custom_orders);
       renderPreorderDateSnapshot();
     } catch (e) {
       if (e && e.message === "Unauthorized") throw e;
-      /* Static server / no API: use embedded demo data */
+      if (isProductionDeploy()) {
+        throw new Error((e && e.message) || "Could not load orders from the server.");
+      }
       state.source = "demo";
       state.preorders = normalizePreorders(DEMO_PREORDERS);
       state.customOrders = normalizeCustom(DEMO_CUSTOM);
@@ -419,6 +425,10 @@
         return null;
       });
     } catch (e) {
+      if (isProductionDeploy()) {
+        alert((e && e.message) || "Email request failed.");
+        return;
+      }
       pushEmailLog({
         at: new Date().toISOString(),
         template: template,
@@ -1090,6 +1100,7 @@
         .then(function () {
           return fetchAdminConfig().catch(function (err) {
             if (err && err.message === "Unauthorized") throw err;
+            if (isProductionDeploy()) throw err;
             return fallbackConfigPayload();
           });
         })
@@ -1180,6 +1191,7 @@
         .then(function () {
           return fetchAdminConfig().catch(function (err) {
             if (err && err.message === "Unauthorized") throw err;
+            if (isProductionDeploy()) throw err;
             state.offlineMode = true;
             return fallbackConfigPayload();
           });
@@ -1202,8 +1214,13 @@
       });
     if ($("refresh-config"))
       $("refresh-config").addEventListener("click", function () {
-        if ($("ordering-cap-save-msg")) $("ordering-cap-save-msg").textContent = "";
-        fetchAdminConfig().then(setUiFromConfig).catch(function () {});
+        var el = $("ordering-cap-save-msg");
+        if (el) el.textContent = "";
+        fetchAdminConfig()
+          .then(setUiFromConfig)
+          .catch(function (err) {
+            if (el) el.textContent = (err && err.message) || "Could not refresh configuration.";
+          });
       });
     if ($("open-and-notify")) $("open-and-notify").addEventListener("click", openAndNotify);
 
@@ -1214,6 +1231,7 @@
         .then(function () {
           return fetchAdminConfig().catch(function (err) {
             if (err && err.message === "Unauthorized") throw err;
+            if (isProductionDeploy()) throw err;
             state.offlineMode = true;
             return fallbackConfigPayload();
           });

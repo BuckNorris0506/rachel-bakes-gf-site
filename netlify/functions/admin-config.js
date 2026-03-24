@@ -28,6 +28,61 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const { normalizePreorderPickupSchedule } = require("./lib/preorder-schedule");
 
+/**
+ * Parse PostgREST / Supabase REST error JSON (never echo env or secrets).
+ */
+function parsePostgrestErrorBody(text) {
+  if (!text || typeof text !== "string") {
+    return { message: null, code: undefined, details: undefined, hint: undefined };
+  }
+  try {
+    const j = JSON.parse(text);
+    if (!j || typeof j !== "object") {
+      return { message: text.slice(0, 2000), code: undefined, details: undefined, hint: undefined };
+    }
+    return {
+      message: typeof j.message === "string" ? j.message : null,
+      code: j.code != null ? String(j.code) : undefined,
+      details: j.details != null ? String(j.details) : undefined,
+      hint: j.hint != null ? String(j.hint) : undefined,
+    };
+  } catch (_) {
+    return { message: text.slice(0, 2000), code: undefined, details: undefined, hint: undefined };
+  }
+}
+
+function makeSupabaseHttpError(httpStatus, text) {
+  const p = parsePostgrestErrorBody(text);
+  const err = new Error(p.message || `Supabase REST request failed (HTTP ${httpStatus})`);
+  if (p.code !== undefined) err.code = p.code;
+  if (p.details !== undefined) err.details = p.details;
+  if (p.hint !== undefined) err.hint = p.hint;
+  return err;
+}
+
+function jsonErrorResponse(stage, err, fallbackMessage) {
+  const message =
+    err && typeof err === "object" && err.message != null
+      ? String(err.message)
+      : err instanceof Error
+        ? String(err.message)
+        : fallbackMessage || "Unknown error";
+  const body = {
+    success: false,
+    stage: stage,
+    error: "admin-config failed",
+    message: message,
+  };
+  if (err && typeof err === "object" && err.code != null) body.code = err.code;
+  if (err && typeof err === "object" && err.details != null) body.details = String(err.details);
+  if (err && typeof err === "object" && err.hint != null) body.hint = err.hint;
+  return {
+    statusCode: 500,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  };
+}
+
 function getHeader(event, name) {
   if (!event || !event.headers) return "";
   const key = name.toLowerCase();
@@ -116,9 +171,7 @@ async function supabaseRestGet(pathWithQuery, extraHeaders) {
   });
   const text = await res.text().catch(() => "");
   if (!res.ok) {
-    const err = new Error(`Supabase REST GET failed (${res.status})`);
-    err.details = text;
-    throw err;
+    throw makeSupabaseHttpError(res.status, text);
   }
   return text ? JSON.parse(text) : [];
 }
@@ -138,9 +191,7 @@ async function supabaseRestPatch(pathWithQuery, jsonBody) {
   });
   const text = await res.text().catch(() => "");
   if (!res.ok) {
-    const err = new Error(`Supabase REST PATCH failed (${res.status})`);
-    err.details = text;
-    throw err;
+    throw makeSupabaseHttpError(res.status, text);
   }
   return text ? JSON.parse(text) : [];
 }
@@ -159,9 +210,7 @@ async function supabaseRestGetCount(pathWithQuery) {
   });
   const text = await res.text().catch(() => "");
   if (!res.ok) {
-    const err = new Error(`Supabase REST COUNT GET failed (${res.status})`);
-    err.details = text;
-    throw err;
+    throw makeSupabaseHttpError(res.status, text);
   }
   const contentRange = res.headers.get("content-range") || "";
   const parts = contentRange.split("/");
@@ -204,11 +253,9 @@ module.exports.handler = async function handler(event) {
   try {
     // v1 protection: reject unauthorized requests first so we don't leak behavior.
     if (!ADMIN_SECRET || !ADMIN_PASSWORD) {
-      return {
-        statusCode: 500,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Server misconfigured. Missing ADMIN_SECRET/ADMIN_PASSWORD." }),
-      };
+      return jsonErrorResponse("env", {
+        message: "Server misconfigured: admin auth is not set.",
+      });
     }
 
     if (!requireAdmin(event)) {
@@ -220,11 +267,9 @@ module.exports.handler = async function handler(event) {
     }
 
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-      return {
-        statusCode: 500,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Server misconfigured. Missing Supabase environment variables." }),
-      };
+      return jsonErrorResponse("env", {
+        message: "Server misconfigured: Supabase URL or service role key is not set.",
+      });
     }
 
     if (!event || !event.httpMethod) {
@@ -232,16 +277,31 @@ module.exports.handler = async function handler(event) {
     }
 
     if (event.httpMethod === "GET") {
-      const config = await getConfigRow();
-      if (!config) {
-        return {
-          statusCode: 500,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ success: false, error: "Ordering config row is missing." }),
-        };
+      let config;
+      try {
+        config = await getConfigRow();
+      } catch (err) {
+        return jsonErrorResponse("getConfigRow", err);
       }
-      const todayTotalCents = await getTodayTotalCents();
-      const waitlistCount = await getWaitlistCountUnnotified();
+      if (!config) {
+        return jsonErrorResponse("getConfigRow", {
+          message:
+            "Ordering config row is missing: no row returned for the configured ordering id (check server env and Supabase data).",
+          hint: "In Supabase: confirm table `config` exists, RLS allows the service role to read it, and a row exists for the id your deployment uses.",
+        });
+      }
+      let todayTotalCents;
+      try {
+        todayTotalCents = await getTodayTotalCents();
+      } catch (err) {
+        return jsonErrorResponse("getTodayTotalCents", err);
+      }
+      let waitlistCount;
+      try {
+        waitlistCount = await getWaitlistCountUnnotified();
+      } catch (err) {
+        return jsonErrorResponse("getWaitlistCountUnnotified", err);
+      }
       const preorder_pickup_schedule = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
 
       return {
@@ -314,14 +374,42 @@ module.exports.handler = async function handler(event) {
 
       updates.updated_at = new Date().toISOString();
 
-      const patched = await supabaseRestPatch(
-        `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}`,
-        updates
-      );
+      let patched;
+      try {
+        patched = await supabaseRestPatch(
+          `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}`,
+          updates
+        );
+      } catch (err) {
+        return jsonErrorResponse("patchConfig", err);
+      }
 
-      const config = Array.isArray(patched) && patched.length ? patched[0] : await getConfigRow();
-      const todayTotalCents = await getTodayTotalCents();
-      const waitlistCount = await getWaitlistCountUnnotified();
+      let config;
+      try {
+        config = Array.isArray(patched) && patched.length ? patched[0] : await getConfigRow();
+      } catch (err) {
+        return jsonErrorResponse("getConfigRow", err);
+      }
+      if (!config) {
+        return jsonErrorResponse("getConfigRow", {
+          message:
+            "Ordering config row is missing after update: no row returned for the configured ordering id.",
+          hint: "In Supabase: confirm table `config` has a row for the id your deployment uses and PATCH returned a row.",
+        });
+      }
+
+      let todayTotalCents;
+      try {
+        todayTotalCents = await getTodayTotalCents();
+      } catch (err) {
+        return jsonErrorResponse("getTodayTotalCents", err);
+      }
+      let waitlistCount;
+      try {
+        waitlistCount = await getWaitlistCountUnnotified();
+      } catch (err) {
+        return jsonErrorResponse("getWaitlistCountUnnotified", err);
+      }
       const preorder_pickup_schedule = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
 
       return {
@@ -349,15 +437,7 @@ module.exports.handler = async function handler(event) {
       body: JSON.stringify({ success: false, error: "Method not allowed" }),
     };
   } catch (err) {
-    return {
-      statusCode: 500,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        success: false,
-        error: "admin-config failed",
-        message: err && err.message ? err.message : String(err),
-      }),
-    };
+    return jsonErrorResponse("unknown", err);
   }
 };
 
