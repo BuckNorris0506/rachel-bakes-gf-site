@@ -1,5 +1,4 @@
 [build]
-  base = "bucksites"
   publish = "public"
   functions = "netlify/functions"
 
@@ -37,3 +36,4 @@
   from = "/api/open-preorder-and-notify"
   to = "/.netlify/functions/open-preorder-and-notify"
   status = 200
+
