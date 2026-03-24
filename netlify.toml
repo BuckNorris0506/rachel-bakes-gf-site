@@ -1,5 +1,3 @@
-cd /Users/jaredbuckman/Documents/Playground/bucksites
-cat > netlify.toml <<'EOF'
 [build]
   base = "bucksites"
   publish = "public"
@@ -39,8 +37,3 @@ cat > netlify.toml <<'EOF'
   from = "/api/open-preorder-and-notify"
   to = "/.netlify/functions/open-preorder-and-notify"
   status = 200
-EOF
-
-git add netlify.toml
-git commit -m "Fix repo-root netlify.toml"
-git push
