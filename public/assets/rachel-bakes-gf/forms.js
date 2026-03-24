@@ -114,22 +114,6 @@ function handlePreorderSubmit(e) {
     });
 }
 
-function readFileAsBase64Segment(file) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function () {
-      var r = reader.result;
-      if (typeof r === 'string' && r.indexOf(',') !== -1) {
-        resolve(r.split(',')[1]);
-      } else resolve(null);
-    };
-    reader.onerror = function () {
-      reject(new Error('read failed'));
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
 function handleCustomOrderSubmit(e) {
   e.preventDefault();
   var form = e.target;
@@ -173,20 +157,8 @@ function handleCustomOrderSubmit(e) {
   var pickupDateVal = (form.querySelector('[name="pickup_date"]') && form.querySelector('[name="pickup_date"]').value) || '';
   var servingsVal = (form.querySelector('[name="servings"]') && form.querySelector('[name="servings"]').value) || '';
   var flavorVal = (form.querySelector('[name="flavor"]') && form.querySelector('[name="flavor"]').value) || '';
-  var designNotesVal = (form.querySelector('[name="design_notes"]') && form.querySelector('[name="design_notes"]').value) || '';
-  var inspirationLinkVal = (form.querySelector('[name="inspiration_link"]') && form.querySelector('[name="inspiration_link"]').value) || '';
-  var inspirationNotesVal = (form.querySelector('[name="inspiration_notes"]') && form.querySelector('[name="inspiration_notes"]').value) || '';
   var allergyNotesVal = (form.querySelector('[name="allergy_notes"]') && form.querySelector('[name="allergy_notes"]').value) || '';
   var extraDetailsVal = (form.querySelector('[name="extra_details"]') && form.querySelector('[name="extra_details"]').value) || '';
-
-  var fileInput = form.querySelector('input[type="file"][name="reference_file"]');
-  var file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
-  if (file && file.size > 600000) {
-    statusEl.textContent = 'Please choose a smaller file (under about 600KB) or paste a link instead.';
-    statusEl.classList.add('text-[var(--rose)]');
-    statusEl.classList.remove('text-[var(--muted)]');
-    return;
-  }
 
   var submitBtn = form.querySelector('button[type="submit"], .cta-primary');
   var prevBtnText = submitBtn ? submitBtn.textContent : null;
@@ -195,7 +167,7 @@ function handleCustomOrderSubmit(e) {
     submitBtn.textContent = 'Saving...';
   }
 
-  function postPayload(reference_file_name, reference_file_data) {
+  function postPayload() {
     return fetch('/api/custom-order-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -209,13 +181,8 @@ function handleCustomOrderSubmit(e) {
         item_type: itemTypeVal,
         servings: servingsVal,
         flavor: flavorVal,
-        design_notes: designNotesVal,
-        inspiration_link: inspirationLinkVal,
-        inspiration_notes: inspirationNotesVal,
         allergy_notes: allergyNotesVal,
         extra_details: extraDetailsVal,
-        reference_file_name: reference_file_name || '',
-        reference_file_data: reference_file_data || '',
       }),
     })
       .then(function (res) {
@@ -248,22 +215,7 @@ function handleCustomOrderSubmit(e) {
       });
   }
 
-  if (file) {
-    readFileAsBase64Segment(file)
-      .then(function (b64) {
-        return postPayload(file.name, b64 || '');
-      })
-      .catch(function () {
-        statusEl.textContent = "We couldn't read that file. Try another image or paste a link.";
-        statusEl.classList.add('text-[var(--rose)]');
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = prevBtnText || 'Send my request';
-        }
-      });
-  } else {
-    postPayload('', '');
-  }
+  postPayload();
 }
 
 function collectNotifyInterests(form) {

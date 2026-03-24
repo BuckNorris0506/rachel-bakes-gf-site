@@ -305,8 +305,8 @@
     closed.innerHTML =
       '<h2 class="font-display text-3xl">Custom orders are not open right now</h2>' +
       '<p class="mt-3 text-base leading-7 text-[var(--muted)]">' + escapeHtml(statusMessage) + '</p>' +
-      '<p class="mt-3 text-sm leading-7 text-[var(--muted)]">When custom orders reopen, we’ll take a limited number of simple celebration cake requests with enough notice.</p>' +
-      '<div class="mt-4 surface rounded-2xl p-4"><p class="text-sm font-semibold text-ink">When custom orders are open, we usually offer:</p><ul class="info-list mt-2 space-y-1 text-sm leading-7 text-[var(--muted)]"><li>Simple celebration cakes</li><li>Limited flavor and style options</li><li>Pickup-based orders in Liberty</li></ul></div>';
+      '<p class="mt-3 text-sm leading-7 text-[var(--muted)]">When custom inquiries reopen, we’ll take a limited number of straightforward requests—usually carrot cake and small preference notes—with enough notice.</p>' +
+      '<div class="mt-4 surface rounded-2xl p-4"><p class="text-sm font-semibold text-ink">When open, we use this form for:</p><ul class="info-list mt-2 space-y-1 text-sm leading-7 text-[var(--muted)]"><li>Carrot cake and simple preferences (nuts, frosting)</li><li>Pickup timing in Liberty</li><li>Clear quantity and dates—no design briefs required</li></ul></div>';
     inquiryEl.parentNode.replaceChild(closed, inquiryEl);
   }
 
