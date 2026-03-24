@@ -100,19 +100,55 @@
           <div id="request" class="rbgf-request-slab compact-form-panel">
             <h2>Send your order request</h2>
             <p class="mt-3 text-sm leading-7 text-[var(--sf-muted)]">Fill in the details below and send. We’ll confirm what’s available, then follow up with pickup and payment.</p>
-            <form id="preorder-form" class="mt-4 grid gap-3 sm:grid-cols-2" novalidate>
+            <form id="preorder-form" class="mt-4 grid gap-4 sm:grid-cols-2 rbgf-preorder-form" novalidate>
               <input class="form-field" type="text" name="name" placeholder="Your name" required />
               <input class="form-field" type="text" name="contact" placeholder="Email or phone" required />
               <div class="sm:col-span-2 border border-[var(--line)] rounded-xl p-4 space-y-3 bg-[var(--paper)]">
                 <p class="text-sm font-semibold text-[var(--sf-text)]">Your order</p>
                 <p class="text-xs text-[var(--sf-muted)] leading-relaxed">Choose quantities. Carrot cake and other custom work stay on the Custom orders page.</p>
-                <div class="grid gap-2 sm:grid-cols-2 text-sm">
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Soft pretzel bites <span class="text-xs">($10 / 20-bite order)</span></span><input class="form-field" type="number" name="pretzel_20_orders" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Cinnamon rolls — 6-pack <span class="text-xs">($20)</span></span><input class="form-field" type="number" name="cinnamon_6" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Cinnamon rolls — 12-pack <span class="text-xs">($40)</span></span><input class="form-field" type="number" name="cinnamon_12" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Oatmeal cream pies <span class="text-xs">($4 each)</span></span><input class="form-field" type="number" name="cream_pies" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Dinner rolls — 6-pack <span class="text-xs">($12)</span></span><input class="form-field" type="number" name="rolls_6" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
-                  <label class="flex flex-col gap-1"><span class="text-[var(--sf-muted)]">Dinner rolls — 12-pack <span class="text-xs">($24)</span></span><input class="form-field" type="number" name="rolls_12" min="0" max="999" step="1" value="0" inputmode="numeric" /></label>
+                <div class="rbgf-preorder-line-items">
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Soft pretzel bites</span>
+                      <span class="rbgf-preorder-line-item__price">($10 / 20-bite order)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="pretzel_20_orders" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Cinnamon rolls — 6-pack</span>
+                      <span class="rbgf-preorder-line-item__price">($20)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="cinnamon_6" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Cinnamon rolls — 12-pack</span>
+                      <span class="rbgf-preorder-line-item__price">($40)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="cinnamon_12" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Oatmeal cream pies</span>
+                      <span class="rbgf-preorder-line-item__price">($4 each)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="cream_pies" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Dinner rolls — 6-pack</span>
+                      <span class="rbgf-preorder-line-item__price">($12)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="rolls_6" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
+                  <label class="rbgf-preorder-line-item">
+                    <div class="rbgf-preorder-line-item__head">
+                      <span class="rbgf-preorder-line-item__title">Dinner rolls — 12-pack</span>
+                      <span class="rbgf-preorder-line-item__price">($24)</span>
+                    </div>
+                    <input class="form-field rbgf-preorder-line-item__qty" type="number" name="rolls_12" min="0" max="999" step="1" value="0" inputmode="numeric" />
+                  </label>
                 </div>
                 <div class="pt-2 border-t border-[var(--line)] flex flex-wrap items-baseline justify-between gap-2">
                   <span class="text-sm font-semibold text-[var(--sf-text)]">Estimated subtotal (tentative)</span>
@@ -120,22 +156,32 @@
                 </div>
                 <p class="text-xs text-[var(--sf-muted)] leading-relaxed">This is an estimate only. Rachel confirms the final total after reviewing your request.</p>
               </div>
-              <select class="form-field" name="pickup_date" aria-label="Pickup date" required>
-                <option value="">Loading pickup dates…</option>
-              </select>
-              <select class="form-field" name="pickup_window" aria-label="Pickup window" required>
-                <option value="">Loading pickup windows…</option>
-              </select>
-              <p id="preorder-pickup-window-hint" class="hidden text-sm leading-6 text-[var(--sf-muted)] sm:col-span-2 -mt-1" role="status"></p>
-              <label class="sm:col-span-2 text-sm font-medium text-[var(--sf-muted)]">How would you like to pay?</label>
-              <select class="form-field sm:col-span-2" name="payment_preference" aria-label="Payment preference" required>
-                <option value="">Choose one</option>
-                <option value="Card">Card</option>
-                <option value="Cash at pickup">Cash at pickup</option>
-              </select>
-              <textarea class="form-field min-h-[120px] sm:col-span-2" name="notes" placeholder="Allergies, flavor notes, event timing, or anything else we should know."></textarea>
-              <div class="sm:col-span-2">
-                <button type="submit" class="cta-primary">Send my request</button>
+              <div class="rbgf-preorder-meta sm:col-span-2">
+                <div class="rbgf-preorder-meta__pickup">
+                  <div class="rbgf-preorder-meta__pickup-grid">
+                    <select class="form-field" name="pickup_date" aria-label="Pickup date" required>
+                      <option value="">Loading pickup dates…</option>
+                    </select>
+                    <select class="form-field" name="pickup_window" aria-label="Pickup window" required>
+                      <option value="">Loading pickup windows…</option>
+                    </select>
+                  </div>
+                  <p id="preorder-pickup-window-hint" class="hidden rbgf-preorder-pickup-hint" role="status"></p>
+                </div>
+                <div class="rbgf-preorder-meta__payment">
+                  <label class="rbgf-preorder-meta__label" for="preorder-payment-preference">How would you like to pay?</label>
+                  <select id="preorder-payment-preference" class="form-field" name="payment_preference" aria-label="Payment preference" required>
+                    <option value="">Choose one</option>
+                    <option value="Card">Card</option>
+                    <option value="Cash at pickup">Cash at pickup</option>
+                  </select>
+                </div>
+                <div class="rbgf-preorder-meta__notes">
+                  <textarea class="form-field min-h-[120px]" name="notes" placeholder="Allergies, flavor notes, event timing, or anything else we should know."></textarea>
+                </div>
+                <div class="rbgf-preorder-meta__submit">
+                  <button type="submit" class="cta-primary">Send my request</button>
+                </div>
               </div>
             </form>
             <div class="rbgf-request-note mt-4 p-3 text-sm leading-6">We confirm your order before payment. Pickup timing may shift around holidays and events.</div>

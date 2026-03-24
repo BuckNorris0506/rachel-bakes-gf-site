@@ -6,8 +6,9 @@
     <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
     <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
-    <title>Rachel Bakes GF · BakeSites Command Center</title>
-    <meta name="description" content="Owner dashboard: orders, bake list, controls, and customer messages." />
+    <title>Rachel Bakes GF · Admin sign-in</title>
+    <meta name="description" content="Owner sign-in for Rachel Bakes GF command center." />
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,7 +23,7 @@
     <div id="auth-gate" class="rbgf-ux-panel" style="max-width: 480px; margin: 2rem auto">
       <p class="rbgf-ux-badge">BakeSites · Owner</p>
       <h1 class="rbgf-ux-h2" style="margin-top: 0.5rem">Command center</h1>
-      <p class="rbgf-ux-sub">Rachel Bakes GF — preorder, production, and customer updates.</p>
+      <p class="rbgf-ux-sub">Rachel Bakes GF — sign in to open the owner dashboard.</p>
       <div id="secret-missing" class="rbgf-ux-hidden" style="padding: 0.75rem; background: #fef2f2; border-radius: 8px; color: #991b1b; font-size: 0.9rem">
         Add <code>?secret=…</code> to the URL (same value as <code>ADMIN_SECRET</code>). On localhost with <code>netlify dev</code>, you can omit it if <code>.env</code> matches <code>.env.example</code>.
       </div>
@@ -33,120 +34,9 @@
       <label class="block text-sm font-semibold" for="admin-password" style="margin-top: 1rem; color: #0f172a">Admin password</label>
       <input id="admin-password" class="form-field" type="password" autocomplete="current-password" style="margin-top: 0.35rem" />
       <button id="auth-submit" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary" style="margin-top: 1rem; width: 100%">Unlock</button>
-    </div>
-
-    <div id="app-root" class="rbgf-ux-hidden">
-      <header class="rbgf-ux-header">
-        <div>
-          <div class="rbgf-ux-brand">Rachel Bakes GF</div>
-          <div class="rbgf-ux-badge">BakeSites command center</div>
-          <p style="margin: 0.35rem 0 0; font-size: 0.82rem">
-            <a href="./dashboard/" style="color: #475569; font-weight: 600">Kitchen board (visual prototype)</a>
-          </p>
-        </div>
-        <div id="demo-banner" class="rbgf-ux-demo rbgf-ux-hidden">Demo data · connect Supabase for live orders</div>
-        <div id="offline-banner" class="rbgf-ux-demo rbgf-ux-hidden" style="background: #e0f2fe; color: #075985; border-color: #7dd3fc">
-          Static preview — Netlify APIs not running. Password not verified. Use <code>netlify dev</code> for real auth.
-        </div>
-      </header>
-
-      <nav class="rbgf-ux-nav" aria-label="Primary">
-        <button type="button" class="rbgf-ux-tab" data-view="orders" aria-selected="true">Orders</button>
-        <button type="button" class="rbgf-ux-tab" data-view="bake" aria-selected="false">Bake list</button>
-        <button type="button" class="rbgf-ux-tab" data-view="controls" aria-selected="false">Ordering &amp; cap</button>
-        <button type="button" class="rbgf-ux-tab" data-view="profit" aria-selected="false">Profit</button>
-      </nav>
-
-      <main class="rbgf-ux-main">
-        <section id="view-orders" class="rbgf-ux-panel">
-          <h2 class="rbgf-ux-h2">Orders</h2>
-          <p class="rbgf-ux-sub">Filter and update status. Tap a status button to move the order through the kitchen.</p>
-          <div class="rbgf-ux-chips" role="toolbar" aria-label="Filters">
-            <button type="button" class="rbgf-ux-chip" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="today" aria-pressed="false">Today</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="tomorrow" aria-pressed="false">Tomorrow</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="week" aria-pressed="false">This week</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="new" aria-pressed="false">New</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="confirmed" aria-pressed="false">Confirmed</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="baking" aria-pressed="false">Baking</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="ready" aria-pressed="false">Ready</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="picked_up" aria-pressed="false">Picked up</button>
-            <button type="button" class="rbgf-ux-chip" data-filter="custom" aria-pressed="false">Custom</button>
-          </div>
-          <div id="orders-list"></div>
-        </section>
-
-        <section id="view-bake" class="rbgf-ux-panel rbgf-ux-hidden">
-          <h2 class="rbgf-ux-h2">Production / bake list</h2>
-          <p class="rbgf-ux-sub">Totals by item for pickup date (parsed from order text). Adjust menu matchers in admin-command.js when you add SKUs.</p>
-          <label class="block text-sm font-semibold" for="bake-date" style="color: #475569">Pickup date</label>
-          <input id="bake-date" type="date" class="form-field" style="max-width: 280px; margin-top: 0.35rem" />
-          <div id="bake-list" style="margin-top: 1rem"></div>
-        </section>
-
-        <section id="view-controls" class="rbgf-ux-hidden">
-          <div class="rbgf-ux-panel">
-            <h2 class="rbgf-ux-h2">Ordering &amp; capacity</h2>
-            <p class="rbgf-ux-sub">Same controls as before — toggles sync to your live site when Supabase + Netlify are configured.</p>
-            <div class="space-y-3" style="max-width: 520px">
-              <label class="flex items-center gap-3" style="min-height: 48px">
-                <input id="preorder_open" type="checkbox" class="h-6 w-6" />
-                <span class="font-semibold text-slate-800">Preorder open</span>
-              </label>
-              <label class="flex items-center gap-3" style="min-height: 48px">
-                <input id="custom_orders_open" type="checkbox" class="h-6 w-6" />
-                <span class="font-semibold text-slate-800">Custom orders open</span>
-              </label>
-              <div>
-                <label class="block text-sm font-semibold text-slate-800" for="daily_cap_dollars">Daily production cap ($)</label>
-                <input id="daily_cap_dollars" class="form-field mt-2" type="number" step="1" min="0" placeholder="e.g. 1000" />
-              </div>
-              <div>
-                <label class="block text-sm font-semibold text-slate-800" for="status_message">Closed-state message (customer-facing)</label>
-                <textarea id="status_message" class="form-field mt-2 min-h-[120px]" placeholder="Shown when ordering is closed."></textarea>
-              </div>
-              <p class="text-sm text-slate-500">Per-item limits: placeholder for later — wire to menu SKU rows when you upload pricing.</p>
-            </div>
-            <div class="flex gap-3 flex-wrap mt-4">
-              <button id="save-config" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary">Save</button>
-              <button id="refresh-config" type="button" class="rbgf-ux-btn rbgf-ux-btn--ghost">Refresh</button>
-            </div>
-          </div>
-          <div class="rbgf-ux-panel" style="margin-top: 1rem">
-            <h2 class="rbgf-ux-h2">Waitlist · reopen blast</h2>
-            <p class="rbgf-ux-sub">Opens preorder and emails everyone on the waitlist who hasn’t been notified yet.</p>
-            <div id="notify-message" class="text-sm mb-3"></div>
-            <div class="grid gap-4 sm:grid-cols-2">
-              <div>
-                <div class="text-sm text-slate-600">Today’s preorder total</div>
-                <div id="today_total_cents" class="text-xl font-bold text-slate-900"></div>
-              </div>
-              <div>
-                <div class="text-sm text-slate-600">Daily cap</div>
-                <div id="daily_cap_cents_display" class="text-xl font-bold text-slate-900"></div>
-              </div>
-              <div>
-                <div class="text-sm text-slate-600">Waitlist (unnotified)</div>
-                <div id="waitlist_count" class="text-xl font-bold text-slate-900"></div>
-              </div>
-            </div>
-            <button id="open-and-notify" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary" style="margin-top: 1rem; width: 100%">Open preorder &amp; notify waitlist</button>
-          </div>
-        </section>
-
-        <section id="view-profit" class="rbgf-ux-hidden">
-          <div class="rbgf-ux-panel">
-            <h2 class="rbgf-ux-h2">Profit snapshot</h2>
-            <p class="rbgf-ux-sub">Booked revenue from preorder amounts; estimated cost from placeholder COGS in <code>admin-command.js</code> (replace with real data).</p>
-            <div id="profit-stats"></div>
-          </div>
-          <div class="rbgf-ux-panel" style="margin-top: 1rem">
-            <h2 class="rbgf-ux-h2">Message log (this browser)</h2>
-            <p class="rbgf-ux-sub">Customer emails triggered from Orders (and demo sends) append here.</p>
-            <div id="email-log" class="rbgf-ux-log"></div>
-          </div>
-        </section>
-      </main>
+      <p class="rbgf-ux-sub" style="margin-top: 1.25rem; font-size: 0.85rem">
+        After you unlock, you’ll continue to <strong>Dashboard</strong> — orders, bake list, ordering &amp; cap, and ledger.
+      </p>
     </div>
 
     <script src="/assets/rachel-bakes-gf/admin-command.js"></script>

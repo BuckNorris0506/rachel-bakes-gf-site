@@ -406,7 +406,7 @@
       if (submitBtn) submitBtn.disabled = true;
       if (hint) {
         hint.textContent =
-          'No pickup dates are open yet. Check back soon or reach out through Contact.';
+          'No pickup dates open yet — check back soon or reach out via Contact.';
         hint.classList.remove('hidden');
       }
       return;
@@ -447,35 +447,17 @@
   function applyStatusStrip() {
     var el = document.getElementById('rbgf-ordering-status-strip');
     if (!el) return;
-    var capMsg = '';
-    if (
-      preorderOpen &&
-      dailyCapCents != null &&
-      todayTotalCents != null &&
-      Number.isFinite(Number(dailyCapCents)) &&
-      Number(dailyCapCents) > 0
-    ) {
-      var capD = Math.round(Number(dailyCapCents) / 100);
-      var todayD = Math.round(Number(todayTotalCents) / 100);
-      capMsg =
-        ' · Today’s preorder submissions: ~$' +
-        todayD +
-        ' (site baseline $' +
-        capD +
-        '). Pickup-date limits are separate — your order is not blocked mid-form when a date is near full.';
-    }
     if (preorderOpen) {
       var policiesHref = './pickup-policies/';
       if (getOrderPagePath() === 'order') policiesHref = '../pickup-policies/';
       el.innerHTML =
         '<div class="mx-auto max-w-site px-5 py-3">' +
         '<p class="text-sm leading-6 text-[var(--sf-muted)]">' +
-        '<span class="font-semibold text-[var(--sf-text)]">Preorder is open.</span> ' +
-        'Pickup is in Liberty — we confirm your window when your bake is scheduled. ' +
+        '<span class="font-semibold text-[var(--sf-text)]">Preorders are open.</span> ' +
+        'Pickup is in Liberty, Missouri. Choose from the available dates and windows below — we\'ll confirm the details after we review your request. ' +
         '<a href="' +
         policiesHref +
         '" class="text-rose font-medium hover:underline">Pickup &amp; policies</a>' +
-        capMsg +
         '</p></div>';
       el.hidden = false;
     } else {

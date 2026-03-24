@@ -108,6 +108,12 @@
               <input class="form-field" type="text" name="servings" placeholder="Servings or quantity" />
               <input class="form-field sm:col-span-2" type="text" name="flavor" placeholder="Simple preferences (e.g. walnuts or none; cream cheese or icing on rolls)" />
               <input class="form-field sm:col-span-2" type="text" name="allergy_notes" placeholder="Allergy / dietary notes" />
+              <label class="sm:col-span-2 text-sm font-medium text-[var(--sf-muted)]">How would you like to pay?</label>
+              <select class="form-field sm:col-span-2" name="payment_preference" aria-label="Payment preference" required>
+                <option value="">Choose one</option>
+                <option value="Card">Card</option>
+                <option value="Cash at pickup">Cash at pickup</option>
+              </select>
               <textarea class="form-field min-h-[100px] sm:col-span-2" name="extra_details" placeholder="Anything else straightforward we should know (no design boards or theme briefs needed)"></textarea>
               <div class="sm:col-span-2">
                 <button type="submit" class="cta-primary">Send my request</button>

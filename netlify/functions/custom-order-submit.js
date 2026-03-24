@@ -11,6 +11,8 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ORDERING_CONFIG_ROW_ID = process.env.ORDERING_CONFIG_ROW_ID || "1";
 
+const { isPaymentPreferenceOk } = require("./lib/preorder-schedule");
+
 function isValidEmail(email) {
   if (!email) return false;
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -118,6 +120,19 @@ module.exports.handler = async function handler(event) {
       };
     }
 
+    const paymentPreference =
+      typeof parsed.payment_preference === "string" ? parsed.payment_preference.trim() : "";
+    if (!isPaymentPreferenceOk(paymentPreference)) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          success: false,
+          error: "Please choose how you would like to pay (Card or Cash at pickup).",
+        }),
+      };
+    }
+
     // config gate
     const configRows = await supabaseRestGet(
       `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=custom_orders_open,status_message`
@@ -188,6 +203,7 @@ module.exports.handler = async function handler(event) {
     if (inspiration_notes) row.inspiration_notes = inspiration_notes;
     if (reference_file_name) row.reference_file_name = reference_file_name;
     if (reference_file_data) row.reference_file_data = reference_file_data;
+    row.payment_preference = paymentPreference;
 
     const inserted = await supabaseRestPost("custom_orders?select=id", [row]);
 

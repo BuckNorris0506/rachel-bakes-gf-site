@@ -12,6 +12,8 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ORDERING_CONFIG_ROW_ID = process.env.ORDERING_CONFIG_ROW_ID || "1";
 
+const { normalizePreorderPickupSchedule, customerFacingSchedule } = require("./lib/preorder-schedule");
+
 // "Today" boundaries for Rachel Bakes GF should follow America/Chicago.
 // We compute the start of the local day in that timezone and return UTC ISO strings for PostgREST filters.
 const BUSINESS_TIMEZONE = "America/Chicago";
@@ -114,7 +116,7 @@ module.exports.handler = async function handler() {
 
     // 1) Read single-row ordering config
     const configRows = await supabaseRestGet(
-      `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message,updated_at`
+      `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message,updated_at,preorder_pickup_schedule`
     );
 
     const config = Array.isArray(configRows) && configRows.length ? configRows[0] : null;
@@ -124,6 +126,9 @@ module.exports.handler = async function handler() {
         body: JSON.stringify({ error: "Missing config row in Supabase (expected single row model)" }),
       };
     }
+
+    const scheduleFull = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
+    const preorderPickupSchedule = customerFacingSchedule(scheduleFull);
 
     // 2) Sum today's preorder amount_cents (America/Chicago day boundaries)
     const todayStartIso = isoChicagoStartOfDay(new Date());
@@ -153,6 +158,7 @@ module.exports.handler = async function handler() {
         statusMessage,
         dailyCapCents,
         todayTotalCents,
+        preorderPickupSchedule,
       }),
     };
   } catch (err) {

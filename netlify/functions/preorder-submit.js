@@ -1,5 +1,11 @@
 // preorder-submit netlify function
-// Stores preorder submissions and enforces daily revenue cap auto-close.
+// Structured preorder line items, tentative revenue, per–pickup-date soft cap.
+//
+// Capacity rule (soft, not a mid-order hard stop):
+// 1) Inserts the preorder row first (never reject solely because the request would cross the target).
+// 2) Then, if sum(amount_cents) for that pickup_date >= target, sets closed:true on that date in
+//    config.preorder_pickup_schedule so future customers no longer see that date.
+// 3) Rachel can reopen a date by clearing "Closed to new requests" in Command Center and Save.
 //
 // Env vars required:
 // - SUPABASE_URL
@@ -12,7 +18,14 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ORDERING_CONFIG_ROW_ID = process.env.ORDERING_CONFIG_ROW_ID || "1";
 
-// "Today" boundaries should follow America/Chicago.
+const {
+  normalizePreorderPickupSchedule,
+  validatePickupChoice,
+  isPaymentPreferenceOk,
+  getRevenueTargetCentsForDate,
+} = require("./lib/preorder-schedule");
+const { parseLineItemsBody, computeSubtotalCents, lineItemsToOrderDetails } = require("./lib/preorder-menu");
+
 const BUSINESS_TIMEZONE = "America/Chicago";
 
 function getZonedYMD(date) {
@@ -65,7 +78,7 @@ function isoChicagoStartOfDay(d) {
 
 function isoChicagoEndOfDay(d) {
   const start = startOfDayInTimeZone(new Date(d), BUSINESS_TIMEZONE);
-  const probe = new Date(start.getTime() + 36 * 3600 * 1000); // safe across DST
+  const probe = new Date(start.getTime() + 36 * 3600 * 1000);
   return startOfDayInTimeZone(probe, BUSINESS_TIMEZONE).toISOString();
 }
 
@@ -132,13 +145,38 @@ async function supabaseRestPatch(pathWithQuery, jsonBody) {
   return text ? JSON.parse(text) : [];
 }
 
-function toCentsFromDollarsMaybe(dollars) {
-  if (dollars == null) return null;
-  const v = parseFloat(String(dollars));
-  if (!Number.isFinite(v)) return null;
-  const cents = Math.round(v * 100);
-  if (!Number.isFinite(cents) || cents <= 0) return null;
-  return cents;
+async function sumAmountCentsForPickupDate(pickupDate) {
+  const rows = await supabaseRestGet(
+    `preorders?pickup_date=eq.${encodeURIComponent(pickupDate)}&select=amount_cents`
+  );
+  return (Array.isArray(rows) ? rows : []).reduce(function (sum, row) {
+    const v = row && row.amount_cents != null ? Number(row.amount_cents) : 0;
+    return sum + (Number.isFinite(v) ? v : 0);
+  }, 0);
+}
+
+// Runs only after a successful insert. Never blocks the order that pushed the date over the target.
+async function markPickupDateClosedIfOverTarget(pickupDate, config) {
+  const dailyCapCents = config.daily_cap_cents != null ? Number(config.daily_cap_cents) : null;
+  const scheduleNorm = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
+  const target = getRevenueTargetCentsForDate(scheduleNorm, pickupDate, dailyCapCents);
+  if (target == null || !Number.isFinite(target) || target <= 0) return { dateClosed: false };
+
+  const total = await sumAmountCentsForPickupDate(pickupDate);
+  if (total < target) return { dateClosed: false };
+
+  const raw = Array.isArray(config.preorder_pickup_schedule) ? config.preorder_pickup_schedule : [];
+  if (!raw.length) return { dateClosed: false };
+
+  const patched = raw.map(function (e) {
+    if (e && e.date === pickupDate) return Object.assign({}, e, { closed: true });
+    return e;
+  });
+  await supabaseRestPatch(`config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}`, {
+    preorder_pickup_schedule: patched,
+    updated_at: new Date().toISOString(),
+  });
+  return { dateClosed: true };
 }
 
 module.exports.handler = async function handler(event) {
@@ -180,42 +218,46 @@ module.exports.handler = async function handler(event) {
 
     const name = typeof parsed.name === "string" ? parsed.name.trim() : "";
     const contact = typeof parsed.contact === "string" ? parsed.contact.trim() : "";
-    const orderDetails = typeof parsed.order_details === "string" ? parsed.order_details.trim() : "";
     const pickupDate = typeof parsed.pickup_date === "string" ? parsed.pickup_date.trim() : "";
     const pickupWindow = typeof parsed.pickup_window === "string" ? parsed.pickup_window.trim() : "";
     const notes = typeof parsed.notes === "string" ? parsed.notes.trim() : "";
+    const paymentPreference =
+      typeof parsed.payment_preference === "string" ? parsed.payment_preference.trim() : "";
 
-    const amountCentsIn = parsed.amount_cents;
-    const orderTotalDollarsIn = parsed.order_total_dollars;
+    const lineItems = parseLineItemsBody(parsed.line_items);
 
-    let amountCents = null;
-    if (amountCentsIn != null && String(amountCentsIn).trim() !== "") {
-      const v = parseInt(String(amountCentsIn), 10);
-      if (Number.isFinite(v) && v > 0) amountCents = v;
-    }
-    if (amountCents == null) {
-      amountCents = toCentsFromDollarsMaybe(orderTotalDollarsIn);
-    }
-
-    if (!name || !contact || !orderDetails) {
+    if (!name || !contact) {
       return {
         statusCode: 400,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Please complete name, contact, and what you want to order." }),
+        body: JSON.stringify({ success: false, error: "Please complete your name and contact." }),
       };
     }
 
-    if (amountCents == null) {
+    if (!lineItems) {
       return {
         statusCode: 400,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Please enter a valid estimated total." }),
+        body: JSON.stringify({
+          success: false,
+          error: "Choose at least one item with a quantity.",
+        }),
       };
     }
 
-    // 1) Read config row
+    const amountCents = computeSubtotalCents(lineItems);
+    if (amountCents <= 0) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ success: false, error: "Order total could not be calculated." }),
+      };
+    }
+
+    const orderDetails = lineItemsToOrderDetails(lineItems);
+
     const configRows = await supabaseRestGet(
-      `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message`
+      `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message,preorder_pickup_schedule`
     );
     const config = Array.isArray(configRows) && configRows.length ? configRows[0] : null;
     if (!config) {
@@ -241,61 +283,88 @@ module.exports.handler = async function handler(event) {
       };
     }
 
+    if (!isPaymentPreferenceOk(paymentPreference)) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          success: false,
+          error: "Please choose how you would like to pay (Card or Cash at pickup).",
+        }),
+      };
+    }
+
+    const scheduleNorm = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
+    if (!scheduleNorm.some(function (r) { return r.date === pickupDate && !r.closed && r.windows.length; })) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          success: false,
+          error: "That pickup date is not available. Please choose another date or contact us.",
+        }),
+      };
+    }
+
+    if (!validatePickupChoice(scheduleNorm, pickupDate, pickupWindow)) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          success: false,
+          error: "Please choose a pickup date and window from the options in the form.",
+        }),
+      };
+    }
+
     if (dailyCapCents == null || !Number.isFinite(dailyCapCents) || dailyCapCents <= 0) {
       return {
         statusCode: 500,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Daily cap is not configured correctly." }),
+        body: JSON.stringify({ success: false, error: "Daily revenue target is not configured correctly." }),
       };
     }
 
-    // 2) Insert preorder
     const inserted = await supabaseRestPost("preorders?select=id", [
       {
         name: name,
         contact: contact,
         order_details: orderDetails,
+        line_items: lineItems,
         pickup_date: pickupDate || null,
         pickup_window: pickupWindow || null,
         notes: notes || null,
         amount_cents: amountCents,
+        payment_preference: paymentPreference,
       },
     ]);
 
-    // 3) Recompute today's total and optionally auto-close
+    // Soft cap: only after save — may mark this pickup date closed for *future* requests.
+    const capResult = await markPickupDateClosedIfOverTarget(pickupDate, config);
+
     const todayStartIso = isoChicagoStartOfDay(new Date());
     const tomorrowStartIso = isoChicagoEndOfDay(new Date());
-    const preorderRows = await supabaseRestGet(
+    const preorderRowsToday = await supabaseRestGet(
       `preorders?created_at=gte.${encodeURIComponent(todayStartIso)}&created_at=lt.${encodeURIComponent(tomorrowStartIso)}&select=amount_cents`
     );
-
-    const todayTotalCents = (Array.isArray(preorderRows) ? preorderRows : []).reduce(function (sum, row) {
+    const todayTotalCents = (Array.isArray(preorderRowsToday) ? preorderRowsToday : []).reduce(function (sum, row) {
       const v = row && row.amount_cents != null ? Number(row.amount_cents) : 0;
       return sum + (Number.isFinite(v) ? v : 0);
     }, 0);
-
-    const capReached = todayTotalCents >= dailyCapCents;
-
-    let preorderOpenAfter = true;
-    if (capReached) {
-      await supabaseRestPatch(
-        `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}`,
-        { preorder_open: false, updated_at: new Date().toISOString() }
-      );
-      preorderOpenAfter = false;
-    }
 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         success: true,
-        message: "Thanks! Your preorder request is saved. We’ll confirm availability and pickup details.",
+        message: capResult.dateClosed
+          ? "Thanks! Your preorder was accepted and saved. That pickup date is now full for new requests (your order still counts — we’ll confirm with you separately)."
+          : "Thanks! Your preorder request is saved. We’ll confirm availability and pickup details.",
         id: inserted && Array.isArray(inserted) && inserted.length ? inserted[0].id : null,
-        capReached: capReached,
-        preorderOpen: preorderOpenAfter,
+        pickupDateClosed: capResult.dateClosed === true,
         dailyCapCents: dailyCapCents,
         todayTotalCents: todayTotalCents,
+        amountCents: amountCents,
       }),
     };
   } catch (err) {
@@ -310,4 +379,3 @@ module.exports.handler = async function handler(event) {
     };
   }
 };
-

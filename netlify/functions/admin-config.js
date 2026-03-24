@@ -26,6 +26,8 @@ const ORDERING_CONFIG_ROW_ID = process.env.ORDERING_CONFIG_ROW_ID || "1";
 const ADMIN_SECRET = process.env.ADMIN_SECRET;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
+const { normalizePreorderPickupSchedule } = require("./lib/preorder-schedule");
+
 function getHeader(event, name) {
   if (!event || !event.headers) return "";
   const key = name.toLowerCase();
@@ -193,7 +195,7 @@ async function getWaitlistCountUnnotified() {
 
 async function getConfigRow() {
   const rows = await supabaseRestGet(
-    `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message,updated_at`
+    `config?id=eq.${encodeURIComponent(ORDERING_CONFIG_ROW_ID)}&select=preorder_open,custom_orders_open,daily_cap_cents,status_message,updated_at,preorder_pickup_schedule`
   );
   return Array.isArray(rows) && rows.length ? rows[0] : null;
 }
@@ -240,6 +242,7 @@ module.exports.handler = async function handler(event) {
       }
       const todayTotalCents = await getTodayTotalCents();
       const waitlistCount = await getWaitlistCountUnnotified();
+      const preorder_pickup_schedule = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
 
       return {
         statusCode: 200,
@@ -252,6 +255,7 @@ module.exports.handler = async function handler(event) {
             daily_cap_cents: Number(config.daily_cap_cents),
             status_message: config.status_message || "",
             updated_at: config.updated_at || null,
+            preorder_pickup_schedule,
           },
           todayTotalCents,
           waitlistCount,
@@ -297,6 +301,17 @@ module.exports.handler = async function handler(event) {
 
       if (typeof parsed.status_message === "string") updates.status_message = parsed.status_message;
 
+      if (parsed.preorder_pickup_schedule != null) {
+        if (!Array.isArray(parsed.preorder_pickup_schedule)) {
+          return {
+            statusCode: 400,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ success: false, error: "preorder_pickup_schedule must be an array." }),
+          };
+        }
+        updates.preorder_pickup_schedule = normalizePreorderPickupSchedule(parsed.preorder_pickup_schedule);
+      }
+
       updates.updated_at = new Date().toISOString();
 
       const patched = await supabaseRestPatch(
@@ -307,6 +322,7 @@ module.exports.handler = async function handler(event) {
       const config = Array.isArray(patched) && patched.length ? patched[0] : await getConfigRow();
       const todayTotalCents = await getTodayTotalCents();
       const waitlistCount = await getWaitlistCountUnnotified();
+      const preorder_pickup_schedule = normalizePreorderPickupSchedule(config.preorder_pickup_schedule);
 
       return {
         statusCode: 200,
@@ -319,6 +335,7 @@ module.exports.handler = async function handler(event) {
             daily_cap_cents: Number(config.daily_cap_cents),
             status_message: config.status_message || "",
             updated_at: config.updated_at || null,
+            preorder_pickup_schedule,
           },
           todayTotalCents,
           waitlistCount,
