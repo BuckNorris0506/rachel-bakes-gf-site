@@ -1,0 +1,371 @@
+/* Rachel Bakes GF — BakeSites command center (admin only, iPad-first) */
+
+:root {
+  --ux-bg: #f1f5f9;
+  --ux-surface: #ffffff;
+  --ux-muted: #64748b;
+  --ux-ink: #0f172a;
+  --ux-accent: #2b3a44;
+  --ux-soft: #6f8798;
+  --ux-line: #cbd5e1;
+  --ux-chip: #e2e8f0;
+  --ux-ok: #15803d;
+  --ux-warn: #b45309;
+  --ux-touch: 48px;
+}
+
+.rbgf-ux {
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: var(--ux-ink);
+  background: var(--ux-bg);
+  min-height: 100vh;
+}
+
+.rbgf-ux * {
+  box-sizing: border-box;
+}
+
+.rbgf-ux-header {
+  background: var(--ux-surface);
+  border-bottom: 1px solid var(--ux-line);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.rbgf-ux-brand {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ux-accent);
+}
+
+.rbgf-ux-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ux-soft);
+}
+
+.rbgf-ux-demo {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+
+.rbgf-ux-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--ux-surface);
+  border-bottom: 1px solid var(--ux-line);
+}
+
+.rbgf-ux-tab {
+  min-height: var(--ux-touch);
+  padding: 0 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--ux-line);
+  background: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ux-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.rbgf-ux-tab:hover {
+  border-color: var(--ux-soft);
+  color: var(--ux-accent);
+}
+
+.rbgf-ux-tab[aria-selected="true"] {
+  background: var(--ux-accent);
+  color: #fff;
+  border-color: var(--ux-accent);
+}
+
+.rbgf-ux-main {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rbgf-ux-panel {
+  background: var(--ux-surface);
+  border: 1px solid var(--ux-line);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rbgf-ux-h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--ux-accent);
+}
+
+.rbgf-ux-sub {
+  font-size: 0.9rem;
+  color: var(--ux-muted);
+  margin: 0 0 1rem;
+}
+
+.rbgf-ux-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.rbgf-ux-chip {
+  min-height: 40px;
+  padding: 0 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--ux-line);
+  background: var(--ux-chip);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ux-ink);
+  cursor: pointer;
+}
+
+.rbgf-ux-chip[aria-pressed="true"] {
+  background: var(--ux-accent);
+  color: #fff;
+  border-color: var(--ux-accent);
+}
+
+.rbgf-ux-order {
+  border: 1px solid var(--ux-line);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: #fff;
+}
+
+.rbgf-ux-order-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.rbgf-ux-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.rbgf-ux-meta {
+  font-size: 0.8rem;
+  color: var(--ux-muted);
+  margin-top: 0.25rem;
+}
+
+.rbgf-ux-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rbgf-ux-pill--new {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+.rbgf-ux-pill--confirmed {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.rbgf-ux-pill--baking {
+  background: #fef3c7;
+  color: #b45309;
+}
+.rbgf-ux-pill--ready {
+  background: #dcfce7;
+  color: #15803d;
+}
+.rbgf-ux-pill--picked_up {
+  background: #f1f5f9;
+  color: #475569;
+}
+.rbgf-ux-pill--custom {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+.rbgf-ux-items {
+  margin: 0.65rem 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.65rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid var(--ux-soft);
+}
+
+.rbgf-ux-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.rbgf-ux-btn {
+  min-height: var(--ux-touch);
+  padding: 0 0.9rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.rbgf-ux-btn--primary {
+  background: #171717;
+  color: #fff;
+  border-color: #171717;
+}
+
+.rbgf-ux-btn--primary:hover {
+  background: #2b3a44;
+  border-color: #2b3a44;
+}
+
+.rbgf-ux-btn--ghost {
+  background: transparent;
+  color: #171717;
+  border-color: #171717;
+}
+
+.rbgf-ux-btn--ghost:hover {
+  background: #f1f5f9;
+}
+
+.rbgf-ux-btn--sm {
+  min-height: 40px;
+  font-size: 0.75rem;
+  padding: 0 0.65rem;
+}
+
+.rbgf-ux-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.rbgf-ux-status-row label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ux-muted);
+  width: 100%;
+}
+
+.rbgf-ux-bake-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .rbgf-ux-bake-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.rbgf-ux-bake-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid var(--ux-line);
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.rbgf-ux-bake-qty {
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--ux-accent);
+}
+
+.rbgf-ux-stat {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 720px) {
+  .rbgf-ux-stat {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.rbgf-ux-stat-card {
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--ux-line);
+  background: #fff;
+}
+
+.rbgf-ux-stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ux-muted);
+}
+
+.rbgf-ux-stat-val {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  color: var(--ux-accent);
+}
+
+.rbgf-ux-log {
+  font-size: 0.78rem;
+  color: var(--ux-muted);
+  max-height: 160px;
+  overflow: auto;
+  border: 1px dashed var(--ux-line);
+  border-radius: 8px;
+  padding: 0.5rem;
+  background: #f8fafc;
+}
+
+.rbgf-ux-hidden {
+  display: none !important;
+}
+
+.rbgf-ux input[type="date"],
+.rbgf-ux input[type="number"],
+.rbgf-ux input[type="password"],
+.rbgf-ux textarea,
+.rbgf-ux .form-field {
+  width: 100%;
+  max-width: 100%;
+}

@@ -1,1 +1,148 @@
- <!DOCTYPE html><html lang="en" class="scroll-smooth"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Order / Preorder | Rachel Bakes GF</title><meta name="description" content="Learn how Rachel Bakes GF preorders work, where pickup happens, what windows look like, and how to submit a clear request." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={theme:{extend:{colors:{ink:'#342a23',rose:'#c56a5f'},maxWidth:{site:'1100px'}}}}</script><script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script><link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" /></head><body><div class="site-shell"><header x-data="{open:false}" class="sticky top-0 z-50 border-b border-[var(--line)] nav-glass"><div class="mx-auto max-w-site px-5"><div class="header-inner"><a href="../" class="brand-wrap brand-direction-2 header-brand"><span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span><span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span></a><nav class="header-nav hidden md:flex"><a class="nav-link" href="../">Home</a><a class="nav-link" href="../menu/">Menu</a><a class="nav-link nav-active" href="./">Order</a><a class="nav-link" href="../custom-orders/">Custom Orders</a><a class="nav-link" href="../pickup-policies/">Policies</a><a class="nav-link" href="../gallery/">Gallery</a><a class="nav-link" href="../about/">About</a></nav><div class="header-cta-wrap hidden md:block"><a href="#request" class="cta-header">Order / Preorder</a></div><button @click="open=!open" class="md:hidden rounded-full border border-[var(--line)] bg-white/80 px-4 py-2 text-sm font-medium" aria-label="Open site navigation">Navigate</button></div><div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden"><a class="nav-link" href="../">Home</a><a class="nav-link" href="../menu/">Menu</a><a class="nav-link nav-active" href="./">Order</a><a class="nav-link" href="../custom-orders/">Custom Orders</a><a class="nav-link" href="../pickup-policies/">Policies</a><a class="nav-link" href="../gallery/">Gallery</a><a class="nav-link" href="../about/">About</a></div></div></header><main><section class="page-hero py-16"><div class="mx-auto max-w-site px-5"><p class="section-label text-xs font-semibold uppercase text-rose">Order / Preorder</p><h1 class="mt-3 font-display text-5xl text-ink">Order ahead, pick up in Liberty.</h1><p class="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">Most items are made to order. Send us what you’d like and when you can pick up; we’ll confirm availability and get you on the schedule.</p></div></section><section class="pb-20"><div class="mx-auto grid max-w-site gap-8 px-5 lg:grid-cols-[.95fr,1.05fr]"><div class="space-y-5"><div class="surface-strong rounded-[1.75rem] p-6"><h2 class="font-display text-3xl">How preorder works</h2><ol class="mt-5 space-y-4 text-sm leading-7 text-[var(--muted)]"><li><span class="font-semibold text-ink">1.</span> Check the menu and decide what you’d like.</li><li><span class="font-semibold text-ink">2.</span> Send your request with what you want, your preferred pickup date, and any notes.</li><li><span class="font-semibold text-ink">3.</span> We’ll confirm what’s available and coordinate pickup with you.</li></ol></div><div class="surface-strong rounded-[1.75rem] p-6"><h2 class="font-display text-3xl">Pickup basics</h2><ul class="info-list mt-5 space-y-3 text-sm leading-7 text-[var(--muted)]"><li>Pickup is in Liberty, Missouri. We’ll share the exact details when your order is confirmed.</li><li>Pickup windows follow our bake schedule—weekends, holidays, and events can shift timing.</li><li>What’s available can change week to week; we’ll let you know when we confirm.</li></ul></div><div class="surface-strong rounded-[1.75rem] p-6"><h2 class="font-display text-3xl">Easiest to order</h2><p class="mt-4 text-sm leading-7 text-[var(--muted)]">Pretzel bites, cinnamon rolls, seasonal items, and simple celebration cakes are the smoothest to get on the schedule. Send your request and we’ll take it from there.</p></div></div><div id="request" class="surface-strong rounded-[2rem] p-7"><h2 class="font-display text-3xl">Send your order request</h2><p class="mt-4 text-sm leading-7 text-[var(--muted)]">Fill in the details below and hit send. Your preorder request will be saved. We’ll reply to confirm availability and pickup details.</p><form id="preorder-form" class="mt-6 grid gap-4 sm:grid-cols-2" novalidate><input class="form-field" type="text" name="name" placeholder="Your name" required /><input class="form-field" type="text" name="contact" placeholder="Email or phone" required /><input class="form-field sm:col-span-2" type="text" name="order" placeholder="What would you like to order?" /><input class="form-field" type="text" name="pickup_date" placeholder="Preferred pickup date" /><input class="form-field" type="text" name="pickup_window" placeholder="Preferred pickup window" /><input class="form-field" type="number" name="order_total_dollars" placeholder="Estimated total ($)" step="0.01" min="0.01" required /><p class="text-sm leading-6 text-[var(--muted)] sm:col-span-2 -mt-1">Your best guess for what this order will cost (check the menu and add it up, or ballpark it). We’ll confirm the real total with you—this just helps us plan the bake day.</p><textarea class="form-field min-h-[140px] sm:col-span-2" name="notes" placeholder="Quantity, flavor, event timing, allergy notes, or anything else we should know."></textarea><div class="sm:col-span-2"><button type="submit" class="cta-primary">Send my request</button></div></form><div class="mt-6 rounded-2xl bg-[rgba(197,106,95,.08)] p-4 text-sm leading-7 text-[var(--muted)]">We’ll confirm your pickup slot once we’ve checked availability. Schedules can shift around holidays, events, and seasonal bakes.</div></div></div></section></main><footer class="border-t border-[var(--line)] py-10"><div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm text-[var(--muted)] md:flex-row md:items-end md:justify-between"><div><a href="../" class="brand-wrap brand-direction-2 inline-block"><span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span><span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span></a><p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Preorder pickup for pretzel bites, cinnamon rolls, seasonal specials, and selective custom orders.</p></div><nav class="flex flex-wrap gap-4"><a class="footer-link" href="../">Home</a><a class="footer-link" href="../menu/">Menu</a><a class="footer-link" href="./">Order / Preorder</a><a class="footer-link" href="../custom-orders/">Custom Orders</a><a class="footer-link" href="../pickup-policies/">Pickup &amp; Policies</a><a class="footer-link" href="../gallery/">Gallery</a><a class="footer-link" href="../about/">About</a></nav></div></footer></div><script src="/assets/rachel-bakes-gf/ordering-config.js"></script><script src="/assets/rachel-bakes-gf/ordering-ui.js"></script><script src="/assets/rachel-bakes-gf/forms.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
+  <title>Order / Preorder | Rachel Bakes GF</title>
+  <meta name="description" content="Preorder pickup for Rachel Bakes GF in Liberty, Missouri — pretzel bites, cinnamon rolls, oatmeal cream pies, and dinner rolls. Carrot cake is by custom inquiry." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { cream:'#fbf6ef', paper:'#fffdf9', ink:'#342a23', rose:'#c56a5f', cocoa:'#7b4d3e', butter:'#f2c98b', sage:'#7d9685' }, boxShadow: { warm:'0 18px 60px rgba(52,42,35,.12)' }, maxWidth: { site:'1100px' } } } };
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
+</head>
+<body class="storefront-home rbgf-inner-page">
+  <div class="site-shell">
+    <header x-data="{open:false}" class="sticky top-0 z-[1000] storefront-header nav-glass rbgf-overlay-header rbgf-inner-header">
+      <div class="mx-auto max-w-site px-5">
+        <div class="header-inner">
+          <a href="../" class="brand-wrap brand-direction-2 header-brand">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker rbgf-header-kicker">Liberty, Missouri</span>
+          </a>
+          <nav class="header-nav hidden md:flex" aria-label="Primary">
+            <a class="nav-link" href="../">Home</a>
+            <a class="nav-link" href="../menu/">Menu</a>
+            <a class="nav-link nav-active" href="./">Order</a>
+            <a class="nav-link" href="../custom-orders/">Custom</a>
+            <a class="nav-link" href="../pickup-policies/">Policies</a>
+            <a class="nav-link" href="../gallery/">Gallery</a>
+            <a class="nav-link" href="../contact/">Contact</a>
+            <a class="nav-link" href="../about/">About</a>
+          </nav>
+          <div class="header-cta-wrap hidden md:block"><a href="#request" class="cta-header">Preorder</a></div>
+          <button @click="open=!open" class="rbgf-nav-toggle md:hidden" type="button" aria-label="Open site navigation">Menu</button>
+        </div>
+        <div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden rbgf-mobile-drawer">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="../menu/">Menu</a>
+          <a class="nav-link nav-active" href="./">Order</a>
+          <a class="nav-link" href="../custom-orders/">Custom Orders</a>
+          <a class="nav-link" href="../pickup-policies/">Policies</a>
+          <a class="nav-link" href="../gallery/">Gallery</a>
+          <a class="nav-link" href="../contact/">Contact</a>
+          <a class="nav-link" href="../about/">About</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="rbgf-inner-main">
+      <section class="rbgf-inner-hero">
+        <div class="mx-auto max-w-site px-5">
+          <p class="section-label text-xs font-semibold uppercase">Order / Preorder</p>
+          <h1 class="mt-2 text-4xl sm:text-5xl">Order ahead, pick up in Liberty.</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7">Most items are made to order. Send us what you’d like and when you can pick up; we’ll confirm availability and get you on the schedule.</p>
+          <p class="mt-3 max-w-2xl text-sm leading-7 text-[var(--sf-muted)]">
+            Live preorder status appears below when the site is connected. Pickup is always coordinated after we confirm your order — see
+            <a href="../pickup-policies/" class="text-rose font-medium hover:underline">pickup &amp; policies</a>
+            or <a href="../contact/" class="text-rose font-medium hover:underline">ask a question</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="border-b border-[var(--line)] bg-[var(--paper)]/90" id="rbgf-ordering-status-strip" hidden aria-label="Preorder status"></section>
+
+      <section class="pb-12">
+        <div class="mx-auto grid max-w-site gap-6 px-5 lg:grid-cols-[.95fr,1.05fr] lg:gap-8">
+          <div class="space-y-4">
+            <div class="rbgf-request-ledger compact-panel">
+              <h2>How preorder works</h2>
+              <ol class="mt-3 space-y-2 text-sm leading-7">
+                <li><span class="font-semibold text-[var(--sf-text)]">1.</span> Check the menu and decide what you’d like.</li>
+                <li><span class="font-semibold text-[var(--sf-text)]">2.</span> Send your request with what you want, your preferred pickup date, and any notes.</li>
+                <li><span class="font-semibold text-[var(--sf-text)]">3.</span> We’ll confirm what’s available and coordinate pickup with you.</li>
+              </ol>
+            </div>
+            <div class="rbgf-request-ledger compact-panel">
+              <h2>Pickup basics</h2>
+              <ul class="info-list mt-3 space-y-2 text-sm leading-7">
+                <li><strong>Where:</strong> Liberty, Missouri — exact pickup details are sent when your order is confirmed.</li>
+                <li><strong>When:</strong> Windows depend on the bake schedule; weekends and holidays can shift availability.</li>
+                <li><strong>Confirmation:</strong> Your slot isn’t final until we reply — we’ll align on time and any order tweaks.</li>
+              </ul>
+            </div>
+            <div class="featured-photo rbgf-featured-photo min-h-[170px]">
+              <img src="../Rachel Bakes GF-Pics/menu-soft-pretzel-bites.jpg" alt="Soft pretzel bites in kraft boxes with coarse salt" />
+              <div class="featured-photo-copy">
+                <h3 class="text-lg">Easiest to order</h3>
+                <p class="mt-1 text-sm leading-6">Pretzel bites, cinnamon rolls, oatmeal cream pies, and dinner rolls are the standard preorder lineup. Carrot cake is by custom inquiry.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="request" class="rbgf-request-slab compact-form-panel">
+            <h2>Send your order request</h2>
+            <p class="mt-3 text-sm leading-7 text-[var(--sf-muted)]">Fill in the details below and hit send. Your preorder request will be saved and we’ll reply with pickup details.</p>
+            <form id="preorder-form" class="mt-4 grid gap-3 sm:grid-cols-2" novalidate>
+              <input class="form-field" type="text" name="name" placeholder="Your name" required />
+              <input class="form-field" type="text" name="contact" placeholder="Email or phone" required />
+              <input class="form-field sm:col-span-2" type="text" name="order" placeholder="What would you like to order?" />
+              <input class="form-field" type="text" name="pickup_date" placeholder="Preferred pickup date" />
+              <input class="form-field" type="text" name="pickup_window" placeholder="Preferred pickup window" />
+              <input class="form-field" type="number" name="order_total_dollars" placeholder="Estimated total ($)" step="0.01" min="0.01" required />
+              <p class="text-sm leading-6 text-[var(--sf-muted)] sm:col-span-2 -mt-1">Your best guess for what this order will cost. We’ll confirm the exact total with you.</p>
+              <textarea class="form-field min-h-[140px] sm:col-span-2" name="notes" placeholder="Quantity, flavor, event timing, allergy notes, or anything else we should know."></textarea>
+              <div class="sm:col-span-2">
+                <button type="submit" class="cta-primary">Send my request</button>
+              </div>
+            </form>
+            <div class="rbgf-request-note mt-4 p-3 text-sm leading-6">Pickup slots are confirmed after availability check. Timing may shift around holidays and events.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="storefront-footer border-t py-10">
+      <div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm md:flex-row md:items-end md:justify-between">
+        <div>
+          <a href="../" class="brand-wrap brand-direction-2 inline-block">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span>
+          </a>
+          <p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Pretzel bites, cinnamon rolls, oatmeal cream pies, dinner rolls — and carrot cake by custom inquiry.</p>
+        </div>
+        <nav class="flex flex-wrap gap-4">
+          <a class="footer-link" href="../">Home</a>
+          <a class="footer-link" href="../menu/">Menu</a>
+          <a class="footer-link" href="./">Order / Preorder</a>
+          <a class="footer-link" href="../custom-orders/">Custom Orders</a>
+          <a class="footer-link" href="../pickup-policies/">Pickup &amp; Policies</a>
+          <a class="footer-link" href="../gallery/">Gallery</a>
+          <a class="footer-link" href="../contact/">Contact</a>
+          <a class="footer-link" href="../about/">About</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+  <script src="/assets/rachel-bakes-gf/ordering-config.js"></script>
+  <script src="/assets/rachel-bakes-gf/ordering-ui.js"></script>
+  <script src="/assets/rachel-bakes-gf/forms.js"></script>
+</body>
+</html>

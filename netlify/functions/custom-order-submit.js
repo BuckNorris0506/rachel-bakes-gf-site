@@ -11,6 +11,11 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ORDERING_CONFIG_ROW_ID = process.env.ORDERING_CONFIG_ROW_ID || "1";
 
+function isValidEmail(email) {
+  if (!email) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 async function supabaseRestGet(pathWithQuery) {
   const url = `${SUPABASE_URL}/rest/v1/${pathWithQuery}`;
   const res = await fetch(url, {
@@ -90,13 +95,26 @@ module.exports.handler = async function handler(event) {
     }
 
     const name = typeof parsed.name === "string" ? parsed.name.trim() : "";
-    const contact = typeof parsed.contact === "string" ? parsed.contact.trim() : "";
+    const email = typeof parsed.email === "string" ? parsed.email.trim() : "";
+    const phone = typeof parsed.phone === "string" ? parsed.phone.trim() : "";
+    const contactLegacy = typeof parsed.contact === "string" ? parsed.contact.trim() : "";
+    const contact =
+      contactLegacy ||
+      (email ? email + (phone ? " · " + phone : "") : phone || "");
+
+    if (email && !isValidEmail(email)) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ success: false, error: "Please enter a valid email address." }),
+      };
+    }
 
     if (!name || !contact) {
       return {
         statusCode: 400,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ success: false, error: "Please complete name and contact so we can follow up." }),
+        body: JSON.stringify({ success: false, error: "Please complete name and email so we can follow up." }),
       };
     }
 
@@ -136,26 +154,42 @@ module.exports.handler = async function handler(event) {
     const inspiration_link = typeof parsed.inspiration_link === "string" ? parsed.inspiration_link.trim() : "";
     const allergy_notes = typeof parsed.allergy_notes === "string" ? parsed.allergy_notes.trim() : "";
     const extra_details = typeof parsed.extra_details === "string" ? parsed.extra_details.trim() : "";
+    const inspiration_notes = typeof parsed.inspiration_notes === "string" ? parsed.inspiration_notes.trim() : "";
+    const reference_file_name = typeof parsed.reference_file_name === "string" ? parsed.reference_file_name.trim() : "";
+    const reference_file_data = typeof parsed.reference_file_data === "string" ? parsed.reference_file_data.trim() : "";
+
+    if (reference_file_data && reference_file_data.length > 900000) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ success: false, error: "Reference file is too large. Please use a smaller image or paste a link instead." }),
+      };
+    }
 
     const toNullable = function (s) {
       return s ? s : null;
     };
 
-    const inserted = await supabaseRestPost("custom_orders?select=id", [
-      {
-        name: name,
-        contact: contact,
-        event_date: toNullable(event_date),
-        pickup_date: toNullable(pickup_date),
-        item_type: toNullable(item_type),
-        servings: toNullable(servings),
-        flavor: toNullable(flavor),
-        design_notes: toNullable(design_notes),
-        inspiration_link: toNullable(inspiration_link),
-        allergy_notes: toNullable(allergy_notes),
-        extra_details: toNullable(extra_details),
-      },
-    ]);
+    const row = {
+      name: name,
+      contact: contact,
+      event_date: toNullable(event_date),
+      pickup_date: toNullable(pickup_date),
+      item_type: toNullable(item_type),
+      servings: toNullable(servings),
+      flavor: toNullable(flavor),
+      design_notes: toNullable(design_notes),
+      inspiration_link: toNullable(inspiration_link),
+      allergy_notes: toNullable(allergy_notes),
+      extra_details: toNullable(extra_details),
+    };
+    if (email) row.email = email;
+    if (phone) row.phone = phone;
+    if (inspiration_notes) row.inspiration_notes = inspiration_notes;
+    if (reference_file_name) row.reference_file_name = reference_file_name;
+    if (reference_file_data) row.reference_file_data = reference_file_data;
+
+    const inserted = await supabaseRestPost("custom_orders?select=id", [row]);
 
     return {
       statusCode: 200,

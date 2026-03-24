@@ -1,12 +1,10 @@
 /**
- * Rachel Bakes GF — customer forms (preorder, custom order, waitlist).
+ * Rachel Bakes GF — customer forms (preorder, custom order, waitlist, contact).
  *
- * Submissions use fetch() + JSON to Netlify functions (via /api redirects):
- *   POST /api/preorder-submit      — preorder rows + daily cap
- *   POST /api/custom-order-submit  — custom inquiries (gated by custom_orders_open)
- *   POST /api/waitlist-signup      — notify-me list when preorders are closed
- *
- * Full behavior needs those APIs live (e.g. `netlify dev` from bucksites/ or production).
+ * POST /api/preorder-submit      — preorder rows + daily cap
+ * POST /api/custom-order-submit  — custom inquiries (gated by custom_orders_open)
+ * POST /api/waitlist-signup      — notification interests + email
+ * POST /api/contact-submit       — general questions (always when Supabase configured)
  */
 
 function ensurePreorderStatusEl(form) {
@@ -116,22 +114,43 @@ function handlePreorderSubmit(e) {
     });
 }
 
+function readFileAsBase64Segment(file) {
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var r = reader.result;
+      if (typeof r === 'string' && r.indexOf(',') !== -1) {
+        resolve(r.split(',')[1]);
+      } else resolve(null);
+    };
+    reader.onerror = function () {
+      reject(new Error('read failed'));
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function handleCustomOrderSubmit(e) {
   e.preventDefault();
   var form = e.target;
   var nameEl = form.querySelector('[name="name"]');
-  var contactEl = form.querySelector('[name="contact"]');
-  if (!nameEl || !contactEl) return;
+  var emailEl = form.querySelector('[name="email"]');
+  if (!nameEl || !emailEl) return;
   var nameVal = (nameEl.value || '').trim();
-  var contactVal = (contactEl.value || '').trim();
+  var emailVal = (emailEl.value || '').trim();
+  var phoneVal = (form.querySelector('[name="phone"]') && form.querySelector('[name="phone"]').value) || '';
+  phoneVal = String(phoneVal).trim();
+
   if (!nameVal) {
     nameEl.focus();
     return;
   }
-  if (!contactVal) {
-    contactEl.focus();
+  var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+  if (!emailOk) {
+    emailEl.focus();
     return;
   }
+
   function ensureCustomStatusEl() {
     var statusEl = form.querySelector('.ordering-custom-status');
     if (statusEl) return statusEl;
@@ -156,8 +175,18 @@ function handleCustomOrderSubmit(e) {
   var flavorVal = (form.querySelector('[name="flavor"]') && form.querySelector('[name="flavor"]').value) || '';
   var designNotesVal = (form.querySelector('[name="design_notes"]') && form.querySelector('[name="design_notes"]').value) || '';
   var inspirationLinkVal = (form.querySelector('[name="inspiration_link"]') && form.querySelector('[name="inspiration_link"]').value) || '';
+  var inspirationNotesVal = (form.querySelector('[name="inspiration_notes"]') && form.querySelector('[name="inspiration_notes"]').value) || '';
   var allergyNotesVal = (form.querySelector('[name="allergy_notes"]') && form.querySelector('[name="allergy_notes"]').value) || '';
   var extraDetailsVal = (form.querySelector('[name="extra_details"]') && form.querySelector('[name="extra_details"]').value) || '';
+
+  var fileInput = form.querySelector('input[type="file"][name="reference_file"]');
+  var file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+  if (file && file.size > 600000) {
+    statusEl.textContent = 'Please choose a smaller file (under about 600KB) or paste a link instead.';
+    statusEl.classList.add('text-[var(--rose)]');
+    statusEl.classList.remove('text-[var(--muted)]');
+    return;
+  }
 
   var submitBtn = form.querySelector('button[type="submit"], .cta-primary');
   var prevBtnText = submitBtn ? submitBtn.textContent : null;
@@ -166,51 +195,88 @@ function handleCustomOrderSubmit(e) {
     submitBtn.textContent = 'Saving...';
   }
 
-  fetch('/api/custom-order-submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: nameVal,
-      contact: contactVal,
-      event_date: eventDateVal,
-      pickup_date: pickupDateVal,
-      item_type: itemTypeVal,
-      servings: servingsVal,
-      flavor: flavorVal,
-      design_notes: designNotesVal,
-      inspiration_link: inspirationLinkVal,
-      allergy_notes: allergyNotesVal,
-      extra_details: extraDetailsVal,
-    }),
-  })
-    .then(function (res) {
-      return res.json().catch(function () { return null; }).then(function (data) { return { ok: res.ok, data: data }; });
+  function postPayload(reference_file_name, reference_file_data) {
+    return fetch('/api/custom-order-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameVal,
+        email: emailVal,
+        phone: phoneVal,
+        contact: emailVal + (phoneVal ? ' · ' + phoneVal : ''),
+        event_date: eventDateVal,
+        pickup_date: pickupDateVal,
+        item_type: itemTypeVal,
+        servings: servingsVal,
+        flavor: flavorVal,
+        design_notes: designNotesVal,
+        inspiration_link: inspirationLinkVal,
+        inspiration_notes: inspirationNotesVal,
+        allergy_notes: allergyNotesVal,
+        extra_details: extraDetailsVal,
+        reference_file_name: reference_file_name || '',
+        reference_file_data: reference_file_data || '',
+      }),
     })
-    .then(function (out) {
-      if (!out || !out.data) throw new Error('Invalid response from server.');
-      if (out.data.success) {
-        statusEl.textContent = out.data.message || 'Thanks! Your custom order request was saved.';
-        statusEl.classList.remove('text-[var(--rose)]');
-        statusEl.classList.add('text-[var(--cocoa)]');
-        form.reset();
-      } else {
-        var msg = out.data.error || "We couldn't save your custom order. Please try again.";
-        statusEl.textContent = msg;
+      .then(function (res) {
+        return res.json().catch(function () { return null; }).then(function (data) { return { ok: res.ok, data: data }; });
+      })
+      .then(function (out) {
+        if (!out || !out.data) throw new Error('Invalid response from server.');
+        if (out.data.success) {
+          statusEl.textContent = out.data.message || 'Thanks! Your custom order request was saved.';
+          statusEl.classList.remove('text-[var(--rose)]');
+          statusEl.classList.add('text-[var(--cocoa)]');
+          form.reset();
+        } else {
+          var msg = out.data.error || "We couldn't save your custom order. Please try again.";
+          statusEl.textContent = msg;
+          statusEl.classList.remove('text-[var(--cocoa)]');
+          statusEl.classList.add('text-[var(--rose)]');
+        }
+      })
+      .catch(function () {
+        statusEl.textContent = "We couldn't save your custom order. Please try again.";
         statusEl.classList.remove('text-[var(--cocoa)]');
         statusEl.classList.add('text-[var(--rose)]');
-      }
-    })
-    .catch(function () {
-      statusEl.textContent = "We couldn't save your custom order. Please try again.";
-      statusEl.classList.remove('text-[var(--cocoa)]');
-      statusEl.classList.add('text-[var(--rose)]');
-    })
-    .finally(function () {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = prevBtnText || 'Send my request';
-      }
-    });
+      })
+      .finally(function () {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = prevBtnText || 'Send my request';
+        }
+      });
+  }
+
+  if (file) {
+    readFileAsBase64Segment(file)
+      .then(function (b64) {
+        return postPayload(file.name, b64 || '');
+      })
+      .catch(function () {
+        statusEl.textContent = "We couldn't read that file. Try another image or paste a link.";
+        statusEl.classList.add('text-[var(--rose)]');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = prevBtnText || 'Send my request';
+        }
+      });
+  } else {
+    postPayload('', '');
+  }
+}
+
+function collectNotifyInterests(form) {
+  function ck(n) {
+    var el = form.querySelector('[name="' + n + '"]');
+    return !!(el && el.checked);
+  }
+  return {
+    preorder_drops: ck('interest_preorder_drops'),
+    custom_availability: ck('interest_custom_availability'),
+    holiday_specials: ck('interest_holiday_specials'),
+    pickup_updates: ck('interest_pickup_updates'),
+  };
 }
 
 function handleNotifySignupSubmit(e) {
@@ -221,6 +287,8 @@ function handleNotifySignupSubmit(e) {
   if (!emailEl) return;
   var nameVal = nameEl ? (nameEl.value || '').trim() : '';
   var emailVal = (emailEl.value || '').trim().toLowerCase();
+  var phoneVal = (form.querySelector('[name="notify_phone"]') && form.querySelector('[name="notify_phone"]').value) || '';
+  phoneVal = String(phoneVal).trim();
   var statusEl = form.querySelector('.ordering-notify-status');
   if (statusEl) {
     statusEl.textContent = '';
@@ -242,10 +310,17 @@ function handleNotifySignupSubmit(e) {
     submitBtn.textContent = 'Saving...';
   }
 
+  var interests = collectNotifyInterests(form);
+
   fetch('/api/waitlist-signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: nameVal, email: emailVal }),
+    body: JSON.stringify({
+      name: nameVal,
+      email: emailVal,
+      phone: phoneVal,
+      interests: interests,
+    }),
   })
     .then(function (res) {
       return res.json().catch(function () { return null; }).then(function (data) { return { ok: res.ok, data: data }; });
@@ -253,6 +328,12 @@ function handleNotifySignupSubmit(e) {
     .then(function (out) {
       if (!out || !out.data) throw new Error('Invalid response from server.');
       if (out.data.success) {
+        try {
+          sessionStorage.setItem('rbgf_notify_modal_subscribed', '1');
+        } catch (err) {
+          /* ignore */
+        }
+        document.dispatchEvent(new CustomEvent('rbgf:waitlist-success', { bubbles: true }));
         if (statusEl) {
           statusEl.textContent = out.data.message || 'Thanks! You are on the list.';
           statusEl.classList.remove('text-[var(--rose)]');
@@ -278,7 +359,95 @@ function handleNotifySignupSubmit(e) {
     .finally(function () {
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = prevBtnText || 'Notify me';
+        var defaultLabel = 'Sign up for notifications';
+        if (form.id === 'notify-signup-modal-form') defaultLabel = 'Notify me when ordering opens';
+        submitBtn.textContent = prevBtnText || defaultLabel;
+      }
+    });
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  var form = e.target;
+  var nameEl = form.querySelector('[name="name"]');
+  var emailEl = form.querySelector('[name="email"]');
+  var msgEl = form.querySelector('[name="message"]');
+  if (!nameEl || !emailEl || !msgEl) return;
+
+  var nameVal = (nameEl.value || '').trim();
+  var emailVal = (emailEl.value || '').trim().toLowerCase();
+  var phoneVal = (form.querySelector('[name="phone"]') && form.querySelector('[name="phone"]').value) || '';
+  phoneVal = String(phoneVal).trim();
+  var messageVal = (msgEl.value || '').trim();
+
+  var statusEl = form.querySelector('.rbgf-contact-status');
+  if (statusEl) {
+    statusEl.textContent = '';
+    statusEl.classList.remove('text-[var(--rose)]');
+    statusEl.classList.add('text-[var(--muted)]');
+  }
+
+  if (!nameVal) {
+    nameEl.focus();
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+    if (statusEl) statusEl.textContent = 'Please enter a valid email.';
+    emailEl.focus();
+    return;
+  }
+  if (messageVal.length < 8) {
+    if (statusEl) statusEl.textContent = 'Please write a bit more so we can help.';
+    msgEl.focus();
+    return;
+  }
+
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var prevBtnText = submitBtn ? submitBtn.textContent : null;
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+  }
+
+  fetch('/api/contact-submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: nameVal,
+      email: emailVal,
+      phone: phoneVal,
+      message: messageVal,
+    }),
+  })
+    .then(function (res) {
+      return res.json().catch(function () { return null; }).then(function (data) { return { ok: res.ok, data: data }; });
+    })
+    .then(function (out) {
+      if (!out || !out.data) throw new Error('Invalid response from server.');
+      if (out.data.success) {
+        if (statusEl) {
+          statusEl.textContent = out.data.message || 'Thanks — we received your message.';
+          statusEl.classList.remove('text-[var(--rose)]');
+          statusEl.classList.add('text-[var(--cocoa)]');
+        }
+        form.reset();
+      } else {
+        if (statusEl) {
+          statusEl.textContent = out.data.error || 'Something went wrong. Please try again.';
+          statusEl.classList.add('text-[var(--rose)]');
+        }
+      }
+    })
+    .catch(function () {
+      if (statusEl) {
+        statusEl.textContent = 'We could not send your message. Please try again.';
+        statusEl.classList.add('text-[var(--rose)]');
+      }
+    })
+    .finally(function () {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = prevBtnText || 'Send message';
       }
     });
 }
@@ -288,8 +457,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (preorderForm) preorderForm.addEventListener('submit', handlePreorderSubmit);
   var customForm = document.getElementById('custom-order-form');
   if (customForm) customForm.addEventListener('submit', handleCustomOrderSubmit);
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) contactForm.addEventListener('submit', handleContactSubmit);
+
   document.body.addEventListener('submit', function (e) {
-    if (e.target.id === 'notify-signup-form') {
+    var t = e.target;
+    if (t && t.getAttribute && t.getAttribute('data-rbgf-notify') === '1') {
       handleNotifySignupSubmit(e);
     }
   });

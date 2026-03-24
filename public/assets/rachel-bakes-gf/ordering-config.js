@@ -9,5 +9,5 @@
 window.RACHEL_BAKES_ORDERING = {
   preorderOpen: false,
   customOrdersOpen: false,
-  statusMessage: "Ordering is currently closed. Rachel Bakes GF opens for summer bakes and select holiday preorders."
+  statusMessage: "Ordering is currently closed. Rachel Bakes GF will reopen for preorder pickup windows—join the list below to hear when ordering opens again."
 };

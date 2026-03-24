@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
+    <title>Production &amp; pickup · Rachel Bakes GF</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Owner kitchen board — Rachel Bakes GF." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/rachel-bakes-gf/owner-dashboard.css" />
+  </head>
+  <body class="rbgf-owner">
+    <header class="rbgf-owner-header">
+      <div class="rbgf-owner-header-inner">
+        <div>
+          <div class="rbgf-owner-brand">Rachel Bakes GF</div>
+          <div class="rbgf-owner-kicker">Production &amp; pickup · Liberty</div>
+        </div>
+        <a class="rbgf-owner-site-link" href="/rachel-bakes-gf/">View public site</a>
+      </div>
+    </header>
+
+    <div class="rbgf-owner-banner rbgf-owner-banner--subtle">
+      <p class="rbgf-owner-banner-inner">
+        <span class="rbgf-owner-banner-tag">Prototype</span>
+        <span class="rbgf-owner-banner-text">Mocked orders · nothing saves</span>
+      </p>
+    </div>
+
+    <main class="rbgf-owner-main">
+      <div class="ob-tabs-wrap">
+        <nav class="ob-tabs" role="tablist" aria-label="Dashboard sections">
+          <button type="button" class="ob-tab" id="tab-btn-kitchen" role="tab" aria-selected="true" aria-controls="tab-panel-kitchen" data-tab="kitchen">
+            Kitchen Board
+          </button>
+          <button type="button" class="ob-tab" id="tab-btn-ledger" role="tab" aria-selected="false" aria-controls="tab-panel-ledger" data-tab="ledger">
+            Ledger
+          </button>
+        </nav>
+      </div>
+
+      <div id="tab-panel-kitchen" class="ob-tab-panel" role="tabpanel" aria-labelledby="tab-btn-kitchen">
+        <section aria-label="Shop summary">
+          <h2 class="ob-visually-hidden">Operational summary</h2>
+          <div class="ob-summary ob-summary--strip">
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Preorders</p>
+              <p class="ob-sum-val ob-sum-val--sm" id="sum-preorder"></p>
+            </div>
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Custom orders</p>
+              <p class="ob-sum-val ob-sum-val--sm" id="sum-custom"></p>
+            </div>
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Today’s pickups</p>
+              <p class="ob-sum-val" id="sum-pickup-count"></p>
+            </div>
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Today’s sales</p>
+              <p class="ob-sum-val" id="sum-today-sales"></p>
+            </div>
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Unpaid (today)</p>
+              <p class="ob-sum-val" id="sum-unpaid"></p>
+            </div>
+            <div class="ob-sum-card">
+              <p class="ob-sum-label">Waitlist</p>
+              <p class="ob-sum-val" id="sum-waitlist"></p>
+            </div>
+            <div class="ob-sum-card ob-sum-card--cap">
+              <p class="ob-sum-label">Daily cap</p>
+              <p class="ob-sum-val ob-sum-val--sm" id="sum-daily-cap"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="ob-planner" aria-labelledby="planner-h">
+          <h2 id="planner-h" class="ob-planner-title">Production planner</h2>
+          <p class="ob-planner-lead">Tonight vs day-of — tap a row to see what’s behind the total.</p>
+          <div class="ob-planner-grid">
+            <div class="ob-planner-col">
+              <h3 class="ob-planner-col-title">Make tonight</h3>
+              <p class="ob-planner-col-sub">Cinnamon rolls, oatmeal cream pies, dinner rolls, carrot cake (custom), other prep</p>
+              <div id="planner-tonight" class="ob-planner-rows"></div>
+            </div>
+            <div class="ob-planner-col">
+              <h3 class="ob-planner-col-title">Make day-of</h3>
+              <p class="ob-planner-col-sub">Pretzel bites &amp; same-day items</p>
+              <div id="planner-dayof" class="ob-planner-rows"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="ob-kanban-section" aria-labelledby="kanban-h">
+          <div class="ob-kanban-head">
+            <h2 id="kanban-h" class="ob-kanban-title">Today’s pickup board</h2>
+            <p class="ob-kanban-sub">Drag-free columns — tap a card for full detail.</p>
+          </div>
+          <div class="ob-kanban-scroll">
+            <div class="ob-kanban" id="kanban-board" role="region" aria-label="Order status columns"></div>
+          </div>
+        </section>
+
+        <section class="ob-section" aria-labelledby="controls-heading">
+          <h2 id="controls-heading" class="ob-h2">Bakery controls</h2>
+          <div class="ob-card ob-controls-grid">
+            <label class="ob-toggle">
+              <input id="ctrl-preorder-open" type="checkbox" />
+              <span>Open preorder</span>
+            </label>
+            <label class="ob-toggle">
+              <input id="ctrl-custom-open" type="checkbox" />
+              <span>Open custom orders</span>
+            </label>
+            <div class="ob-field">
+              <label for="ctrl-daily-cap">Daily cap ($)</label>
+              <input id="ctrl-daily-cap" type="number" min="0" step="50" />
+            </div>
+            <div class="ob-field" style="grid-column: 1 / -1">
+              <label for="ctrl-status-msg">Status message (when closed)</label>
+              <textarea id="ctrl-status-msg" placeholder="Short note for customers…"></textarea>
+            </div>
+          </div>
+          <button id="btn-open-notify" type="button" class="ob-btn ob-btn--primary ob-btn--wide">
+            Open preorder &amp; notify waitlist
+          </button>
+        </section>
+
+        <section aria-labelledby="msg-heading">
+          <h2 id="msg-heading" class="ob-h2">Recent activity</h2>
+          <div class="ob-card">
+            <div id="msg-list" class="ob-msg-list"></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="tab-panel-ledger" class="ob-tab-panel ob-tab-panel--hidden" role="tabpanel" aria-labelledby="tab-btn-ledger" hidden>
+        <section aria-labelledby="ledger-summary-h">
+          <h2 id="ledger-summary-h" class="ob-visually-hidden">Ledger summary</h2>
+          <div class="ob-ledger-summary-grid">
+            <div class="ob-ledger-sum-card">
+              <p class="ob-ledger-sum-label">Today’s completed sales</p>
+              <p class="ob-ledger-sum-val" id="ledger-sum-today">—</p>
+            </div>
+            <div class="ob-ledger-sum-card">
+              <p class="ob-ledger-sum-label">This week’s completed sales</p>
+              <p class="ob-ledger-sum-val" id="ledger-sum-week">—</p>
+            </div>
+            <div class="ob-ledger-sum-card">
+              <p class="ob-ledger-sum-label">Pretzel Bites revenue</p>
+              <p class="ob-ledger-sum-val" id="ledger-sum-pretzel">—</p>
+            </div>
+            <div class="ob-ledger-sum-card">
+              <p class="ob-ledger-sum-label">Carrot cake &amp; other revenue</p>
+              <p class="ob-ledger-sum-val" id="ledger-sum-cakes">—</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="ob-ledger-section" aria-labelledby="ledger-h">
+          <h2 id="ledger-h" class="ob-h2">Completed orders</h2>
+          <p class="ob-ledger-sub">A row is added only when an order is <strong>Picked up</strong> and <strong>Paid</strong> (one row per order).</p>
+          <div class="ob-card ob-ledger-card">
+            <div id="ledger-empty" class="ob-ledger-empty">No completed sales yet.</div>
+            <div id="ledger-table-wrap" class="ob-ledger-table-wrap"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="drawer-root" class="ob-drawer-root" aria-hidden="true">
+      <button type="button" class="ob-drawer-backdrop" id="drawer-backdrop" aria-label="Close order detail"></button>
+      <aside class="ob-drawer" id="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1">
+        <div class="ob-drawer-chrome">
+          <h2 id="drawer-title" class="ob-drawer-title">Order</h2>
+          <button type="button" class="ob-drawer-close" id="drawer-close" aria-label="Close">×</button>
+        </div>
+        <div id="drawer-body" class="ob-drawer-body"></div>
+      </aside>
+    </div>
+
+    <script src="/assets/rachel-bakes-gf/owner-dashboard.js"></script>
+  </body>
+</html>

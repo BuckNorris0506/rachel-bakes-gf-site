@@ -1,1 +1,104 @@
- <!DOCTYPE html><html lang="en" class="scroll-smooth"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>About | Rachel Bakes GF</title><meta name="description" content="About Rachel Bakes GF, a local gluten-free preorder and pickup bakery in Liberty, Missouri." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={theme:{extend:{colors:{ink:'#342a23',rose:'#c56a5f'},maxWidth:{site:'1100px'}}}}</script><script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script><link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" /></head><body><div class="site-shell"><header x-data="{open:false}" class="sticky top-0 z-50 border-b border-[var(--line)] nav-glass"><div class="mx-auto max-w-site px-5"><div class="header-inner"><a href="../" class="brand-wrap brand-direction-2 header-brand"><span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span><span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span></a><nav class="header-nav hidden md:flex"><a class="nav-link" href="../">Home</a><a class="nav-link" href="../menu/">Menu</a><a class="nav-link" href="../order/">Order</a><a class="nav-link" href="../custom-orders/">Custom Orders</a><a class="nav-link" href="../pickup-policies/">Policies</a><a class="nav-link" href="../gallery/">Gallery</a><a class="nav-link nav-active" href="./">About</a></nav><div class="header-cta-wrap hidden md:block"><a href="../order/" class="cta-header">Order / Preorder</a></div><button @click="open=!open" class="md:hidden rounded-full border border-[var(--line)] bg-white/80 px-4 py-2 text-sm font-medium" aria-label="Open site navigation">Navigate</button></div><div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden"><a class="nav-link" href="../">Home</a><a class="nav-link" href="../menu/">Menu</a><a class="nav-link" href="../order/">Order</a><a class="nav-link" href="../custom-orders/">Custom Orders</a><a class="nav-link" href="../pickup-policies/">Policies</a><a class="nav-link" href="../gallery/">Gallery</a><a class="nav-link nav-active" href="./">About</a></div></div></header><main><section class="page-hero py-16"><div class="mx-auto max-w-site px-5"><p class="section-label text-xs font-semibold uppercase text-rose">About</p><h1 class="mt-3 font-display text-5xl text-ink">Gluten-free bakery, pickup in Liberty.</h1></div></section><section class="pb-20"><div class="mx-auto grid max-w-site gap-8 px-5 lg:grid-cols-[.9fr,1.1fr] lg:items-center"><div class="img-card-wrap min-h-[380px]"><img src="../Rachel Bakes GF-Pics/pretzel-bites-cinnrolls-2.jpg" alt="Rachel Bakes GF bakery" class="img-card" /></div><div class="surface-strong rounded-[2rem] p-8"><p class="text-lg leading-8 text-[var(--muted)]">Rachel Bakes GF is a home bakery in Liberty, Missouri. We do preorders and pickup—you tell us what you’d like and when you can pick up, and we’ll confirm. The menu is built around the things people order most: pretzel bites, cinnamon rolls, seasonal specials, and the occasional custom cake when it’s a good fit.</p><p class="mt-5 text-lg leading-8 text-[var(--muted)]">Everything is gluten-free. We keep the process simple so you can see what’s available, how pickup works, and what to expect—no complicated checkout, just clear requests and a reliable pickup.</p></div></div></section></main><footer class="border-t border-[var(--line)] py-10"><div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm text-[var(--muted)] md:flex-row md:items-end md:justify-between"><div><a href="../" class="brand-wrap brand-direction-2 inline-block"><span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span><span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span></a><p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Preorder pickup for pretzel bites, cinnamon rolls, seasonal specials, and selective custom orders.</p></div><nav class="flex flex-wrap gap-4"><a class="footer-link" href="../">Home</a><a class="footer-link" href="../menu/">Menu</a><a class="footer-link" href="../order/">Order / Preorder</a><a class="footer-link" href="../custom-orders/">Custom Orders</a><a class="footer-link" href="../pickup-policies/">Pickup &amp; Policies</a><a class="footer-link" href="../gallery/">Gallery</a><a class="footer-link" href="./">About</a></nav></div></footer></div><script src="../../assets/rachel-bakes-gf/ordering-config.js"></script><script src="../../assets/rachel-bakes-gf/ordering-ui.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
+  <title>About | Rachel Bakes GF</title>
+  <meta name="description" content="About Rachel Bakes GF, a local gluten-free preorder and pickup bakery in Liberty, Missouri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { cream:'#fbf6ef', paper:'#fffdf9', ink:'#342a23', rose:'#c56a5f', cocoa:'#7b4d3e', butter:'#f2c98b', sage:'#7d9685' }, boxShadow: { warm:'0 18px 60px rgba(52,42,35,.12)' }, maxWidth: { site:'1100px' } } } };
+  </script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
+</head>
+<body class="storefront-home rbgf-inner-page">
+  <div class="site-shell">
+    <header x-data="{open:false}" class="sticky top-0 z-[1000] storefront-header nav-glass rbgf-overlay-header rbgf-inner-header">
+      <div class="mx-auto max-w-site px-5">
+        <div class="header-inner">
+          <a href="../" class="brand-wrap brand-direction-2 header-brand">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker rbgf-header-kicker">Liberty, Missouri</span>
+          </a>
+          <nav class="header-nav hidden md:flex" aria-label="Primary">
+            <a class="nav-link" href="../">Home</a>
+            <a class="nav-link" href="../menu/">Menu</a>
+            <a class="nav-link" href="../order/">Order</a>
+            <a class="nav-link" href="../custom-orders/">Custom</a>
+            <a class="nav-link" href="../pickup-policies/">Policies</a>
+            <a class="nav-link" href="../gallery/">Gallery</a>
+            <a class="nav-link" href="../contact/">Contact</a>
+            <a class="nav-link nav-active" href="./">About</a>
+          </nav>
+          <div class="header-cta-wrap hidden md:block"><a href="../order/" class="cta-header">Preorder</a></div>
+          <button @click="open=!open" class="rbgf-nav-toggle md:hidden" type="button" aria-label="Open site navigation">Menu</button>
+        </div>
+        <div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden rbgf-mobile-drawer">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="../menu/">Menu</a>
+          <a class="nav-link" href="../order/">Order</a>
+          <a class="nav-link" href="../custom-orders/">Custom Orders</a>
+          <a class="nav-link" href="../pickup-policies/">Policies</a>
+          <a class="nav-link" href="../gallery/">Gallery</a>
+          <a class="nav-link" href="../contact/">Contact</a>
+          <a class="nav-link nav-active" href="./">About</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="rbgf-inner-main">
+      <section class="rbgf-inner-hero">
+        <div class="mx-auto max-w-site px-5">
+          <p class="section-label text-xs font-semibold uppercase">About</p>
+          <h1 class="mt-3 text-4xl sm:text-5xl">Gluten-free bakery, pickup in Liberty.</h1>
+        </div>
+      </section>
+
+      <section>
+        <div class="mx-auto max-w-site px-5">
+          <div class="rbgf-about-split">
+            <div class="rbgf-about-visual min-h-[280px]">
+              <img src="../Rachel Bakes GF-Pics/menu-soft-pretzel-bites.jpg" alt="Soft pretzel bites from Rachel Bakes GF" loading="lazy" />
+            </div>
+            <div class="rbgf-about-prose">
+              <p>Rachel Bakes GF is a home bakery in Liberty, Missouri. We do preorders and pickup—you tell us what you’d like and when you can pick up, and we’ll confirm. The menu stays intentionally small: pretzel bites, cinnamon rolls, oatmeal cream pies, dinner rolls, and carrot cake by custom inquiry when it’s a good fit.</p>
+              <p>Everything is gluten-free. We keep the process simple so you can see what’s available, how pickup works, and what to expect—no complicated checkout, just clear requests and a reliable pickup.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="storefront-footer border-t py-10">
+      <div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm md:flex-row md:items-end md:justify-between">
+        <div>
+          <a href="../" class="brand-wrap brand-direction-2 inline-block">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span>
+          </a>
+          <p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Pretzel bites, cinnamon rolls, oatmeal cream pies, dinner rolls — and carrot cake by custom inquiry.</p>
+        </div>
+        <nav class="flex flex-wrap gap-4">
+          <a class="footer-link" href="../">Home</a>
+          <a class="footer-link" href="../menu/">Menu</a>
+          <a class="footer-link" href="../order/">Order / Preorder</a>
+          <a class="footer-link" href="../custom-orders/">Custom Orders</a>
+          <a class="footer-link" href="../pickup-policies/">Pickup &amp; Policies</a>
+          <a class="footer-link" href="../gallery/">Gallery</a>
+          <a class="footer-link" href="../contact/">Contact</a>
+          <a class="footer-link" href="./">About</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+  <script src="/assets/rachel-bakes-gf/ordering-config.js"></script>
+  <script src="/assets/rachel-bakes-gf/ordering-ui.js"></script>
+</body>
+</html>

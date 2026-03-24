@@ -1,343 +1,154 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Rachel Bakes GF Admin</title>
-    <meta name="description" content="Admin controls for Rachel Bakes GF ordering." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
+    <title>Rachel Bakes GF · BakeSites Command Center</title>
+    <meta name="description" content="Owner dashboard: orders, bake list, controls, and customer messages." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              ink: "#342a23",
-              rose: "#c56a5f",
-              cocoa: "#7b4d3e",
-            },
-            maxWidth: { site: "1100px" },
-          },
-        },
-      };
-    </script>
     <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
+    <link rel="stylesheet" href="/assets/rachel-bakes-gf/admin-command.css" />
   </head>
-  <body>
-    <div class="site-shell">
-      <main>
-        <section class="py-16">
-          <div class="mx-auto max-w-site px-5">
-            <div class="surface-strong rounded-[2rem] p-8">
-              <p class="section-label text-xs font-semibold uppercase text-rose">Admin</p>
-              <h1 class="mt-3 font-display text-4xl text-ink">Rachel Bakes GF controls</h1>
-              <p class="mt-2 max-w-2xl text-lg leading-8 text-[var(--muted)]">
-                Manage ordering windows and notify the waitlist when preorders open.
-              </p>
+  <body class="rbgf-ux">
+    <div id="auth-gate" class="rbgf-ux-panel" style="max-width: 480px; margin: 2rem auto">
+      <p class="rbgf-ux-badge">BakeSites · Owner</p>
+      <h1 class="rbgf-ux-h2" style="margin-top: 0.5rem">Command center</h1>
+      <p class="rbgf-ux-sub">Rachel Bakes GF — preorder, production, and customer updates.</p>
+      <div id="secret-missing" class="rbgf-ux-hidden" style="padding: 0.75rem; background: #fef2f2; border-radius: 8px; color: #991b1b; font-size: 0.9rem">
+        Add <code>?secret=…</code> to the URL (same value as <code>ADMIN_SECRET</code>). On localhost with <code>netlify dev</code>, you can omit it if <code>.env</code> matches <code>.env.example</code>.
+      </div>
+      <div id="local-dev-hint" class="rbgf-ux-hidden" style="margin-top: 0.75rem; padding: 0.65rem 0.75rem; background: #e0f2fe; border-radius: 8px; color: #075985; font-size: 0.85rem; line-height: 1.45">
+        Local preview: no <code>?secret=</code> — using default secret. Ensure <code>ADMIN_SECRET=local-dev-preview</code> in <code>bucksites/.env</code> (see <code>.env.example</code>).
+      </div>
+      <div id="auth-error" class="rbgf-ux-hidden" style="margin-top: 0.75rem; color: #b91c1c; font-size: 0.9rem"></div>
+      <label class="block text-sm font-semibold" for="admin-password" style="margin-top: 1rem; color: #0f172a">Admin password</label>
+      <input id="admin-password" class="form-field" type="password" autocomplete="current-password" style="margin-top: 0.35rem" />
+      <button id="auth-submit" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary" style="margin-top: 1rem; width: 100%">Unlock</button>
+    </div>
 
-              <div id="auth-error" class="mt-6 hidden text-sm leading-6 text-[var(--rose)]" aria-live="polite"></div>
+    <div id="app-root" class="rbgf-ux-hidden">
+      <header class="rbgf-ux-header">
+        <div>
+          <div class="rbgf-ux-brand">Rachel Bakes GF</div>
+          <div class="rbgf-ux-badge">BakeSites command center</div>
+          <p style="margin: 0.35rem 0 0; font-size: 0.82rem">
+            <a href="./dashboard/" style="color: #475569; font-weight: 600">Kitchen board (visual prototype)</a>
+          </p>
+        </div>
+        <div id="demo-banner" class="rbgf-ux-demo rbgf-ux-hidden">Demo data · connect Supabase for live orders</div>
+        <div id="offline-banner" class="rbgf-ux-demo rbgf-ux-hidden" style="background: #e0f2fe; color: #075985; border-color: #7dd3fc">
+          Static preview — Netlify APIs not running. Password not verified. Use <code>netlify dev</code> for real auth.
+        </div>
+      </header>
 
-              <div id="auth-gate" class="mt-6">
-                <div id="secret-missing" class="hidden text-sm leading-6 text-[var(--rose)]">
-                  Access denied. Missing <code>secret</code> query param.
-                </div>
+      <nav class="rbgf-ux-nav" aria-label="Primary">
+        <button type="button" class="rbgf-ux-tab" data-view="orders" aria-selected="true">Orders</button>
+        <button type="button" class="rbgf-ux-tab" data-view="bake" aria-selected="false">Bake list</button>
+        <button type="button" class="rbgf-ux-tab" data-view="controls" aria-selected="false">Ordering &amp; cap</button>
+        <button type="button" class="rbgf-ux-tab" data-view="profit" aria-selected="false">Profit</button>
+      </nav>
 
-                <label class="block text-sm font-semibold text-ink" for="admin-password">Admin password</label>
-                <div class="mt-2 flex gap-3 items-start">
-                  <input
-                    id="admin-password"
-                    class="form-field flex-1"
-                    type="password"
-                    placeholder="Enter admin password"
-                    autocomplete="current-password"
-                  />
-                  <button id="auth-submit" type="button" class="cta-primary whitespace-nowrap">Unlock</button>
-                </div>
-                <p class="mt-3 text-sm leading-6 text-[var(--muted)]">
-                  This page is protected by a simple v1 secret + password gate. Your password is only stored for this session.
-                </p>
+      <main class="rbgf-ux-main">
+        <section id="view-orders" class="rbgf-ux-panel">
+          <h2 class="rbgf-ux-h2">Orders</h2>
+          <p class="rbgf-ux-sub">Filter and update status. Tap a status button to move the order through the kitchen.</p>
+          <div class="rbgf-ux-chips" role="toolbar" aria-label="Filters">
+            <button type="button" class="rbgf-ux-chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="today" aria-pressed="false">Today</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="tomorrow" aria-pressed="false">Tomorrow</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="week" aria-pressed="false">This week</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="new" aria-pressed="false">New</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="confirmed" aria-pressed="false">Confirmed</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="baking" aria-pressed="false">Baking</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="ready" aria-pressed="false">Ready</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="picked_up" aria-pressed="false">Picked up</button>
+            <button type="button" class="rbgf-ux-chip" data-filter="custom" aria-pressed="false">Custom</button>
+          </div>
+          <div id="orders-list"></div>
+        </section>
+
+        <section id="view-bake" class="rbgf-ux-panel rbgf-ux-hidden">
+          <h2 class="rbgf-ux-h2">Production / bake list</h2>
+          <p class="rbgf-ux-sub">Totals by item for pickup date (parsed from order text). Adjust menu matchers in admin-command.js when you add SKUs.</p>
+          <label class="block text-sm font-semibold" for="bake-date" style="color: #475569">Pickup date</label>
+          <input id="bake-date" type="date" class="form-field" style="max-width: 280px; margin-top: 0.35rem" />
+          <div id="bake-list" style="margin-top: 1rem"></div>
+        </section>
+
+        <section id="view-controls" class="rbgf-ux-hidden">
+          <div class="rbgf-ux-panel">
+            <h2 class="rbgf-ux-h2">Ordering &amp; capacity</h2>
+            <p class="rbgf-ux-sub">Same controls as before — toggles sync to your live site when Supabase + Netlify are configured.</p>
+            <div class="space-y-3" style="max-width: 520px">
+              <label class="flex items-center gap-3" style="min-height: 48px">
+                <input id="preorder_open" type="checkbox" class="h-6 w-6" />
+                <span class="font-semibold text-slate-800">Preorder open</span>
+              </label>
+              <label class="flex items-center gap-3" style="min-height: 48px">
+                <input id="custom_orders_open" type="checkbox" class="h-6 w-6" />
+                <span class="font-semibold text-slate-800">Custom orders open</span>
+              </label>
+              <div>
+                <label class="block text-sm font-semibold text-slate-800" for="daily_cap_dollars">Daily production cap ($)</label>
+                <input id="daily_cap_dollars" class="form-field mt-2" type="number" step="1" min="0" placeholder="e.g. 1000" />
               </div>
-
-              <div id="admin-ui" class="hidden mt-8">
-                <div class="grid gap-6 lg:grid-cols-[1fr_1fr]">
-                  <div class="surface rounded-[1.75rem] p-6">
-                    <h2 class="font-display text-2xl">Ordering windows</h2>
-
-                    <div class="mt-6 space-y-5">
-                      <label class="flex items-center gap-3">
-                        <input id="preorder_open" type="checkbox" class="h-5 w-5" />
-                        <span class="text-sm font-semibold text-ink">Preorder open</span>
-                      </label>
-
-                      <label class="flex items-center gap-3">
-                        <input id="custom_orders_open" type="checkbox" class="h-5 w-5" />
-                        <span class="text-sm font-semibold text-ink">Custom orders open</span>
-                      </label>
-
-                      <div>
-                        <label class="block text-sm font-semibold text-ink" for="daily_cap_dollars">Daily cap ($)</label>
-                        <input
-                          id="daily_cap_dollars"
-                          class="form-field mt-2"
-                          type="number"
-                          step="1"
-                          min="0"
-                          placeholder="e.g. 1000"
-                        />
-                      </div>
-
-                      <div>
-                        <label class="block text-sm font-semibold text-ink" for="status_message">Closed-state status message</label>
-                        <textarea
-                          id="status_message"
-                          class="form-field mt-2 min-h-[120px]"
-                          placeholder="Text shown when ordering is closed."
-                        ></textarea>
-                      </div>
-                    </div>
-
-                    <div class="mt-6 flex gap-3 flex-wrap">
-                      <button id="save-config" type="button" class="cta-primary">Save</button>
-                      <button id="refresh-config" type="button" class="cta-secondary">Refresh</button>
-                    </div>
-                  </div>
-
-                  <div class="surface rounded-[1.75rem] p-6">
-                    <h2 class="font-display text-2xl">Current totals</h2>
-                    <div class="mt-6 space-y-4 text-sm leading-7 text-[var(--muted)]">
-                      <div>
-                        <span class="font-semibold text-ink">Today’s preorder total:</span>
-                        <span id="today_total_cents" class="font-semibold text-[var(--ink)]"></span>
-                      </div>
-                      <div>
-                        <span class="font-semibold text-ink">Daily cap:</span>
-                        <span id="daily_cap_cents_display" class="font-semibold text-[var(--ink)]"></span>
-                      </div>
-                      <div>
-                        <span class="font-semibold text-ink">Waitlist remaining:</span>
-                        <span id="waitlist_count" class="font-semibold text-[var(--ink)]"></span>
-                      </div>
-                    </div>
-
-                    <div id="notify-message" class="mt-6 text-sm leading-6"></div>
-
-                    <div class="mt-6">
-                      <button id="open-and-notify" type="button" class="cta-primary w-full">
-                        Open preorder and notify waitlist
-                      </button>
-                      <p class="mt-3 text-xs leading-5 text-[var(--muted)]">
-                        Sends an email to all waitlist signups that have not yet been notified.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-800" for="status_message">Closed-state message (customer-facing)</label>
+                <textarea id="status_message" class="form-field mt-2 min-h-[120px]" placeholder="Shown when ordering is closed."></textarea>
+              </div>
+              <p class="text-sm text-slate-500">Per-item limits: placeholder for later — wire to menu SKU rows when you upload pricing.</p>
+            </div>
+            <div class="flex gap-3 flex-wrap mt-4">
+              <button id="save-config" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary">Save</button>
+              <button id="refresh-config" type="button" class="rbgf-ux-btn rbgf-ux-btn--ghost">Refresh</button>
+            </div>
+          </div>
+          <div class="rbgf-ux-panel" style="margin-top: 1rem">
+            <h2 class="rbgf-ux-h2">Waitlist · reopen blast</h2>
+            <p class="rbgf-ux-sub">Opens preorder and emails everyone on the waitlist who hasn’t been notified yet.</p>
+            <div id="notify-message" class="text-sm mb-3"></div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <div class="text-sm text-slate-600">Today’s preorder total</div>
+                <div id="today_total_cents" class="text-xl font-bold text-slate-900"></div>
+              </div>
+              <div>
+                <div class="text-sm text-slate-600">Daily cap</div>
+                <div id="daily_cap_cents_display" class="text-xl font-bold text-slate-900"></div>
+              </div>
+              <div>
+                <div class="text-sm text-slate-600">Waitlist (unnotified)</div>
+                <div id="waitlist_count" class="text-xl font-bold text-slate-900"></div>
               </div>
             </div>
+            <button id="open-and-notify" type="button" class="rbgf-ux-btn rbgf-ux-btn--primary" style="margin-top: 1rem; width: 100%">Open preorder &amp; notify waitlist</button>
+          </div>
+        </section>
+
+        <section id="view-profit" class="rbgf-ux-hidden">
+          <div class="rbgf-ux-panel">
+            <h2 class="rbgf-ux-h2">Profit snapshot</h2>
+            <p class="rbgf-ux-sub">Booked revenue from preorder amounts; estimated cost from placeholder COGS in <code>admin-command.js</code> (replace with real data).</p>
+            <div id="profit-stats"></div>
+          </div>
+          <div class="rbgf-ux-panel" style="margin-top: 1rem">
+            <h2 class="rbgf-ux-h2">Message log (this browser)</h2>
+            <p class="rbgf-ux-sub">Customer emails triggered from Orders (and demo sends) append here.</p>
+            <div id="email-log" class="rbgf-ux-log"></div>
           </div>
         </section>
       </main>
     </div>
 
-    <script>
-      (function () {
-        var qs = new URLSearchParams(window.location.search);
-        var secret = qs.get("secret") || "";
-
-        var authGate = document.getElementById("auth-gate");
-        var secretMissing = document.getElementById("secret-missing");
-        var authError = document.getElementById("auth-error");
-        var adminUi = document.getElementById("admin-ui");
-        var adminPasswordEl = document.getElementById("admin-password");
-        var authSubmitBtn = document.getElementById("auth-submit");
-
-        var preorderOpenEl = document.getElementById("preorder_open");
-        var customOrdersOpenEl = document.getElementById("custom_orders_open");
-        var dailyCapDollarsEl = document.getElementById("daily_cap_dollars");
-        var statusMessageEl = document.getElementById("status_message");
-
-        var todayTotalEl = document.getElementById("today_total_cents");
-        var dailyCapDisplayEl = document.getElementById("daily_cap_cents_display");
-        var waitlistCountEl = document.getElementById("waitlist_count");
-        var notifyMessageEl = document.getElementById("notify-message");
-
-        function moneyFromCents(cents) {
-          var n = Number(cents);
-          if (!Number.isFinite(n)) return "";
-          return "$" + (n / 100).toFixed(2).replace(/\.00$/, "");
-        }
-
-        function getPassword() {
-          return sessionStorage.getItem("rbgf_admin_password") || "";
-        }
-
-        function setPassword(pw) {
-          sessionStorage.setItem("rbgf_admin_password", pw);
-        }
-
-        function clearNotifyMessage() {
-          notifyMessageEl.textContent = "";
-          notifyMessageEl.classList.remove("text-[var(--rose)]", "text-[var(--cocoa)]");
-        }
-
-        function setAuthError(msg) {
-          if (!authError) return;
-          if (!msg) {
-            authError.classList.add("hidden");
-            authError.textContent = "";
-            return;
-          }
-          authError.textContent = msg;
-          authError.classList.remove("hidden");
-        }
-
-        function headersForAdmin() {
-          return {
-            "x-admin-secret": secret,
-            "x-admin-password": getPassword(),
-          };
-        }
-
-        async function fetchAdminConfig() {
-          var res = await fetch("/api/admin-config", { headers: headersForAdmin() });
-          var data = await res.json().catch(function () { return null; });
-          if (!res.ok) {
-            var msg = (data && data.error) ? data.error : "Request failed.";
-            throw new Error(msg);
-          }
-          return data;
-        }
-
-        function setUIFromConfig(payload) {
-          var cfg = payload.config || {};
-          preorderOpenEl.checked = cfg.preorder_open === true;
-          customOrdersOpenEl.checked = cfg.custom_orders_open === true;
-          dailyCapDollarsEl.value = (Number(cfg.daily_cap_cents) / 100).toString();
-          statusMessageEl.value = cfg.status_message || "";
-
-          todayTotalEl.textContent = moneyFromCents(payload.todayTotalCents);
-          dailyCapDisplayEl.textContent = moneyFromCents(cfg.daily_cap_cents);
-          waitlistCountEl.textContent = String(payload.waitlistCount || 0);
-        }
-
-        async function refreshAll() {
-          clearNotifyMessage();
-          var payload = await fetchAdminConfig();
-          setUIFromConfig(payload);
-        }
-
-        async function saveConfig() {
-          clearNotifyMessage();
-          var dailyDollars = dailyCapDollarsEl.value;
-          var dailyCents = Math.round(Number(dailyDollars) * 100);
-          if (!Number.isFinite(dailyCents) || dailyCents <= 0) {
-            notifyMessageEl.textContent = "Please enter a valid daily cap.";
-            notifyMessageEl.classList.add("text-[var(--rose)]");
-            return;
-          }
-
-          var res = await fetch("/api/admin-config", {
-            method: "PATCH",
-            headers: Object.assign({ "Content-Type": "application/json" }, headersForAdmin()),
-            body: JSON.stringify({
-              preorder_open: preorderOpenEl.checked,
-              custom_orders_open: customOrdersOpenEl.checked,
-              daily_cap_cents: dailyCents,
-              status_message: statusMessageEl.value || "",
-            }),
-          });
-
-          var data = await res.json().catch(function () { return null; });
-          if (!res.ok || !data || !data.success) {
-            notifyMessageEl.textContent = (data && data.error) ? data.error : "Save failed.";
-            notifyMessageEl.classList.add("text-[var(--rose)]");
-            return;
-          }
-
-          notifyMessageEl.textContent = "Saved.";
-          notifyMessageEl.classList.remove("text-[var(--rose)]");
-          notifyMessageEl.classList.add("text-[var(--cocoa)]");
-          await refreshAll();
-        }
-
-        async function openAndNotify() {
-          clearNotifyMessage();
-          var res = await fetch("/api/open-preorder-and-notify", {
-            method: "POST",
-            headers: headersForAdmin(),
-          });
-          var data = await res.json().catch(function () { return null; });
-          if (!res.ok || !data || !data.success) {
-            notifyMessageEl.textContent = (data && data.error) ? data.error : "Action failed.";
-            notifyMessageEl.classList.add("text-[var(--rose)]");
-            return;
-          }
-
-          var sum = data.summary || {};
-          notifyMessageEl.textContent =
-            "Emails attempted: " + (sum.attempted || 0) +
-            ", sent: " + (sum.sent || 0) +
-            ", failed: " + (sum.failed || 0) + ".";
-          notifyMessageEl.classList.remove("text-[var(--rose)]");
-          notifyMessageEl.classList.add("text-[var(--cocoa)]");
-          await refreshAll();
-        }
-
-        async function unlock() {
-          if (!secret) {
-            if (secretMissing) secretMissing.classList.remove("hidden");
-            return;
-          }
-          clearNotifyMessage();
-          setAuthError("");
-
-          var pw = (adminPasswordEl.value || "").trim();
-          if (!pw) {
-            setAuthError("Please enter the admin password.");
-            return;
-          }
-          setPassword(pw);
-          try {
-            await refreshAll();
-            adminUi.classList.remove("hidden");
-            authGate.classList.add("hidden");
-          } catch (err) {
-            setAuthError(err && err.message ? err.message : "Unauthorized.");
-            sessionStorage.removeItem("rbgf_admin_password");
-          }
-        }
-
-        authSubmitBtn.addEventListener("click", unlock);
-        document.getElementById("save-config").addEventListener("click", saveConfig);
-        document.getElementById("refresh-config").addEventListener("click", refreshAll);
-        document.getElementById("open-and-notify").addEventListener("click", function () {
-          if (!confirm("Open preorder and notify the waitlist now?")) return;
-          openAndNotify();
-        });
-
-        // Auto-unlock if password is already in this session.
-        if (getPassword()) {
-          if (!secret) {
-            if (secretMissing) secretMissing.classList.remove("hidden");
-          } else {
-            refreshAll()
-              .then(function () {
-                adminUi.classList.remove("hidden");
-                authGate.classList.add("hidden");
-              })
-              .catch(function (err) {
-                setAuthError(err && err.message ? err.message : "Unauthorized.");
-              });
-          }
-        } else {
-          if (!secret && secretMissing) secretMissing.classList.remove("hidden");
-        }
-      })();
-    </script>
+    <script src="/assets/rachel-bakes-gf/admin-command.js"></script>
   </body>
 </html>
-

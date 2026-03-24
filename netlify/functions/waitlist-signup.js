@@ -81,9 +81,12 @@ module.exports.handler = async function handler(event) {
 
     const emailIn = parsed && typeof parsed.email === "string" ? parsed.email : "";
     const nameIn = parsed && typeof parsed.name === "string" ? parsed.name : "";
+    const phoneIn = parsed && typeof parsed.phone === "string" ? parsed.phone : "";
+    const interestsIn = parsed && parsed.interests && typeof parsed.interests === "object" ? parsed.interests : null;
 
     const email = String(emailIn).trim().toLowerCase();
     const name = String(nameIn).trim();
+    const phone = String(phoneIn).trim();
 
     if (!email || !isValidEmail(email)) {
       return {
@@ -92,14 +95,18 @@ module.exports.handler = async function handler(event) {
       };
     }
 
+    const row = {
+      email: email,
+      name: name || null,
+    };
+    if (phone) row.phone = phone;
+    if (interestsIn && typeof interestsIn === "object") {
+      row.interests = interestsIn;
+    }
+
     // Insert into waitlist.
     // We store normalized lowercase email to match the unique index.
-    const payload = await supabaseRestPost("waitlist?select=id,email", [
-      {
-        email: email,
-        name: name || null,
-      },
-    ]);
+    const payload = await supabaseRestPost("waitlist?select=id,email", [row]);
 
     return {
       statusCode: 200,
