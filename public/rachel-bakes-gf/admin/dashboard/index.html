@@ -23,8 +23,8 @@
   <body>
     <div id="auth-gate" class="rbgf-ux-panel" style="max-width: 480px; margin: 2rem auto">
       <p class="rbgf-ux-badge">BakeSites · Owner</p>
-      <h1 class="rbgf-ux-h2" style="margin-top: 0.5rem">Command center</h1>
-      <p class="rbgf-ux-sub">Rachel Bakes GF — sign in to open the kitchen board.</p>
+      <h1 class="rbgf-ux-h2" style="margin-top: 0.5rem">Kitchen board</h1>
+      <p class="rbgf-ux-sub">Rachel Bakes GF — sign in to open today’s pickup board and bakery controls.</p>
       <div id="secret-missing" class="rbgf-ux-hidden" style="padding: 0.75rem; background: #fef2f2; border-radius: 8px; color: #991b1b; font-size: 0.9rem">
         Add <code>?secret=…</code> to the URL (same value as <code>ADMIN_SECRET</code>). On localhost with <code>netlify dev</code>, you can omit it if <code>.env</code> matches <code>.env.example</code>.
       </div>
@@ -58,7 +58,7 @@
         <div class="rbgf-owner-banner rbgf-owner-banner--subtle">
           <p class="rbgf-owner-banner-inner">
             <span class="rbgf-owner-banner-tag">Owner</span>
-            <span class="rbgf-owner-banner-text">Kitchen board · planner · ordering controls below</span>
+            <span class="rbgf-owner-banner-text">Today’s pickup board first — then production planner, schedule &amp; bakery controls</span>
           </p>
         </div>
 
@@ -75,6 +75,16 @@
           </div>
 
           <div id="tab-panel-kitchen" class="ob-tab-panel" role="tabpanel" aria-labelledby="tab-btn-kitchen">
+            <section class="ob-kanban-section ob-kanban-section--hero" aria-labelledby="kanban-h">
+              <div class="ob-kanban-head">
+                <h2 id="kanban-h" class="ob-kanban-title">Today’s pickup board</h2>
+                <p class="ob-kanban-sub">Columns by status — tap a card for detail.</p>
+              </div>
+              <div class="ob-kanban-scroll">
+                <div class="ob-kanban" id="kanban-board" role="region" aria-label="Order status columns"></div>
+              </div>
+            </section>
+
             <section aria-label="Shop summary">
               <h2 class="ob-visually-hidden">Operational summary</h2>
               <div class="ob-summary ob-summary--strip">
@@ -123,16 +133,6 @@
                   <p class="ob-planner-col-sub">Pretzel bites &amp; same-day items</p>
                   <div id="planner-dayof" class="ob-planner-rows"></div>
                 </div>
-              </div>
-            </section>
-
-            <section class="ob-kanban-section" aria-labelledby="kanban-h">
-              <div class="ob-kanban-head">
-                <h2 id="kanban-h" class="ob-kanban-title">Today’s pickup board</h2>
-                <p class="ob-kanban-sub">Columns by status — tap a card for detail.</p>
-              </div>
-              <div class="ob-kanban-scroll">
-                <div class="ob-kanban" id="kanban-board" role="region" aria-label="Order status columns"></div>
               </div>
             </section>
 

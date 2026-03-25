@@ -472,6 +472,37 @@
   margin: 0;
 }
 
+/* Hero pickup board — first on kitchen tab: bakery-first hierarchy */
+.ob-kanban-section--hero {
+  margin-bottom: 1rem;
+  padding: 0.85rem 0.9rem 0.95rem;
+  background: var(--ob-surface);
+  border: 1px solid var(--ob-rule);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.07);
+}
+
+.ob-kanban-section--hero .ob-kanban-head {
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(197, 208, 219, 0.65);
+}
+
+.ob-kanban-section--hero .ob-kanban-title {
+  font-size: 1.48rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ob-kanban-section--hero .ob-kanban-sub {
+  font-size: 0.86rem;
+  color: var(--ob-navy-soft);
+}
+
+.ob-kanban-section--hero .ob-kanban {
+  min-height: 240px;
+}
+
 .ob-kanban-sub {
   font-size: 0.8rem;
   color: var(--ob-muted);

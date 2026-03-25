@@ -1,19 +1,55 @@
 /**
  * Rachel Bakes GF — production + pickup board (kitchen layout).
- * When #preorder_schedule_editor exists, orders hydrate from admin-command.js after rbgf-admin-ready.
+ * When #preorder_schedule_editor exists, orders hydrate via window.__rbgfApplyOwnerDashboardHydration (preferred) or rbgf-admin-ready.
  */
 (function () {
   'use strict';
 
-  var orders = [];
-
-  function ymdToday() {
-    return new Date().toISOString().slice(0, 10);
+  function dashboardDebugEnabled() {
+    try {
+      return (
+        typeof window !== 'undefined' &&
+        (window.location.search.indexOf('debug=1') !== -1 || window.localStorage.getItem('rbgfDashboardDebug') === '1')
+      );
+    } catch (e) {
+      return false;
+    }
   }
-  function ymdTomorrow() {
-    var d = new Date();
-    d.setDate(d.getDate() + 1);
-    return d.toISOString().slice(0, 10);
+
+  function dbg() {
+    if (!dashboardDebugEnabled()) return;
+    var a = Array.prototype.slice.call(arguments);
+    a.unshift('[rbgf-dashboard]');
+    console.log.apply(console, a);
+  }
+
+  var orders = [];
+  var ownerChromeWired = false;
+
+  /** All in-flight orders for summary + kanban (same preorder rows that power "Preorder load by pickup date" in admin-command). */
+  function activePipelineOrders() {
+    return orders.filter(function (o) {
+      return o.status !== 'picked_up';
+    });
+  }
+
+  /** Calendar Y-M-D in America/Chicago — must match stored pickup_date strings from Supabase. */
+  function ymdChicagoToday() {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Chicago',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date());
+  }
+
+  function ymdChicagoTomorrow() {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Chicago',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date(Date.now() + 24 * 60 * 60 * 1000));
   }
 
   function adminStatusToKanban(s) {
@@ -46,17 +82,20 @@
 
   function mapOneAdminOrder(o, kind) {
     var id = kind + '-' + String(o.id);
-    var pd = o.pickup_date || '';
-    var board = pd === ymdToday() ? 'today' : pd === ymdTomorrow() ? 'tomorrow' : 'today';
+    var pd = (o.pickup_date && String(o.pickup_date).slice(0, 10)) || '';
+    var tToday = ymdChicagoToday();
+    var tTom = ymdChicagoTomorrow();
+    var board = pd === tToday ? 'today' : pd === tTom ? 'tomorrow' : 'today';
     var total = (o.amount_cents != null ? Number(o.amount_cents) : 0) / 100;
     var lineItems =
       kind === 'preorder'
         ? buildLineItemsFromPreorder(o)
         : [{ label: o.items || 'Custom order', prep: 'tonight', bucket: 'cake', qty: 1 }];
+    var summaryText = o.items != null && o.items !== '' ? o.items : o.order_details || '';
     return {
       id: id,
       customer: o.name || '—',
-      summary: o.items || '',
+      summary: summaryText,
       total: total,
       pickupLabel: (pd || 'TBD') + (o.pickup_window ? ' · ' + o.pickup_window : ''),
       pickupDate: pd,
@@ -72,8 +111,21 @@
   }
 
   function hydrateFromAdmin(detail) {
-    var pre = (detail && detail.preorders) || [];
-    var cu = (detail && detail.customOrders) || [];
+    var win = typeof window !== 'undefined' ? window : {};
+    var live =
+      typeof win.__rbgfGetAdminState === 'function'
+        ? win.__rbgfGetAdminState()
+        : null;
+    var pre =
+      live && Array.isArray(live.preorders)
+        ? live.preorders
+        : (detail && detail.preorders) || [];
+    var cu =
+      live && Array.isArray(live.customOrders)
+        ? live.customOrders
+        : (detail && detail.customOrders) || [];
+    dbg('hydrateFromAdmin detail.preorders len=', pre.length, 'sample=', pre[0]);
+    dbg('hydrateFromAdmin detail.customOrders len=', cu.length, 'sample=', cu[0]);
     orders = [];
     pre.forEach(function (o) {
       orders.push(mapOneAdminOrder(o, 'preorder'));
@@ -82,6 +134,12 @@
       orders.push(mapOneAdminOrder(o, 'custom'));
     });
     orders.forEach(normalizePaymentMethodKey);
+    dbg(
+      'after hydrate orders.length=',
+      orders.length,
+      'activePipelineOrders().length=',
+      activePipelineOrders().length
+    );
   }
 
   /** Kanban status: new | confirmed | in_prep | ready | picked_up */
@@ -226,10 +284,14 @@
       if (cat === 'Pretzel Bites') pretzelRev += o.total;
       if (cat !== 'Pretzel Bites') cakesRev += o.total;
     });
-    document.getElementById('ledger-sum-today').textContent = money(todayTotal);
-    document.getElementById('ledger-sum-week').textContent = money(weekTotal);
-    document.getElementById('ledger-sum-pretzel').textContent = money(pretzelRev);
-    document.getElementById('ledger-sum-cakes').textContent = money(cakesRev);
+    var lt = document.getElementById('ledger-sum-today');
+    var lw = document.getElementById('ledger-sum-week');
+    var lp = document.getElementById('ledger-sum-pretzel');
+    var lc = document.getElementById('ledger-sum-cakes');
+    if (lt) lt.textContent = money(todayTotal);
+    if (lw) lw.textContent = money(weekTotal);
+    if (lp) lp.textContent = money(pretzelRev);
+    if (lc) lc.textContent = money(cakesRev);
   }
 
   var state = {
@@ -257,14 +319,8 @@
       .replace(/"/g, '&quot;');
   }
 
-  function todayOrders() {
-    return orders.filter(function (o) {
-      return o.pickupBoard === 'today';
-    });
-  }
-
   function renderSummary() {
-    var list = todayOrders();
+    var list = activePipelineOrders();
     var count = list.length;
     var sales = 0;
     var unpaid = 0;
@@ -283,17 +339,23 @@
     var waitN = wl ? parseInt(String(wl.textContent || '0').replace(/[^\d]/g, ''), 10) : state.waitlist;
     if (!Number.isFinite(waitN)) waitN = state.waitlist;
 
-    document.getElementById('sum-preorder').innerHTML = preorderOpen
-      ? '<span class="ob-pill-open">Open</span>'
-      : '<span class="ob-pill-closed">Closed</span>';
-    document.getElementById('sum-custom').innerHTML = customOpen
-      ? '<span class="ob-pill-open">Open</span>'
-      : '<span class="ob-pill-closed">Closed</span>';
-    document.getElementById('sum-pickup-count').textContent = String(count);
-    document.getElementById('sum-today-sales').textContent = money(sales);
-    document.getElementById('sum-unpaid').textContent = String(unpaid);
-    document.getElementById('sum-waitlist').textContent = String(waitN);
-    document.getElementById('sum-daily-cap').textContent = money(capDollars);
+    var sp = document.getElementById('sum-preorder');
+    var sc = document.getElementById('sum-custom');
+    var spc = document.getElementById('sum-pickup-count');
+    var sts = document.getElementById('sum-today-sales');
+    var su = document.getElementById('sum-unpaid');
+    var sw = document.getElementById('sum-waitlist');
+    var sdc = document.getElementById('sum-daily-cap');
+    if (sp)
+      sp.innerHTML = preorderOpen ? '<span class="ob-pill-open">Open</span>' : '<span class="ob-pill-closed">Closed</span>';
+    if (sc)
+      sc.innerHTML = customOpen ? '<span class="ob-pill-open">Open</span>' : '<span class="ob-pill-closed">Closed</span>';
+    if (spc) spc.textContent = String(count);
+    if (sts) sts.textContent = money(sales);
+    if (su) su.textContent = String(unpaid);
+    if (sw) sw.textContent = String(waitN);
+    if (sdc) sdc.textContent = money(capDollars);
+    dbg('renderSummary done; activePipeline count=', count);
   }
 
   function rollupPlanner() {
@@ -310,7 +372,9 @@
     };
     orders.forEach(function (o) {
       if (o.status === 'picked_up') return;
-      o.lineItems.forEach(function (li) {
+      var lines = o.lineItems;
+      if (!lines || !lines.length) return;
+      lines.forEach(function (li) {
         var entry = { customer: o.customer, id: o.id, label: li.label, qty: li.qty || 1 };
         if (li.prep === 'tonight') {
           if (tonightBuckets[li.bucket] != null) tonightBuckets[li.bucket].push(entry);
@@ -346,9 +410,11 @@
   ];
 
   function renderPlanner() {
+    dbg('renderPlanner');
     var r = rollupPlanner();
     var tonightEl = document.getElementById('planner-tonight');
     var dayofEl = document.getElementById('planner-dayof');
+    if (!tonightEl || !dayofEl) return;
     tonightEl.innerHTML = '';
     dayofEl.innerHTML = '';
 
@@ -436,9 +502,11 @@
   }
 
   function renderKanban() {
+    dbg('renderKanban; activePipeline len=', activePipelineOrders().length);
     var board = document.getElementById('kanban-board');
+    if (!board) return;
     board.innerHTML = '';
-    var list = todayOrders();
+    var list = activePipelineOrders();
 
     STATUS_ORDER.forEach(function (st) {
       var inCol = list.filter(function (o) {
@@ -649,6 +717,7 @@
   function renderLedger() {
     var wrap = document.getElementById('ledger-table-wrap');
     var empty = document.getElementById('ledger-empty');
+    if (!wrap || !empty) return;
     var rows = ledgerRows();
     if (!rows.length) {
       empty.classList.remove('ob-ledger-empty--hidden');
@@ -717,6 +786,7 @@
     var ledger = document.getElementById('tab-panel-ledger');
     var btnK = document.getElementById('tab-btn-kitchen');
     var btnL = document.getElementById('tab-btn-ledger');
+    if (!kitchen || !ledger || !btnK || !btnL) return;
     var isKitchen = tab === 'kitchen';
     kitchen.classList.toggle('ob-tab-panel--hidden', !isKitchen);
     kitchen.hidden = !isKitchen;
@@ -731,12 +801,18 @@
   }
 
   function refresh() {
-    renderSummary();
-    renderPlanner();
-    renderKanban();
-    renderLedgerSummary();
-    renderLedger();
-    renderMessages();
+    dbg('refresh() start');
+    try {
+      renderSummary();
+      renderPlanner();
+      renderKanban();
+      renderLedgerSummary();
+      renderLedger();
+      renderMessages();
+      dbg('refresh() complete');
+    } catch (e) {
+      console.error('[rbgf-dashboard] refresh failed', e);
+    }
   }
 
   function logMessage(text) {
@@ -748,6 +824,7 @@
 
   function renderMessages() {
     var root = document.getElementById('msg-list');
+    if (!root) return;
     root.innerHTML = '';
     state.messageLog.forEach(function (m) {
       var row = document.createElement('div');
@@ -775,8 +852,10 @@
   }
 
   function wireChrome() {
-    document.getElementById('drawer-backdrop').addEventListener('click', closeDrawer);
-    document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+    var bd = document.getElementById('drawer-backdrop');
+    var dc = document.getElementById('drawer-close');
+    if (bd) bd.addEventListener('click', closeDrawer);
+    if (dc) dc.addEventListener('click', closeDrawer);
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeDrawer();
     });
@@ -790,14 +869,40 @@
     });
   }
 
-  function init() {
-    if (!document.getElementById('preorder_schedule_editor')) return;
-    document.addEventListener('rbgf-admin-ready', function onReady(ev) {
-      document.removeEventListener('rbgf-admin-ready', onReady);
-      hydrateFromAdmin(ev.detail);
+  function applyOwnerDashboardHydration(detail) {
+    /* Kitchen dashboard: anchor on hero board (schedule editor is below the fold; must not block hydration). */
+    if (!document.getElementById('kanban-board')) {
+      console.warn('[rbgf-dashboard] applyOwnerDashboardHydration skipped: #kanban-board not in DOM');
+      return;
+    }
+    hydrateFromAdmin(detail || {});
+    console.info('[rbgf-dashboard] hydrated', {
+      orders: orders.length,
+      pipeline: activePipelineOrders().length,
+    });
+    if (!ownerChromeWired) {
+      ownerChromeWired = true;
       wireChrome();
-      refresh();
-      setActiveTab('kitchen');
+    }
+    refresh();
+    console.info('[rbgf-dashboard] refresh finished (summary + planner + kanban)');
+    setActiveTab('kitchen');
+  }
+
+  window.__rbgfApplyOwnerDashboardHydration = applyOwnerDashboardHydration;
+
+  function init() {
+    if (!document.getElementById('kanban-board')) {
+      dbg('init: no #kanban-board — owner dashboard hydration skipped');
+      console.warn('[rbgf-dashboard] init skipped: #kanban-board not in DOM (owner-dashboard.js will not hydrate)');
+      return;
+    }
+    dbg('init: listening for rbgf-admin-ready on document');
+    console.info('[rbgf-dashboard] init: listening for rbgf-admin-ready and/or direct __rbgfApplyOwnerDashboardHydration');
+    document.addEventListener('rbgf-admin-ready', function onReady(ev) {
+      dbg('rbgf-admin-ready fired; detail keys=', ev.detail ? Object.keys(ev.detail) : null);
+      document.removeEventListener('rbgf-admin-ready', onReady);
+      applyOwnerDashboardHydration(ev.detail);
     });
   }
 

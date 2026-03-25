@@ -103,6 +103,15 @@
     dailyCapCents: 100000,
   };
 
+  /** Same live arrays as renderPreorderDateSnapshot / setUiFromConfig — owner-dashboard reads this after load. */
+  window.__rbgfGetAdminState = function () {
+    return {
+      source: state.source,
+      preorders: state.preorders,
+      customOrders: state.customOrders,
+    };
+  };
+
   function $(id) {
     return document.getElementById(id);
   }
@@ -1137,18 +1146,41 @@
     setUiFromConfig(payload);
     if (state.offlineMode && $("offline-banner")) $("offline-banner").classList.remove("rbgf-ux-hidden");
     else if ($("offline-banner")) $("offline-banner").classList.add("rbgf-ux-hidden");
+    var detailPayload = {
+      source: state.source,
+      preorders: state.preorders,
+      customOrders: state.customOrders,
+    };
     try {
-      window.dispatchEvent(
-        new CustomEvent("rbgf-admin-ready", {
-          detail: {
-            source: state.source,
-            preorders: state.preorders,
-            customOrders: state.customOrders,
-          },
-        })
-      );
+      if (typeof window.__rbgfApplyOwnerDashboardHydration === "function") {
+        console.info("[rbgf-admin] invoking __rbgfApplyOwnerDashboardHydration", {
+          preorders: (detailPayload.preorders && detailPayload.preorders.length) || 0,
+          customOrders: (detailPayload.customOrders && detailPayload.customOrders.length) || 0,
+        });
+        window.__rbgfApplyOwnerDashboardHydration(detailPayload);
+      } else {
+        console.warn(
+          "[rbgf-admin] __rbgfApplyOwnerDashboardHydration missing — dispatching rbgf-admin-ready only (check owner-dashboard.js is loaded)"
+        );
+        document.dispatchEvent(
+          new CustomEvent("rbgf-admin-ready", {
+            detail: detailPayload,
+            bubbles: true,
+          })
+        );
+      }
     } catch (e) {
-      /* ignore */
+      console.error("[rbgf-admin] owner dashboard hydration failed", e);
+      try {
+        document.dispatchEvent(
+          new CustomEvent("rbgf-admin-ready", {
+            detail: detailPayload,
+            bubbles: true,
+          })
+        );
+      } catch (e2) {
+        console.error("[rbgf-admin] rbgf-admin-ready dispatch failed", e2);
+      }
     }
   }
 
