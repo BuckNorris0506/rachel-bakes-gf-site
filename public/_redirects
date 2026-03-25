@@ -7,3 +7,15 @@
 /api/admin-bakery /.netlify/functions/admin-bakery 200
 /api/admin-customer-email /.netlify/functions/admin-customer-email 200
 /api/open-preorder-and-notify /.netlify/functions/open-preorder-and-notify 200
+
+# Legacy /rachel-bakes-gf/* URLs → site root (Rachel Bakes GF now lives at /)
+/rachel-bakes-gf/pickup-policies   /policies 301
+/rachel-bakes-gf/pickup-policies/  /policies/ 301
+/rachel-bakes-gf/pickup-policies/*  /policies/:splat 301
+/rachel-bakes-gf/docs   /rachel-bakes-gf-docs 301
+/rachel-bakes-gf/docs/  /rachel-bakes-gf-docs/ 301
+/rachel-bakes-gf/docs/*  /rachel-bakes-gf-docs/:splat 301
+/rachel-bakes-gf  / 301
+/rachel-bakes-gf/  / 301
+/rachel-bakes-gf/index.html  / 301
+/rachel-bakes-gf/*  /:splat 301
