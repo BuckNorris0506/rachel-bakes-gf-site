@@ -69,6 +69,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input", default="data/contractor_emails.csv", help="CSV or JSON contact dataset")
     parser.add_argument("--subject-template", default="templates/outreach_subject.txt")
     parser.add_argument("--body-template", default="templates/outreach_body.txt")
+    parser.add_argument(
+        "--campaign-type",
+        choices=["first_touch", "followup"],
+        default="first_touch",
+        help="Controls historical dedupe behavior. first_touch blocks any prior sent recipient; followup blocks only recipients already sent the same follow-up subject.",
+    )
     parser.add_argument("--log", default="logs/outreach_sent_log.csv")
     parser.add_argument("--daily-limit", type=int, default=20, help="Daily send cap (recommended 20-40)")
     parser.add_argument("--min-delay", type=float, default=5.0, help="Min delay between sends (seconds)")
@@ -147,23 +153,26 @@ def ensure_csv(path: Path, headers: List[str]) -> None:
         writer.writerow(headers)
 
 
-def load_sent_today(path: Path) -> tuple[Set[str], int]:
+def load_send_history(path: Path) -> tuple[Set[str], Dict[str, Set[str]], int]:
     sent_emails: Set[str] = set()
+    sent_subjects: Dict[str, Set[str]] = {}
     sent_today = 0
     if not path.exists():
-        return sent_emails, sent_today
+        return sent_emails, sent_subjects, sent_today
 
     today = dt.date.today().isoformat()
     with path.open("r", newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             status = (row.get("status") or "").strip().lower()
             email = (row.get("email") or "").strip().lower()
+            subject = (row.get("subject") or "").strip()
             ts = (row.get("timestamp") or "")[:10]
             if status == "sent" and email:
                 sent_emails.add(email)
+                sent_subjects.setdefault(email, set()).add(subject)
                 if ts == today:
                     sent_today += 1
-    return sent_emails, sent_today
+    return sent_emails, sent_subjects, sent_today
 
 
 def append_log(path: Path, row: Dict[str, str]) -> None:
@@ -257,10 +266,18 @@ def main() -> int:
         print("No valid subject line found in subject template.", file=sys.stderr)
         return 2
 
-    sent_before, sent_today = load_sent_today(log_path)
+    sent_before, sent_subject_history, sent_today = load_send_history(log_path)
     remaining = max(args.daily_limit - sent_today, 0)
-
-    queue = [c for c in contacts if c.email not in sent_before]
+    queue: List[Contact] = []
+    for contact in contacts:
+        if args.campaign_type == "first_touch":
+            if contact.email in sent_before:
+                continue
+        else:
+            prior_subjects = sent_subject_history.get(contact.email, set())
+            if subject_tpl in prior_subjects:
+                continue
+        queue.append(contact)
     queue = queue[:remaining]
 
     print(f"Loaded contacts: {len(contacts)}")
@@ -268,6 +285,7 @@ def main() -> int:
     print(f"Sent today: {sent_today}")
     print(f"Will process now: {len(queue)}")
     print(f"Send Mode: {'SEND' if args.send else 'DRY RUN'}")
+    print(f"Campaign Type: {args.campaign_type}")
     print(f"Daily Limit: {args.daily_limit}")
     print(f"Random Delay Range: {SEND_DELAY_MIN_SECONDS}-{SEND_DELAY_MAX_SECONDS} seconds")
     if args.daily_limit > SAFE_RAMP_THRESHOLD:

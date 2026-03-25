@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
-  <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
-  <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
-  <title>About | Rachel Bakes GF</title>
-  <meta name="description" content="About Rachel Bakes GF, a local gluten-free preorder and pickup bakery in Liberty, Missouri." />
+  <link rel="icon" href="/assets/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/assets/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/rachel-bakes-gf/apple-touch-icon.png" />
+  <title>Pickup & Policies | Rachel Bakes GF</title>
+  <meta name="description" content="Pickup information and ordering policies for Rachel Bakes GF in Liberty, Missouri." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -32,10 +32,10 @@
             <a class="nav-link" href="../menu/">Menu</a>
             <a class="nav-link" href="../order/">Order</a>
             <a class="nav-link" href="../custom-orders/">Custom</a>
-            <a class="nav-link" href="../pickup-policies/">Policies</a>
+            <a class="nav-link nav-active" href="./">Policies</a>
             <a class="nav-link" href="../gallery/">Gallery</a>
             <a class="nav-link" href="../contact/">Contact</a>
-            <a class="nav-link nav-active" href="./">About</a>
+            <a class="nav-link" href="../about/">About</a>
           </nav>
           <div class="header-cta-wrap hidden md:block"><a href="../order/" class="cta-header">Preorder</a></div>
           <button @click="open=!open" class="rbgf-nav-toggle md:hidden" type="button" aria-label="Open site navigation">Menu</button>
@@ -45,10 +45,10 @@
           <a class="nav-link" href="../menu/">Menu</a>
           <a class="nav-link" href="../order/">Order</a>
           <a class="nav-link" href="../custom-orders/">Custom Orders</a>
-          <a class="nav-link" href="../pickup-policies/">Policies</a>
+          <a class="nav-link nav-active" href="./">Policies</a>
           <a class="nav-link" href="../gallery/">Gallery</a>
           <a class="nav-link" href="../contact/">Contact</a>
-          <a class="nav-link nav-active" href="./">About</a>
+          <a class="nav-link" href="../about/">About</a>
         </div>
       </div>
     </header>
@@ -56,20 +56,46 @@
     <main class="rbgf-inner-main">
       <section class="rbgf-inner-hero">
         <div class="mx-auto max-w-site px-5">
-          <p class="section-label text-xs font-semibold uppercase">About</p>
-          <h1 class="mt-3 text-4xl sm:text-5xl">Gluten-free bakery, pickup in Liberty.</h1>
+          <p class="section-label text-xs font-semibold uppercase">Pickup &amp; Policies</p>
+          <h1 class="mt-3 text-4xl sm:text-5xl">Pickup details and what to expect.</h1>
+          <p class="mt-5 max-w-2xl text-lg leading-8">Where and when we do pickup, how payment works, and a few policies so you know what you’re signing up for.</p>
         </div>
       </section>
 
       <section>
         <div class="mx-auto max-w-site px-5">
-          <div class="rbgf-about-split">
-            <div class="rbgf-about-visual min-h-[280px]">
-              <img src="../Rachel Bakes GF-Pics/menu-soft-pretzel-bites.jpg" alt="Soft pretzel bites from Rachel Bakes GF" loading="lazy" />
+          <div class="rbgf-policy-grid">
+            <div class="rbgf-policy-item">
+              <h2>Pickup location</h2>
+              <p>Pickup is in Liberty, Missouri. We’ll give you the exact address and instructions once your order is confirmed.</p>
             </div>
-            <div class="rbgf-about-prose">
-              <p>Rachel Bakes GF is a home bakery in Liberty, Missouri. We do preorders and pickup—you tell us what you’d like and when you can pick up, and we’ll confirm. The menu stays intentionally small: pretzel bites, cinnamon rolls, oatmeal cream pies, dinner rolls, and carrot cake by custom inquiry when it’s a good fit.</p>
-              <p>Everything is gluten-free. We keep the process simple so you can see what’s available, how pickup works, and what to expect—no complicated checkout, just clear requests and a reliable pickup.</p>
+            <div class="rbgf-policy-item">
+              <h2>Pickup windows</h2>
+              <p>We schedule pickup around our bake days—often weekends, with some flexibility for holidays and events. We’re not open like a regular store; we’ll confirm your window when we confirm your order.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Ordering timelines</h2>
+              <p>The earlier you order, the easier it is to get on the schedule. Holiday and game-day bakes fill up; custom orders need extra lead time. Regular items can often be slotted in with a few days’ notice.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Payment</h2>
+              <p>We’ll tell you when and how to pay when we confirm your order. Some orders may need payment or a deposit ahead of pickup to hold your slot.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Cancellations and refunds</h2>
+              <p>Because we bake to order, canceling close to pickup is hard on our end. We’ll do our best to be fair; orders canceled last-minute, especially custom or holiday orders, may not be fully refundable.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Custom orders</h2>
+              <p>We only take on some custom inquiries. Carrot cake is the custom item on our menu; other requests need to be simple, clearly scoped, and booked with enough notice.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Gluten-free and allergies</h2>
+              <p>Everything we make is gluten-free. If you have other allergies or questions, mention them when you order so we can address them before your pickup is set.</p>
+            </div>
+            <div class="rbgf-policy-item">
+              <h2>Cottage bakery</h2>
+              <p>We operate as a Missouri cottage bakery. If you have questions about what that means for ordering or labeling, ask when you get in touch.</p>
             </div>
           </div>
         </div>
@@ -90,10 +116,10 @@
           <a class="footer-link" href="../menu/">Menu</a>
           <a class="footer-link" href="../order/">Order / Preorder</a>
           <a class="footer-link" href="../custom-orders/">Custom Orders</a>
-          <a class="footer-link" href="../pickup-policies/">Pickup &amp; Policies</a>
+          <a class="footer-link" href="./">Pickup &amp; Policies</a>
           <a class="footer-link" href="../gallery/">Gallery</a>
           <a class="footer-link" href="../contact/">Contact</a>
-          <a class="footer-link" href="./">About</a>
+          <a class="footer-link" href="../about/">About</a>
         </nav>
       </div>
     </footer>

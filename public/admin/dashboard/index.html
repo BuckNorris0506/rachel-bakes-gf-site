@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <link rel="icon" href="/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
-    <link rel="icon" href="/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/rachel-bakes-gf/apple-touch-icon.png" />
+    <link rel="icon" href="/assets/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="icon" href="/assets/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/rachel-bakes-gf/apple-touch-icon.png" />
     <title>Production &amp; pickup · Rachel Bakes GF</title>
     <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content="Owner kitchen board — Rachel Bakes GF." />
@@ -50,23 +50,23 @@
               <div id="offline-banner" class="rbgf-ux-demo rbgf-ux-hidden" style="margin: 0; background: #e0f2fe; color: #075985; border-color: #7dd3fc">
                 Static preview — APIs not running
               </div>
-              <a class="rbgf-owner-site-link" href="/rachel-bakes-gf/">View public site</a>
+              <a class="rbgf-owner-site-link" href="/">View public site</a>
             </div>
           </div>
         </header>
 
-        <div class="rbgf-owner-banner rbgf-owner-banner--subtle">
+        <div class="rbgf-owner-banner rbgf-owner-banner--subtle rbgf-owner-banner--quiet">
           <p class="rbgf-owner-banner-inner">
-            <span class="rbgf-owner-banner-tag">Owner</span>
-            <span class="rbgf-owner-banner-text">Today’s pickup board first — then production planner, schedule &amp; bakery controls</span>
+            <span class="rbgf-owner-banner-tag">Kitchen</span>
+            <span class="rbgf-owner-banner-text">Same live queue as planner &amp; schedule below.</span>
           </p>
         </div>
 
         <main class="rbgf-owner-main">
-          <div class="ob-tabs-wrap">
-            <nav class="ob-tabs" role="tablist" aria-label="Dashboard sections">
+          <div class="ob-tabs-wrap ob-tabs-wrap--kitchen">
+            <nav class="ob-tabs ob-tabs--kitchen" role="tablist" aria-label="Dashboard sections">
               <button type="button" class="ob-tab" id="tab-btn-kitchen" role="tab" aria-selected="true" aria-controls="tab-panel-kitchen" data-tab="kitchen">
-                Kitchen Board
+                Board
               </button>
               <button type="button" class="ob-tab" id="tab-btn-ledger" role="tab" aria-selected="false" aria-controls="tab-panel-ledger" data-tab="ledger">
                 Ledger
@@ -75,19 +75,22 @@
           </div>
 
           <div id="tab-panel-kitchen" class="ob-tab-panel" role="tabpanel" aria-labelledby="tab-btn-kitchen">
+            <div class="ob-kitchen-workspace">
             <section class="ob-kanban-section ob-kanban-section--hero" aria-labelledby="kanban-h">
               <div class="ob-kanban-head">
+                <p class="ob-kanban-eyebrow">Pickup pipeline</p>
                 <h2 id="kanban-h" class="ob-kanban-title">Today’s pickup board</h2>
-                <p class="ob-kanban-sub">Columns by status — tap a card for detail.</p>
+                <p class="ob-kanban-sub">Status columns for the day — tap a card for order detail and workflow.</p>
               </div>
-              <div class="ob-kanban-scroll">
+              <div class="ob-kanban-scroll ob-kanban-board-surface">
                 <div class="ob-kanban" id="kanban-board" role="region" aria-label="Order status columns"></div>
               </div>
             </section>
 
-            <section aria-label="Shop summary">
+            <section aria-label="Shop summary" class="ob-summary-section">
               <h2 class="ob-visually-hidden">Operational summary</h2>
-              <div class="ob-summary ob-summary--strip">
+              <p class="ob-zone-rail-label" aria-hidden="true">Shift pulse</p>
+              <div class="ob-summary ob-summary--strip ob-summary--pulse">
                 <div class="ob-sum-card">
                   <p class="ob-sum-label">Preorders</p>
                   <p class="ob-sum-val ob-sum-val--sm" id="sum-preorder"></p>
@@ -119,22 +122,32 @@
               </div>
             </section>
 
-            <section class="ob-planner" aria-labelledby="planner-h">
-              <h2 id="planner-h" class="ob-planner-title">Production planner</h2>
-              <p class="ob-planner-lead">Tonight vs day-of — tap a row to see what’s behind the total.</p>
+            <section class="ob-planner ob-planner--workspace" aria-labelledby="planner-h">
+              <div class="ob-planner-head">
+                <p class="ob-planner-eyebrow">From the board above</p>
+                <h2 id="planner-h" class="ob-planner-title">Production planner</h2>
+                <p class="ob-planner-lead">Tonight prep vs day-of — totals roll up from the same orders on the board. Tap a row for the customer list.</p>
+              </div>
               <div class="ob-planner-grid">
                 <div class="ob-planner-col">
-                  <h3 class="ob-planner-col-title">Make tonight</h3>
-                  <p class="ob-planner-col-sub">Cinnamon rolls, oatmeal cream pies, dinner rolls, carrot cake (custom), other prep</p>
+                  <div class="ob-planner-col-head">
+                    <h3 class="ob-planner-col-title">Make tonight</h3>
+                    <p class="ob-planner-col-sub">Cinnamon, oatmeal pies, rolls, custom cakes, other prep</p>
+                  </div>
                   <div id="planner-tonight" class="ob-planner-rows"></div>
                 </div>
                 <div class="ob-planner-col">
-                  <h3 class="ob-planner-col-title">Make day-of</h3>
-                  <p class="ob-planner-col-sub">Pretzel bites &amp; same-day items</p>
+                  <div class="ob-planner-col-head">
+                    <h3 class="ob-planner-col-title">Make day-of</h3>
+                    <p class="ob-planner-col-sub">Pretzel bites &amp; same-day SKUs</p>
+                  </div>
                   <div id="planner-dayof" class="ob-planner-rows"></div>
                 </div>
               </div>
             </section>
+            </div>
+
+            <p class="ob-zone-rail-label ob-zone-rail-label--below" aria-hidden="true">Backroom &amp; storefront</p>
 
             <section class="ob-section" aria-labelledby="schedule-h">
               <h2 id="schedule-h" class="ob-h2">Preorder pickup dates &amp; windows</h2>
@@ -198,7 +211,7 @@
               </div>
             </section>
 
-            <section aria-labelledby="msg-heading">
+            <section class="ob-section" aria-labelledby="msg-heading">
               <h2 id="msg-heading" class="ob-h2">Recent activity</h2>
               <div class="ob-card">
                 <div id="msg-list" class="ob-msg-list"></div>

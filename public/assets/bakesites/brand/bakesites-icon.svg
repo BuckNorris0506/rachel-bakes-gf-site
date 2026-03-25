@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-labelledby="t">
+  <title id="t">BakeSites</title>
+  <!-- Minimal loaf mark — same geometry as header; ink #1e293b -->
+  <path fill="#1e293b" d="M8 22V15.5Q16 8.5 24 15.5V22H8Z"/>
+</svg>

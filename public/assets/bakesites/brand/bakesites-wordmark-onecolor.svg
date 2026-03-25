@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 44" role="img" aria-labelledby="title">
+  <title id="title">BakeSites (one-color)</title>
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@9..144,600&amp;display=swap');
+    </style>
+  </defs>
+  <text
+    x="0"
+    y="32"
+    font-family="Fraunces, Georgia, serif"
+    font-size="26"
+    font-weight="600"
+    letter-spacing="-0.02em"
+    fill="#1e293b"
+  >
+    BakeSites
+  </text>
+</svg>

@@ -1588,6 +1588,125 @@ body.storefront-home.rbgf-inner-page .rbgf-request-slab .form-field {
   background: var(--sf-page);
   color: var(--sf-text);
 }
+
+/* Preorder builder: even rows, aligned qty inputs (order page #preorder-form only) */
+#preorder-form .rbgf-preorder-line-items {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  align-items: stretch;
+}
+@media (min-width: 640px) {
+  #preorder-form .rbgf-preorder-line-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+#preorder-form .rbgf-preorder-line-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+  min-height: 100%;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--sf-rule);
+  border-radius: 2px;
+  background: rgba(255, 253, 249, 0.65);
+}
+#preorder-form .rbgf-preorder-line-item__head {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+#preorder-form .rbgf-preorder-line-item__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sf-text);
+}
+#preorder-form .rbgf-preorder-line-item__price {
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--sf-muted);
+}
+#preorder-form .rbgf-preorder-line-item__qty.form-field {
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+  min-height: 2.5rem;
+}
+
+/* Preorder form: cohesive lower section (pickup → payment → notes → submit) */
+#preorder-form.rbgf-preorder-form {
+  gap: 1rem;
+}
+#preorder-form .rbgf-preorder-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  margin-top: 0.1rem;
+  border-top: 1px solid rgba(160, 110, 100, 0.2);
+}
+#preorder-form .rbgf-preorder-meta__pickup {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+#preorder-form .rbgf-preorder-meta__pickup-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  #preorder-form .rbgf-preorder-meta__pickup-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+#preorder-form .rbgf-preorder-pickup-hint:not(.hidden) {
+  display: block;
+  margin: 0.5rem 0 0;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--sf-muted);
+  background: rgba(243, 232, 228, 0.4);
+  border: 1px solid rgba(160, 110, 100, 0.14);
+  border-radius: 2px;
+}
+#preorder-form .rbgf-preorder-meta__payment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.15rem;
+  border-top: 1px solid rgba(160, 110, 100, 0.12);
+}
+#preorder-form .rbgf-preorder-meta__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--sf-text);
+  margin: 0;
+}
+#preorder-form .rbgf-preorder-meta__payment .form-field {
+  width: 100%;
+}
+#preorder-form .rbgf-preorder-meta__notes .form-field {
+  width: 100%;
+}
+#preorder-form .rbgf-preorder-meta__submit {
+  padding-top: 0.15rem;
+}
+#preorder-form .rbgf-preorder-meta__submit .cta-primary {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  #preorder-form .rbgf-preorder-meta__submit .cta-primary {
+    width: auto;
+  }
+}
+
 body.storefront-home.rbgf-inner-page .rbgf-request-note {
   border-radius: 2px;
   border: 1px solid rgba(168, 95, 90, 0.15);

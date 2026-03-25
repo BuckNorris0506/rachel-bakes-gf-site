@@ -1,0 +1,52 @@
+/* BakeSites — proof-led layout; tone via CSS variables */
+
+:root {
+  --bs-ink: #1e293b;
+  --bs-accent: #9d5b5e;
+  --bs-accent-dark: #854d50;
+  --bs-page: #f8f7f6;
+  --bs-panel: #1e293b;
+}
+
+.bs-proof-frame {
+  border: 1px solid rgba(30, 41, 59, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(30, 41, 59, 0.04),
+    0 12px 36px rgba(30, 41, 59, 0.1);
+}
+
+.bs-proof-frame--lift {
+  transform: translateY(0);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) {
+  .bs-proof-frame--lift:hover {
+    box-shadow:
+      0 0 0 1px rgba(30, 41, 59, 0.06),
+      0 16px 44px rgba(30, 41, 59, 0.14);
+  }
+}
+
+.bs-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(30, 41, 59, 0.15), transparent);
+}
+
+.bs-kicker {
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.bs-row-line {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.bs-row-line:last-child {
+  border-bottom: none;
+}

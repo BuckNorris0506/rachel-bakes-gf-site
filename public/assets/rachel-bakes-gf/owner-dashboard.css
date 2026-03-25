@@ -1,14 +1,20 @@
 /* Rachel Bakes GF — production & pickup board (prototype, admin only) */
 
 :root {
-  --ob-page: #e8ecf0;
-  --ob-navy: #1f2a36;
-  --ob-navy-soft: #6f8798;
+  --ob-page: #e2e6ec;
+  --ob-page-warm: #f7f0e8;
+  --ob-cream: #fffbf5;
+  --ob-wheat: #f3e9dc;
+  --ob-navy: #1a2330;
+  --ob-navy-deep: #121920;
+  --ob-navy-soft: #5c6d7d;
   --ob-surface: #ffffff;
   --ob-rule: #c5d0db;
   --ob-muted: #5c6570;
   --ob-ink: #171717;
   --ob-touch: 48px;
+  --ob-accent-warm: #b8956a;
+  --ob-accent-rose: #c4a090;
   --ob-col-new: #0369a1;
   --ob-col-confirmed: #1d4ed8;
   --ob-col-prep: #c2410c;
@@ -19,7 +25,11 @@
 .rbgf-owner {
   font-family: 'DM Sans', system-ui, sans-serif;
   color: var(--ob-ink);
-  background: var(--ob-page);
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -15%, rgba(196, 165, 116, 0.2), transparent 52%),
+    radial-gradient(ellipse 60% 45% at 0% 30%, rgba(196, 160, 144, 0.1), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 100% 60%, rgba(31, 42, 54, 0.05), transparent 45%),
+    linear-gradient(185deg, var(--ob-page-warm) 0%, #ebe4dc 35%, var(--ob-page) 72%, #d8dee6 100%);
   min-height: 100vh;
   margin: 0;
   -webkit-text-size-adjust: 100%;
@@ -42,14 +52,14 @@
 }
 
 .rbgf-owner-header {
-  background: linear-gradient(180deg, #243240 0%, var(--ob-navy) 100%);
-  color: #f8f7f3;
-  padding: 0.62rem 1rem;
+  background: linear-gradient(180deg, #2a3644 0%, var(--ob-navy-deep) 48%, #0f1419 100%);
+  color: #faf8f4;
+  padding: 0.72rem 1rem 0.78rem;
   position: sticky;
   top: 0;
   z-index: 200;
-  border-bottom: 1px solid rgba(111, 135, 152, 0.35);
-  box-shadow: 0 4px 18px rgba(8, 12, 18, 0.28);
+  border-bottom: 1px solid rgba(196, 165, 116, 0.22);
+  box-shadow: 0 6px 24px rgba(5, 8, 12, 0.45), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .rbgf-owner-header-inner {
@@ -64,19 +74,20 @@
 
 .rbgf-owner-brand {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.48rem;
+  font-size: 1.55rem;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.12;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .rbgf-owner-kicker {
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(231, 238, 244, 0.72);
-  margin-top: 0.08rem;
+  color: rgba(232, 224, 214, 0.78);
+  margin-top: 0.1rem;
 }
 
 .rbgf-owner-site-link {
@@ -118,8 +129,35 @@
 }
 
 .rbgf-owner-banner--subtle .rbgf-owner-banner-inner {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(31, 42, 54, 0.1);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+}
+
+/* Below header — quiet wayfinding; does not compete with the pickup board hero */
+.rbgf-owner-banner--quiet {
+  padding: 0.2rem 1rem 0;
+}
+
+.rbgf-owner-banner--quiet .rbgf-owner-banner-inner {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.35rem 0 0.5rem;
   box-shadow: none;
+  font-size: 0.68rem;
+  color: #6d6a66;
+  justify-content: center;
+}
+
+.rbgf-owner-banner--quiet .rbgf-owner-banner-tag {
+  color: #8a7f72;
+  letter-spacing: 0.1em;
+}
+
+.rbgf-owner-banner--quiet .rbgf-owner-banner-text {
+  color: #7a756e;
+  max-width: 36rem;
 }
 
 .rbgf-owner-banner-tag {
@@ -137,11 +175,20 @@
 .rbgf-owner-main {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0.65rem 1rem 1.5rem;
+  padding: 0.75rem 1rem 2rem;
 }
 
 .ob-tabs-wrap {
   margin-bottom: 0.65rem;
+}
+
+.ob-tabs-wrap--kitchen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .ob-tabs {
@@ -152,6 +199,16 @@
   background: rgba(31, 42, 54, 0.06);
   border-radius: 10px;
   border: 1px solid var(--ob-rule);
+}
+
+.ob-tabs--kitchen {
+  flex: 0 1 auto;
+  gap: 0.25rem;
+  padding: 0.18rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(31, 42, 54, 0.12);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
 }
 
 .ob-tab {
@@ -169,11 +226,27 @@
   cursor: pointer;
 }
 
+.ob-tabs--kitchen .ob-tab {
+  min-height: 40px;
+  min-width: 7.5rem;
+  padding: 0 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
 .ob-tab[aria-selected='true'] {
   background: var(--ob-surface);
   color: var(--ob-navy);
   border-color: var(--ob-rule);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.ob-tabs--kitchen .ob-tab[aria-selected='true'] {
+  background: var(--ob-navy);
+  color: #faf8f4;
+  border-color: var(--ob-navy);
+  box-shadow: 0 2px 10px rgba(26, 35, 48, 0.35);
 }
 
 .ob-tab:focus-visible {
@@ -183,6 +256,192 @@
 
 .ob-tab-panel--hidden {
   display: none !important;
+}
+
+/* Operational “kitchen workspace” — board + pulse + planner as one bakery-first surface */
+.ob-kitchen-workspace {
+  background:
+    linear-gradient(168deg, rgba(255, 251, 245, 0.99) 0%, rgba(248, 240, 230, 0.92) 38%, rgba(230, 236, 244, 0.94) 100%);
+  border: 1px solid rgba(90, 70, 55, 0.12);
+  border-radius: 20px;
+  box-shadow:
+    0 20px 56px rgba(42, 32, 24, 0.09),
+    0 2px 0 rgba(255, 255, 255, 0.65) inset;
+  padding: 0.55rem 0.65rem 0.95rem;
+  margin-bottom: 1.35rem;
+}
+
+.ob-kitchen-workspace .ob-kanban-section--hero {
+  margin-bottom: 0.65rem;
+  padding: 0.45rem 0.35rem 0.55rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ob-kitchen-workspace .ob-kanban-section--hero .ob-kanban-head {
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(31, 42, 54, 0.1);
+}
+
+.ob-kanban-eyebrow {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ob-navy-soft);
+  margin: 0 0 0.35rem;
+}
+
+.ob-kitchen-workspace .ob-kanban-section--hero .ob-kanban-title {
+  font-size: 1.62rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.ob-kitchen-workspace .ob-kanban-section--hero .ob-kanban-sub {
+  font-size: 0.8rem;
+  color: var(--ob-muted);
+  max-width: 38rem;
+  opacity: 0.9;
+  line-height: 1.42;
+}
+
+.ob-kitchen-workspace .ob-kanban {
+  width: 100%;
+  min-height: 288px;
+  gap: 0.42rem;
+  align-items: stretch;
+}
+
+/* Pickup “floor” — full-width presence, equal main lanes, intentional empty lanes */
+.ob-kitchen-workspace .ob-kanban-scroll.ob-kanban-board-surface {
+  width: calc(100% + 0.35rem);
+  margin-left: -0.175rem;
+  margin-right: -0.175rem;
+  padding: 0.7rem 0.5rem 0.8rem;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 247, 0.98) 0%, rgba(250, 243, 234, 0.75) 55%, rgba(238, 232, 224, 0.45) 100%),
+    radial-gradient(ellipse 90% 50% at 50% 0%, rgba(196, 165, 116, 0.14), transparent 58%);
+  border: 1px solid rgba(100, 75, 55, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(90, 70, 55, 0.05),
+    0 6px 22px rgba(42, 32, 24, 0.07);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='new'],
+.ob-kitchen-workspace .ob-kanban-col[data-status='confirmed'],
+.ob-kitchen-workspace .ob-kanban-col[data-status='in_prep'],
+.ob-kitchen-workspace .ob-kanban-col[data-status='ready'] {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='picked_up'] {
+  flex: 0 0 108px;
+  min-width: 100px;
+  max-width: 116px;
+}
+
+.ob-kitchen-workspace .ob-kanban-cards {
+  flex: 1 1 auto;
+  min-height: 168px;
+  position: relative;
+}
+
+/* Empty lanes = valid workflow destinations (status-specific copy, no JS) */
+.ob-kitchen-workspace .ob-kanban-cards:empty::before {
+  content: '';
+  position: absolute;
+  inset: 0.35rem 0.4rem 0.45rem;
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 252, 247, 0.35) 100%),
+    repeating-linear-gradient(
+      -12deg,
+      rgba(90, 70, 55, 0.04) 0 1px,
+      transparent 1px 10px
+    );
+  border: 1px solid rgba(90, 70, 55, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ob-kitchen-workspace .ob-kanban-cards:empty::after {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 0.5rem 0.55rem 0.55rem;
+  padding: 1.1rem 0.45rem 1.15rem;
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  color: #3d3a36;
+  border-radius: 9px;
+  border: 1px dashed rgba(90, 70, 55, 0.2);
+  background: rgba(255, 255, 255, 0.65);
+  white-space: pre-line;
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='new'] .ob-kanban-cards:empty::after {
+  content: 'New intake lane\A Orders appear here first.\A Move to Confirmed when reviewed.';
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='confirmed'] .ob-kanban-cards:empty::after {
+  content: 'Confirmed queue\A Nothing waiting — new orders stay in New until you confirm.\A Ready for prep handoff.';
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='in_prep'] .ob-kanban-cards:empty::after {
+  content: 'Production floor\A Bakes in progress show here.\A Move to Ready when bagged & labeled.';
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='ready'] .ob-kanban-cards:empty::after {
+  content: 'Pickup window\A Finished orders wait for customer.\A Move to Picked up when they leave.';
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='picked_up'] .ob-kanban-cards:empty::after {
+  content: 'Completed today\A Closed orders stack here for the shift record.\A Clear as you reconcile.';
+}
+
+.ob-kitchen-workspace .ob-kanban-col:has(.ob-kanban-cards:empty) {
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.85) 0%, rgba(245, 238, 230, 0.65) 100%);
+}
+
+.ob-summary-section {
+  padding: 0.15rem 0.25rem 0.75rem;
+  margin-bottom: 0.15rem;
+}
+
+/* KPI rail: supportive, not competing with the board */
+.ob-kitchen-workspace .ob-summary-section .ob-zone-rail-label {
+  opacity: 0.62;
+  letter-spacing: 0.11em;
+  color: #7a7369;
+  margin-bottom: 0.38rem;
+}
+
+.ob-zone-rail-label {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5c5348;
+  margin: 0 0 0.45rem;
+}
+
+.ob-zone-rail-label--below {
+  margin: 1.35rem 0 0.55rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(31, 42, 54, 0.1);
 }
 
 .ob-ledger-summary-grid {
@@ -236,8 +495,8 @@
 .ob-summary--strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.45rem;
-  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 @media (min-width: 720px) {
@@ -252,15 +511,25 @@
   }
 }
 
+.ob-kitchen-workspace .ob-summary--strip {
+  gap: 0.55rem;
+}
+
 .ob-sum-card {
-  background: var(--ob-surface);
-  border: 1px solid var(--ob-rule);
-  border-radius: 8px;
-  padding: 0.55rem 0.65rem;
-  min-height: 3.65rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+  border: 1px solid rgba(31, 42, 54, 0.1);
+  border-radius: 10px;
+  padding: 0.62rem 0.72rem;
+  min-height: 3.85rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.ob-kitchen-workspace .ob-sum-card {
+  border-color: rgba(31, 42, 54, 0.08);
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06);
 }
 
 .ob-sum-label {
@@ -274,20 +543,22 @@
 }
 
 .ob-sum-val {
-  font-size: 1.08rem;
-  font-weight: 700;
+  font-size: 1.12rem;
+  font-weight: 800;
   color: var(--ob-navy);
-  margin: 0.12rem 0 0;
+  margin: 0.18rem 0 0;
   line-height: 1.15;
+  font-variant-numeric: tabular-nums;
 }
 
 .ob-sum-val--sm {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
 }
 
 .ob-sum-card--cap {
   border-style: dashed;
-  border-color: rgba(31, 42, 54, 0.22);
+  border-color: rgba(31, 42, 54, 0.2);
+  background: rgba(255, 255, 255, 0.65);
 }
 
 .ob-pill-open {
@@ -316,6 +587,61 @@
   color: #64748b;
 }
 
+/* KPI row — operational pulse (stronger hierarchy, warm cards) */
+.ob-summary--pulse.ob-summary--strip {
+  gap: 0.58rem;
+}
+
+.ob-summary--pulse .ob-sum-card {
+  position: relative;
+  padding: 0.75rem 0.82rem 0.82rem;
+  min-height: 4.35rem;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff 0%, #fffbf6 45%, #faf4ec 100%);
+  border: 1px solid rgba(90, 70, 55, 0.11);
+  box-shadow: 0 4px 16px rgba(42, 32, 24, 0.07);
+}
+
+.ob-summary--pulse .ob-sum-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.11em;
+  color: #3d4654;
+  font-weight: 800;
+}
+
+.ob-summary--pulse .ob-sum-val {
+  font-size: 1.42rem;
+  font-weight: 800;
+  margin-top: 0.24rem;
+  letter-spacing: -0.02em;
+}
+
+.ob-summary--pulse .ob-sum-val--sm {
+  font-size: 1.15rem;
+}
+
+.ob-summary--pulse .ob-sum-card:nth-child(1) {
+  border-left: 3px solid #0284c7;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(2) {
+  border-left: 3px solid #7c3aed;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(3) {
+  border-left: 3px solid #c2410c;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(4) {
+  border-left: 3px solid #15803d;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(5) {
+  border-left: 3px solid #b45309;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(6) {
+  border-left: 3px solid #0d9488;
+}
+.ob-summary--pulse .ob-sum-card:nth-child(7) {
+  border-left: 3px dashed rgba(90, 70, 55, 0.35);
+}
+
 /* Production planner */
 .ob-planner {
   margin-bottom: 0.85rem;
@@ -324,6 +650,33 @@
   border: 1px solid var(--ob-rule);
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+}
+
+.ob-planner--workspace {
+  margin: 0;
+  padding: 0.85rem 0.35rem 0.45rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  border-top: 1px solid rgba(31, 42, 54, 0.09);
+}
+
+.ob-planner-head {
+  margin-bottom: 0.85rem;
+}
+
+.ob-planner-eyebrow {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ob-navy-soft);
+  margin: 0 0 0.35rem;
+}
+
+.ob-planner--workspace .ob-planner-title {
+  margin-bottom: 0.35rem;
 }
 
 .ob-planner-title {
@@ -338,7 +691,12 @@
   font-size: 0.84rem;
   color: var(--ob-muted);
   margin: 0 0 0.65rem;
-  line-height: 1.4;
+  line-height: 1.45;
+  max-width: 44rem;
+}
+
+.ob-planner--workspace .ob-planner-lead {
+  margin-bottom: 0;
 }
 
 .ob-planner-grid {
@@ -353,6 +711,20 @@
   }
 }
 
+.ob-planner-col {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(31, 42, 54, 0.09);
+  border-radius: 12px;
+  padding: 0.65rem 0.55rem 0.55rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.ob-planner-col-head {
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed rgba(31, 42, 54, 0.14);
+}
+
 .ob-planner-col-title {
   font-size: 0.95rem;
   font-weight: 700;
@@ -363,7 +735,7 @@
 .ob-planner-col-sub {
   font-size: 0.78rem;
   color: var(--ob-muted);
-  margin: 0 0 0.5rem;
+  margin: 0;
   line-height: 1.38;
 }
 
@@ -455,6 +827,68 @@
   padding: 0.25rem 0;
 }
 
+/* Prep zone — connected to board, quantity chips, warm framing */
+.ob-planner--workspace .ob-planner-col {
+  background: linear-gradient(165deg, rgba(255, 253, 248, 0.98) 0%, rgba(248, 236, 224, 0.5) 100%);
+  border: 1px solid rgba(90, 70, 55, 0.13);
+  box-shadow: 0 5px 20px rgba(42, 32, 24, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.ob-planner--workspace .ob-planner-title {
+  font-size: 1.38rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ob-planner--workspace .ob-planner-col-head {
+  border-bottom: 1px solid rgba(90, 70, 55, 0.15);
+}
+
+.ob-planner--workspace .ob-planner-row-wrap {
+  border: 1px solid rgba(90, 70, 55, 0.11);
+  border-radius: 11px;
+  border-left: 4px solid var(--ob-accent-warm);
+  background: linear-gradient(180deg, #fdfaf6 0%, #f5ebe3 100%);
+  box-shadow: 0 2px 8px rgba(42, 32, 24, 0.05);
+}
+
+.ob-planner--workspace .ob-planner-row {
+  min-height: 52px;
+  padding: 0.55rem 0.7rem;
+}
+
+.ob-planner--workspace .ob-planner-row-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.08rem;
+  padding: 0.38rem 0.62rem;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(90, 70, 55, 0.12);
+  box-shadow: 0 1px 4px rgba(42, 32, 24, 0.06);
+}
+
+.ob-planner--workspace .ob-planner-row-total strong {
+  font-size: 1.38rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.ob-planner--workspace .ob-planner-row-unit {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 800;
+  color: #6b5c4a;
+}
+
+.ob-planner--workspace .ob-planner-detail {
+  background: #fffef9;
+  border-top: 1px solid rgba(90, 70, 55, 0.1);
+}
+
 /* Kanban */
 .ob-kanban-section {
   margin-bottom: 0.9rem;
@@ -501,6 +935,55 @@
 
 .ob-kanban-section--hero .ob-kanban {
   min-height: 240px;
+}
+
+.ob-kitchen-workspace .ob-kanban-col {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #faf6f0 0%, #f0e8e0 100%);
+  border-color: rgba(90, 70, 55, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='picked_up'] {
+  background: linear-gradient(180deg, #e9edf2 0%, #dde3ea 100%);
+  opacity: 0.98;
+}
+
+.ob-kitchen-workspace .ob-kanban-card {
+  border-color: rgba(90, 70, 55, 0.14);
+  box-shadow:
+    0 2px 8px rgba(42, 32, 24, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  background: linear-gradient(165deg, #fffefb 0%, #faf6ef 100%);
+  border-radius: 10px;
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='new'] .ob-kanban-card {
+  border-left: 3px solid var(--ob-col-new);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='confirmed'] .ob-kanban-card {
+  border-left: 3px solid var(--ob-col-confirmed);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='in_prep'] .ob-kanban-card {
+  border-left: 3px solid var(--ob-col-prep);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='ready'] .ob-kanban-card {
+  border-left: 3px solid var(--ob-col-ready);
+}
+
+.ob-kitchen-workspace .ob-kanban-col[data-status='picked_up'] .ob-kanban-card {
+  border-left: 3px solid rgba(100, 116, 139, 0.75);
+  background: linear-gradient(165deg, #fafbfc 0%, #f0f2f5 100%);
+}
+
+#tab-panel-kitchen > .ob-section .ob-h2 {
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
 }
 
 .ob-kanban-sub {

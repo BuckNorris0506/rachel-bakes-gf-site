@@ -41,7 +41,7 @@
     var pathname = (typeof window.location !== 'undefined' && window.location.pathname) || '';
     if (pathname.indexOf('custom-orders') !== -1) return 'custom-orders';
     if (pathname.indexOf('/order') !== -1) return 'order';
-    if (pathname === '' || pathname === '/' || pathname === '/index.html' || pathname.match(/\/rachel-bakes-gf(\/index\.html)?\/?$/)) return 'home';
+    if (pathname === '' || pathname === '/' || pathname === '/index.html') return 'home';
     return 'other';
   }
 
@@ -307,7 +307,7 @@
     closed.innerHTML =
       '<h2 class="font-display text-3xl">Ordering is currently closed</h2>' +
       '<p class="mt-3 text-base leading-7 text-[var(--muted)]">' + escapeHtml(statusMessage) + '</p>' +
-      '<p class="mt-3 text-sm leading-7 text-[var(--muted)]">You can still browse the <a href="../menu/" class="text-rose font-medium hover:underline">menu</a>, check out the <a href="../gallery/" class="text-rose font-medium hover:underline">gallery</a>, and review <a href="../pickup-policies/" class="text-rose font-medium hover:underline">pickup &amp; policies</a>.</p>' +
+      '<p class="mt-3 text-sm leading-7 text-[var(--muted)]">You can still browse the <a href="../menu/" class="text-rose font-medium hover:underline">menu</a>, check out the <a href="../gallery/" class="text-rose font-medium hover:underline">gallery</a>, and review <a href="../policies/" class="text-rose font-medium hover:underline">pickup &amp; policies</a>.</p>' +
       '<div class="ordering-notify-signup mt-5 pt-5 border-t border-[var(--line)]">' +
         '<p class="font-display text-xl text-ink">Get notified when we reopen</p>' +
         '<p class="mt-1 text-sm leading-7 text-[var(--muted)]">Join the list for summer and holiday preorder windows.</p>' +
@@ -454,8 +454,8 @@
     var el = document.getElementById('rbgf-ordering-status-strip');
     if (!el) return;
     if (preorderOpen) {
-      var policiesHref = './pickup-policies/';
-      if (getOrderPagePath() === 'order') policiesHref = '../pickup-policies/';
+      var policiesHref = './policies/';
+      if (getOrderPagePath() === 'order') policiesHref = '../policies/';
       el.innerHTML =
         '<div class="mx-auto max-w-site px-5 py-3">' +
         '<p class="text-sm leading-6 text-[var(--sf-muted)]">' +

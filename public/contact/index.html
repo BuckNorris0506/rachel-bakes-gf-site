@@ -2,190 +2,137 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <title>Contact BuckSites — Contractor Websites</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Contact BuckSites. Call, text, or submit the form for a free contractor website review. Kansas City, serving contractors across the U.S." />
-  <link rel="icon" href="/assets/logo/bucksites-logo.png" type="image/png" />
+  <link rel="icon" href="/assets/rachel-bakes-gf/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/assets/rachel-bakes-gf/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/rachel-bakes-gf/apple-touch-icon.png" />
+  <title>Contact | Rachel Bakes GF</title>
+  <meta name="description" content="Contact Rachel Bakes GF in Liberty, Missouri — questions about preorders, pickup, or custom orders." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-          colors: { navy: '#0f172a', accent: '#f97316', lightbg: '#f8fafc' },
-          boxShadow: { 'soft': '0 18px 45px rgba(15,23,42,0.15)' },
-        }
-      }
-    };
+    tailwind.config = { theme: { extend: { colors: { cream:'#fbf6ef', paper:'#fffdf9', ink:'#342a23', rose:'#c56a5f', cocoa:'#7b4d3e', butter:'#f2c98b', sage:'#7d9685' }, boxShadow: { warm:'0 18px 60px rgba(52,42,35,.12)' }, maxWidth: { site:'1100px' } } } };
   </script>
-  <style>body { font-family: 'Inter', system-ui, sans-serif; }</style>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="/assets/rachel-bakes-gf/styles.css" />
 </head>
-<body class="bg-lightbg text-navy antialiased">
-  <div class="min-h-screen flex flex-col">
-    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-white/10">
-      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0">
-        <div class="flex items-center justify-between py-4">
-          <a href="/" class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-10 w-auto flex-shrink-0" fill="none" aria-label="BuckSites logo">
-              <path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/>
-              <path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/>
-              <path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/><path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/>
-              <ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/>
-              <ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/>
-            </svg>
-            <div class="flex flex-col leading-none">
-              <span class="text-[1.2rem] font-black tracking-tight text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"><span>Buck</span><span class="text-accent">Sites</span></span>
-              <span class="mt-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/75">Contractor Web Studio</span>
-            </div>
+<body class="storefront-home rbgf-inner-page">
+  <div class="site-shell">
+    <header x-data="{open:false}" class="sticky top-0 z-[1000] storefront-header nav-glass rbgf-overlay-header rbgf-inner-header">
+      <div class="mx-auto max-w-site px-5">
+        <div class="header-inner">
+          <a href="../" class="brand-wrap brand-direction-2 header-brand">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker rbgf-header-kicker">Liberty, Missouri</span>
           </a>
-          <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="/" class="text-white/80 hover:text-white transition-colors">Home</a>
-            <a href="/contractor-website-design/" class="text-white/80 hover:text-white transition-colors">Design</a>
-            <a href="/contractor-website-redesign/" class="text-white/80 hover:text-white transition-colors">Redesign</a>
-            <a href="/contractor-website-pricing/" class="text-white/80 hover:text-white transition-colors">Pricing</a>
-            <a href="/contractor-website-examples/" class="text-white/80 hover:text-white transition-colors">Examples</a>
-            <a href="/free-website-review/" class="text-white/80 hover:text-white transition-colors">Free Review</a>
+          <nav class="header-nav hidden md:flex" aria-label="Primary">
+            <a class="nav-link" href="../">Home</a>
+            <a class="nav-link" href="../menu/">Menu</a>
+            <a class="nav-link" href="../order/">Order</a>
+            <a class="nav-link" href="../custom-orders/">Custom</a>
+            <a class="nav-link" href="../policies/">Policies</a>
+            <a class="nav-link" href="../gallery/">Gallery</a>
+            <a class="nav-link nav-active" href="./">Contact</a>
+            <a class="nav-link" href="../about/">About</a>
           </nav>
-          <div class="hidden md:flex items-center gap-4">
-            <a href="tel:+18168048603" class="flex flex-col items-end text-right min-w-[7.5rem]">
-              <span class="text-[11px] font-medium uppercase tracking-[0.16em] text-white/50">Call or Text</span>
-              <span class="text-sm font-semibold text-white whitespace-nowrap">(816) 804-8603</span>
-            </a>
-            <a href="/free-website-review/" class="inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg hover:bg-[#fb923c] transition-all">Request Review</a>
-          </div>
-          <div class="flex items-center gap-4 md:hidden">
-            <a href="tel:+18168048603" class="text-xs font-semibold text-white">(816) 804-8603</a>
-            <button type="button" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Toggle navigation" class="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-white/20 transition-all">
-              <span id="mobile-menu-btn-text">Menu</span>
-              <svg class="h-3.5 w-3.5 ml-1.5" viewBox="0 0 20 20" fill="none"><path d="M4 7h12M4 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg>
-            </button>
-          </div>
+          <div class="header-cta-wrap hidden md:block"><a href="../order/" class="cta-header">Preorder</a></div>
+          <button @click="open=!open" class="rbgf-nav-toggle md:hidden" type="button" aria-label="Open site navigation">Menu</button>
         </div>
-        <div id="mobile-nav-panel" class="hidden pb-4 border-t border-white/10 md:hidden" aria-hidden="true">
-          <nav class="flex flex-col gap-2 pt-4 text-sm font-medium">
-            <a href="/" class="py-1 text-white/80 hover:text-white">Home</a>
-            <a href="/contractor-website-design/" class="py-1 text-white/80 hover:text-white">Design</a>
-            <a href="/contractor-website-redesign/" class="py-1 text-white/80 hover:text-white">Redesign</a>
-            <a href="/contractor-website-pricing/" class="py-1 text-white/80 hover:text-white">Pricing</a>
-            <a href="/contractor-website-examples/" class="py-1 text-white/80 hover:text-white">Examples</a>
-            <a href="/free-website-review/" class="py-1 text-white/80 hover:text-white">Free Review</a>
-            <a href="/free-website-review/" class="mt-3 inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg transition-all">Request Review</a>
-          </nav>
+        <div x-show="open" x-cloak x-transition class="header-mobile-nav space-y-0 md:hidden rbgf-mobile-drawer">
+          <a class="nav-link" href="../">Home</a>
+          <a class="nav-link" href="../menu/">Menu</a>
+          <a class="nav-link" href="../order/">Order</a>
+          <a class="nav-link" href="../custom-orders/">Custom Orders</a>
+          <a class="nav-link" href="../policies/">Policies</a>
+          <a class="nav-link" href="../gallery/">Gallery</a>
+          <a class="nav-link nav-active" href="./">Contact</a>
+          <a class="nav-link" href="../about/">About</a>
         </div>
       </div>
     </header>
 
-    <main class="flex-1">
-      <section class="py-16 lg:py-24 bg-navy text-slate-50">
-        <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 grid gap-10 lg:grid-cols-2 items-start">
-          <div>
-            <p class="text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">Contact</p>
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">Get in Touch</h1>
-            <p class="mt-4 text-slate-200 leading-relaxed">Questions about contractor websites, pricing, or a free review? Call, text, or use the form. I follow up personally.</p>
-            <div class="mt-7 flex flex-col gap-4 text-sm">
-              <div>
-                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Call or text</p>
-                <a href="tel:+18168048603" class="text-xl font-bold text-slate-50 hover:text-accent transition-colors tracking-tight">(816) 804-8603</a>
-              </div>
-              <div>
-                <p class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Email</p>
-                <a href="mailto:jared@bucksites.com" class="text-sm font-semibold text-slate-100 hover:text-accent transition-colors">jared@bucksites.com</a>
-              </div>
-              <p class="text-sm text-slate-300 pt-2 border-t border-slate-700/60"><span class="font-semibold text-slate-50">Kansas City, Missouri</span> — serving contractors across the U.S.</p>
+    <main class="rbgf-inner-main">
+      <section class="rbgf-inner-hero">
+        <div class="mx-auto max-w-site px-5">
+          <p class="section-label text-xs font-semibold uppercase">Contact</p>
+          <h1 class="mt-2 text-4xl sm:text-5xl">Questions before you order?</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7">
+            Send a message — we’ll reply by email when we can. For carrot cake or other custom inquiries, you can also use the
+            <a href="../custom-orders/" class="text-rose font-medium hover:underline">custom order form</a>
+            when it’s open.
+          </p>
+          <p class="mt-3 max-w-2xl text-sm leading-7 text-[var(--muted)]">
+            Want something not listed? Send us a note here — ask about another item not currently on the menu (for example cupcakes or brownies). That doesn’t mean it’s available for preorder until we confirm.
+          </p>
+        </div>
+      </section>
+
+      <section class="pb-12">
+        <div class="mx-auto grid max-w-site gap-6 px-5 lg:grid-cols-[.95fr,1.05fr] lg:gap-8">
+          <div class="space-y-4">
+            <div class="rbgf-request-ledger compact-panel">
+              <h2>What to use this for</h2>
+              <ul class="info-list mt-3 space-y-2 text-sm leading-7">
+                <li>Pickup timing questions</li>
+                <li>Allergies or ingredients</li>
+                <li>Whether something on the menu fits your event</li>
+                <li>Ask about another item not currently on the menu (for example cupcakes or brownies — not a preorder until we reply)</li>
+              </ul>
+            </div>
+            <div class="rbgf-request-ledger compact-panel">
+              <h2>Faster paths</h2>
+              <ul class="info-list mt-3 space-y-2 text-sm leading-7">
+                <li><a href="../order/" class="text-rose font-medium hover:underline">Preorder request</a> — menu items &amp; pickup</li>
+                <li><a href="../custom-orders/" class="text-rose font-medium hover:underline">Custom order inquiry</a> — carrot cake &amp; selective custom work</li>
+                <li><a href="../policies/" class="text-rose font-medium hover:underline">Pickup &amp; policies</a></li>
+              </ul>
             </div>
           </div>
-          <div>
-            <div class="rounded-[28px] border border-slate-700 bg-slate-900/60 p-6 sm:p-7 shadow-soft">
-              <p class="text-sm font-semibold text-slate-50">Send a message</p>
-              <p class="mt-1 text-xs text-slate-400">I’ll get back to you personally.</p>
-              <form class="mt-5 space-y-4" name="website-review" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" id="contact-form">
-                <input type="hidden" name="form-name" value="website-review" />
-                <p class="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-name">Name</label>
-                  <input id="contact-name" type="text" name="name" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Your name" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-company">Company</label>
-                  <input id="contact-company" type="text" name="company" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Company name" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-email">Email</label>
-                  <input id="contact-email" type="email" name="email" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="you@company.com" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-phone">Phone (optional)</label>
-                  <input id="contact-phone" type="tel" name="phone" class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="(555) 555-5555" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-website">Current website (optional)</label>
-                  <input id="contact-website" type="text" name="website" class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="https:// or leave blank" />
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-300 mb-1.5" for="contact-projects">What kind of jobs do you want more of?</label>
-                  <textarea id="contact-projects" name="projects" rows="4" required class="w-full rounded-xl border border-slate-700 bg-slate-900/80 px-3.5 py-2.5 text-sm text-slate-50 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" placeholder="Driveways, roofs, decks, etc."></textarea>
-                </div>
-                <button type="submit" class="w-full inline-flex items-center justify-center rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-navy shadow-md shadow-accent/40 hover:shadow-lg hover:bg-[#fb923c] transition-all">Submit</button>
-              </form>
-            </div>
+
+          <div id="message" class="rbgf-request-slab compact-form-panel">
+            <h2>Send a message</h2>
+            <p class="mt-3 text-sm leading-7 text-[var(--sf-muted)]">We read every message; please allow a little time during busy weeks.</p>
+            <form id="contact-form" class="mt-4 grid gap-3 sm:grid-cols-2" novalidate>
+              <input class="form-field" type="text" name="name" placeholder="Your name" required autocomplete="name" />
+              <input class="form-field" type="email" name="email" placeholder="Email *" required autocomplete="email" />
+              <input class="form-field sm:col-span-2" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel" />
+              <textarea class="form-field min-h-[160px] sm:col-span-2" name="message" placeholder="Your question" required></textarea>
+              <div class="sm:col-span-2">
+                <button type="submit" class="cta-primary">Send message</button>
+              </div>
+              <div class="rbgf-contact-status sm:col-span-2 text-sm leading-6 text-[var(--muted)]" aria-live="polite"></div>
+            </form>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="border-t border-slate-200 bg-white">
-      <div class="mx-auto max-w-[1100px] px-4 sm:px-6 lg:px-0 py-8">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div class="flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 48" class="h-8 w-auto flex-shrink-0" fill="none"><path d="M22 2 L42 10.5 V28 C42 39.5 22 46.5 22 46.5 C22 46.5 2 39.5 2 28 V10.5 Z" fill="#0f172a"/><path d="M22 5 L39.5 13 V28 C39.5 38 22 44 22 44 C22 44 4.5 38 4.5 28 V13 Z" fill="none" stroke="#f97316" stroke-width="1.2"/><path d="M15.5 27 L8.5 12.5 L5.5 6.5 M8.5 12.5 L12.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M28.5 27 L35.5 12.5 L38.5 6.5 M35.5 12.5 L31.5 7.5" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 27 L7.5 19.5 L13 18.5 Z" fill="white"/><path d="M30 27 L36.5 19.5 L31 18.5 Z" fill="white"/><ellipse cx="22" cy="34" rx="10" ry="9" fill="white"/><ellipse cx="22" cy="40.5" rx="3.8" ry="2.2" fill="#f97316"/></svg>
-            <div><p class="text-sm font-extrabold text-navy"><span>Buck</span><span class="text-accent">Sites</span></p><p class="text-xs text-slate-500">Websites That Generate Calls for Contractors</p></div>
-          </div>
-          <nav class="flex flex-wrap gap-x-6 gap-y-1 text-sm">
-            <a href="/contractor-website-design/" class="text-slate-600 hover:text-navy">Design</a>
-            <a href="/contractor-website-redesign/" class="text-slate-600 hover:text-navy">Redesign</a>
-            <a href="/contractor-website-pricing/" class="text-slate-600 hover:text-navy">Pricing</a>
-            <a href="/contractor-website-examples/" class="text-slate-600 hover:text-navy">Examples</a>
-            <a href="/free-website-review/" class="text-slate-600 hover:text-navy">Free Review</a>
-            <a href="/process/" class="text-slate-600 hover:text-navy">Process</a>
-            <a href="/about/" class="text-slate-600 hover:text-navy">About</a>
-            <a href="/faq/" class="text-slate-600 hover:text-navy">FAQ</a>
-            <a href="/contact/" class="text-navy font-medium hover:text-accent">Contact</a>
-          </nav>
+    <footer class="storefront-footer border-t py-10">
+      <div class="mx-auto flex max-w-site flex-col gap-6 px-5 text-sm md:flex-row md:items-end md:justify-between">
+        <div>
+          <a href="../" class="brand-wrap brand-direction-2 inline-block">
+            <span class="brand-wordmark">Rachel Bakes <span class="brand-gf">GF</span></span>
+            <span class="brand-wordmark-kicker">Gluten-Free Bakery in Liberty, Missouri</span>
+          </a>
+          <p class="mt-2 max-w-md">Gluten-free bakery in Liberty, Missouri. Pretzel bites, cinnamon rolls, oatmeal cream pies, dinner rolls — and carrot cake by custom inquiry.</p>
         </div>
-        <p class="mt-6 text-xs text-slate-500">© <span id="year"></span> BuckSites. Built in Kansas City · Working with contractors across the U.S.</p>
+        <nav class="flex flex-wrap gap-4">
+          <a class="footer-link" href="../">Home</a>
+          <a class="footer-link" href="../menu/">Menu</a>
+          <a class="footer-link" href="../order/">Order / Preorder</a>
+          <a class="footer-link" href="../custom-orders/">Custom Orders</a>
+          <a class="footer-link" href="../policies/">Pickup &amp; Policies</a>
+          <a class="footer-link" href="../gallery/">Gallery</a>
+          <a class="footer-link" href="./">Contact</a>
+          <a class="footer-link" href="../about/">About</a>
+        </nav>
       </div>
     </footer>
   </div>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
-  <script>
-    document.getElementById('contact-form')?.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var form = e.target;
-      if (!form.checkValidity()) { form.reportValidity(); return; }
-      var formData = new FormData(form);
-      var submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
-      fetch(form.getAttribute('action') || window.location.pathname || '/contact/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      }).then(function(response) {
-        if (response.ok) window.location.href = '/thank-you/';
-        else form.submit();
-      }).catch(function() {
-        form.submit();
-      }).finally(function() {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
-      });
-    });
-  </script>
-  <script>
-  (function(){ var btn = document.getElementById('mobile-menu-btn'); var panel = document.getElementById('mobile-nav-panel'); if (!btn || !panel) return; btn.addEventListener('click', function() { var isHidden = panel.classList.contains('hidden'); panel.classList.toggle('hidden'); btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false'); panel.setAttribute('aria-hidden', !isHidden); var text = document.getElementById('mobile-menu-btn-text'); if (text) text.textContent = isHidden ? 'Close' : 'Menu'; }); })();
-  </script>
+  <script src="/assets/rachel-bakes-gf/ordering-config.js"></script>
+  <script src="/assets/rachel-bakes-gf/ordering-ui.js"></script>
+  <script src="/assets/rachel-bakes-gf/forms.js"></script>
 </body>
 </html>
